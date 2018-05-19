@@ -32,7 +32,8 @@
             <artifactId>commons-io</artifactId>
             <version>2.1</version>
         </dependency>
-    </dependencies>
+
+        </dependencies>
 
     <build>
         <plugins>

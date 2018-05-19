@@ -3,19 +3,16 @@ package solver;
 import com.github.javaparser.JavaParser;
 import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.NodeList;
-import com.github.javaparser.ast.body.FieldDeclaration;
 import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.ast.body.Parameter;
 import com.github.javaparser.ast.body.VariableDeclarator;
 import com.github.javaparser.ast.comments.Comment;
+import com.github.javaparser.ast.comments.JavadocComment;
 import com.github.javaparser.ast.expr.MethodCallExpr;
 import com.github.javaparser.ast.stmt.BlockStmt;
-import com.github.javaparser.ast.expr.NameExpr;
 import com.github.javaparser.ast.visitor.VoidVisitor;
 import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
-import com.github.javaparser.resolution.types.ResolvedType;
 import com.github.javaparser.symbolsolver.javaparser.Navigator;
-import com.github.javaparser.symbolsolver.javaparsermodel.JavaParserFacade;
 import com.github.javaparser.symbolsolver.model.resolution.TypeSolver;
 import com.github.javaparser.symbolsolver.resolution.typesolvers.CombinedTypeSolver;
 import com.github.javaparser.symbolsolver.resolution.typesolvers.JavaParserTypeSolver;
@@ -27,12 +24,10 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.Set;
 
 public class Solver {
 
@@ -43,7 +38,7 @@ public class Solver {
 
     public static void main(String[] args) throws Exception {
         for(File file : getSubfolderClasses(FILE_PATH)){
-            System.out.println(file.toString());
+            System.out.println("File: " + file.toString());
             CompilationUnit cu = JavaParser.parse(new FileInputStream(file));
             VoidVisitor<?> methodNameVisitor = new MethodNamePrinter();
             methodNameVisitor.visit(cu, null);
@@ -66,28 +61,34 @@ public class Solver {
             if (blk.isPresent()){
                 BlockStmt block = blk.get();
                 String text = block.toString();
-                int words = getWords(text);
-                int lines = getLines(text);
+                int words = getWordCount(text);
+                int lines = getLineCount(text);
+                int repWords = getMaxRepeatedWords(text);
+                float density = getDensity(words, lines);
+                int arguments = getArgCount(md);
+                int funcCalls = getFuncCallCount(md);
+                int variables = getLocalVarCount(md);
+                float commentRatio = getCommentRatio(md);
 
-                System.out.println("Words: " + words);
-                System.out.println("Lines: " + lines);
-                System.out.println("Density: " + getDensity(words, lines));
-                System.out.println("Arguments: " + getArguments(md));
-                System.out.println("Method Calls: " + getDistinctFunctionCalls(md));
-                System.out.println("Variables: " + getDistinctLocalVariables(md));
-                System.out.println("MaxRepeatedWords: " + getMaxRepeatedWords(text));
-                System.out.println("Comments: " + getComments(md));
+                System.out.println("#Words: " + words);
+                System.out.println("#Lines: " + lines);
+                System.out.println("Density: " + density);
+                System.out.println("#Arguments: " + arguments);
+                System.out.println("#Method Calls: " + funcCalls);
+                System.out.println("#Variables: " + variables);
+                System.out.println("Maxmal repeated words: " + repWords);
+                System.out.println("Comments ratio: " + commentRatio);
             }
         }
     }
 
     private static List<File> getSubfolderClasses(String path){
-        File file = new File(path);
+        File rootFile = new File(path);
         List<File> files = new LinkedList();
-        if(file.isDirectory()){
-            files = (List<File>) FileUtils.listFiles(new File(SRC_PATH), new String[] { "java" }, true);
-        } else if(file.isFile()){
-            files.add(file);
+        if(rootFile.isDirectory()){
+            files = (List<File>) FileUtils.listFiles(rootFile, new String[] { "java" }, true);
+        } else if(rootFile.isFile()){
+            files.add(rootFile);
         }
         else {
             System.out.println("File path not correct.");
@@ -96,7 +97,7 @@ public class Solver {
         return files;
     }
 
-    private static int getWords(String text) {
+    private static int getWordCount(String text) {
         String cleaned = text.replaceAll("[^\\p{L}\\p{Nd}]+", " ").trim();
         String[] words = cleaned.split(" ");
         return words.length;
@@ -118,7 +119,7 @@ public class Solver {
         
     }
 
-    private static int getLines(String text) {
+    private static int getLineCount(String text) {
         String[] lines = text.split("\r\n|\r|\n");
         return lines.length - 2;
     }
@@ -127,15 +128,15 @@ public class Solver {
         return (float) words/ lines;
     }
 
-    private static int getArguments(MethodDeclaration md){
+    private static int getArgCount(MethodDeclaration md){
         NodeList<Parameter> parameters = md.getParameters();
         return parameters.size();
     }
 
-    private static int getDistinctFunctionCalls(MethodDeclaration md){
-        TypeSolver jpTypeSolver = new JavaParserTypeSolver(SRC_PATH);
-        TypeSolver reTypeSolver = new ReflectionTypeSolver();
-        TypeSolver combSolver = new CombinedTypeSolver(jpTypeSolver, reTypeSolver);
+    private static int getFuncCallCount(MethodDeclaration md){
+        // TypeSolver jpTypeSolver = new JavaParserTypeSolver(SRC_PATH);
+        // TypeSolver reTypeSolver = new ReflectionTypeSolver();
+        // TypeSolver combSolver = new CombinedTypeSolver(jpTypeSolver, reTypeSolver);
 
         List<MethodCallExpr> methodCalls = Navigator.findAllNodesOfGivenClass(md, MethodCallExpr.class);
         // Set<String> set = new HashSet<String>();
@@ -152,7 +153,7 @@ public class Solver {
         return methodCalls.size();
     }
 
-    private static int getDistinctLocalVariables(MethodDeclaration md){
+    private static int getLocalVarCount(MethodDeclaration md){
         TypeSolver jpTypeSolver = new JavaParserTypeSolver(SRC_PATH);
         TypeSolver reTypeSolver = new ReflectionTypeSolver();
         TypeSolver combSolver = new CombinedTypeSolver(jpTypeSolver, reTypeSolver);
@@ -161,21 +162,30 @@ public class Solver {
         return declarations.size();
     }
     
-    private static float getComments(MethodDeclaration md){
+    private static float getCommentRatio(MethodDeclaration md){
         TypeSolver jpTypeSolver = new JavaParserTypeSolver(SRC_PATH);
         TypeSolver reTypeSolver = new ReflectionTypeSolver();
         TypeSolver combSolver = new CombinedTypeSolver(jpTypeSolver, reTypeSolver);
 
-        List<Comment> comments = md.getAllContainedComments();
-        String commentText = comments.toString();
+        List<Comment> innerComments = md.getAllContainedComments();
+        Optional<JavadocComment> docComments = md.getJavadocComment();
+
+        String commentText = innerComments.toString();
+        if(docComments.isPresent()) {
+            commentText += docComments.get().toString();
+            System.out.println(docComments.get());}
         String methodText = md.getBody().toString();
 
         String cleanedComments = commentText.replaceAll("[^\\p{L}\\p{Nd}]+", "").trim();
+        System.out.println(cleanedComments);
         String cleanedMethod = methodText.replaceAll("[^\\p{L}\\p{Nd}]+", "").trim();
 
         int commentChars = cleanedComments.toCharArray().length;
         int methodChars = cleanedMethod.toCharArray().length;
-        return (float) commentChars / methodChars;
+        if (commentChars > 0 || methodChars > 0) {
+            return (float) commentChars / (methodChars + commentChars);
+        }
+        return 0;
     }
 
     private static int getNumBlockStmt(MethodDeclaration md){
