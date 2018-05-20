@@ -47,12 +47,6 @@ public class Solver {
             VoidVisitor<?> methodNameVisitor = new MethodNamePrinter();
             methodNameVisitor.visit(cu, null);
         }
-        // System.out.println("HALBZEIT");
-        // List<String> methodNames = new ArrayList<>();
-        // VoidVisitor<List<String>> methodNameCollector = new MethodNameCollector();
-        // methodNameCollector.visit(cu, methodNames);
-        // methodNames.forEach(n -> System.out.println("Method Name Collected: " + n));
-
     }
 
     private static class MethodNamePrinter extends VoidVisitorAdapter<Void> {
