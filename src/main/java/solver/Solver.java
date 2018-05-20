@@ -2,6 +2,7 @@ package solver;
 
 import com.github.javaparser.JavaParser;
 import com.github.javaparser.ast.CompilationUnit;
+import com.github.javaparser.ast.Node;
 import com.github.javaparser.ast.NodeList;
 import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.ast.body.Parameter;
@@ -28,17 +29,20 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 
 public class Solver {
 
     private static final String FILE_PATH = "src/main/resources/Time/src/main/java/";
+    private static final String CSV_PATH = "results.csv";
+    private static File currentFile = null;
 
     // Do not change
     private static final String SRC_PATH = "src/main/resources/Time/";
 
     public static void main(String[] args) throws Exception {
         for(File file : getSubfolderClasses(FILE_PATH)){
-            System.out.println("File: " + file.toString());
+            currentFile = file;
             CompilationUnit cu = JavaParser.parse(new FileInputStream(file));
             VoidVisitor<?> methodNameVisitor = new MethodNamePrinter();
             methodNameVisitor.visit(cu, null);
@@ -56,7 +60,8 @@ public class Solver {
         @Override
         public void visit(MethodDeclaration md, Void arg) {
             super.visit(md, arg);
-            System.out.println("Method Name Printed: " + md.getName());
+            System.out.println("File: " + currentFile);
+            System.out.println("Method Name: " + md.getName());
             Optional<BlockStmt> blk = md.getBody();
             if (blk.isPresent()){
                 BlockStmt block = blk.get();
@@ -69,22 +74,28 @@ public class Solver {
                 int funcCalls = getFuncCallCount(md);
                 int variables = getLocalVarCount(md);
                 float commentRatio = getCommentRatio(md);
+                int maxDepth = getMaxDepth(md);
 
+                System.out.println("==========================================");
+                System.out.println(md);
                 System.out.println("#Words: " + words);
                 System.out.println("#Lines: " + lines);
                 System.out.println("Density: " + density);
                 System.out.println("#Arguments: " + arguments);
                 System.out.println("#Method Calls: " + funcCalls);
                 System.out.println("#Variables: " + variables);
-                System.out.println("Maxmal repeated words: " + repWords);
+                System.out.println("Maximal repeated words: " + repWords);
                 System.out.println("Comments ratio: " + commentRatio);
+                System.out.println("Maximal depth: " + maxDepth);
+                System.out.println("");
+                System.out.println("==========================================");
             }
         }
     }
 
     private static List<File> getSubfolderClasses(String path){
         File rootFile = new File(path);
-        List<File> files = new LinkedList();
+        List<File> files = new LinkedList<File>();
         if(rootFile.isDirectory()){
             files = (List<File>) FileUtils.listFiles(rootFile, new String[] { "java" }, true);
         } else if(rootFile.isFile()){
@@ -114,7 +125,6 @@ public class Solver {
                 }
                 occurences.put(word, oldCount+1);
             }
-        // System.out.println(Collections.singletonList(occurences));
         return Collections.max(occurences.values());
         
     }
@@ -134,11 +144,13 @@ public class Solver {
     }
 
     private static int getFuncCallCount(MethodDeclaration md){
+        List<MethodCallExpr> methodCalls = Navigator.findAllNodesOfGivenClass(md, MethodCallExpr.class);
+        return methodCalls.size();
+    }
         // TypeSolver jpTypeSolver = new JavaParserTypeSolver(SRC_PATH);
         // TypeSolver reTypeSolver = new ReflectionTypeSolver();
         // TypeSolver combSolver = new CombinedTypeSolver(jpTypeSolver, reTypeSolver);
 
-        List<MethodCallExpr> methodCalls = Navigator.findAllNodesOfGivenClass(md, MethodCallExpr.class);
         // Set<String> set = new HashSet<String>();
         // for(MethodCallExpr element : methodCalls) {
             // set.add(element.toString()); 
@@ -150,36 +162,23 @@ public class Solver {
                     // .solve(mc)
                     // .getCorrespondingDeclaration()
                     // .getQualifiedSignature()));
-        return methodCalls.size();
-    }
 
     private static int getLocalVarCount(MethodDeclaration md){
-        TypeSolver jpTypeSolver = new JavaParserTypeSolver(SRC_PATH);
-        TypeSolver reTypeSolver = new ReflectionTypeSolver();
-        TypeSolver combSolver = new CombinedTypeSolver(jpTypeSolver, reTypeSolver);
-
         List<VariableDeclarator> declarations = Navigator.findAllNodesOfGivenClass(md, VariableDeclarator.class);
         return declarations.size();
     }
     
     private static float getCommentRatio(MethodDeclaration md){
-        TypeSolver jpTypeSolver = new JavaParserTypeSolver(SRC_PATH);
-        TypeSolver reTypeSolver = new ReflectionTypeSolver();
-        TypeSolver combSolver = new CombinedTypeSolver(jpTypeSolver, reTypeSolver);
-
         List<Comment> innerComments = md.getAllContainedComments();
         Optional<JavadocComment> docComments = md.getJavadocComment();
-
-        String commentText = innerComments.toString();
-        if(docComments.isPresent()) {
-            commentText += docComments.get().toString();
-            System.out.println(docComments.get());}
         String methodText = md.getBody().toString();
-
+        // Extract inner method comments and javadoc comments
+        String commentText = innerComments.toString();
+        if(docComments.isPresent()) commentText += docComments.get().toString();
+        // Delete everything except letters and numerals
         String cleanedComments = commentText.replaceAll("[^\\p{L}\\p{Nd}]+", "").trim();
-        System.out.println(cleanedComments);
         String cleanedMethod = methodText.replaceAll("[^\\p{L}\\p{Nd}]+", "").trim();
-
+        // Calculate percentage of comments
         int commentChars = cleanedComments.toCharArray().length;
         int methodChars = cleanedMethod.toCharArray().length;
         if (commentChars > 0 || methodChars > 0) {
@@ -188,33 +187,27 @@ public class Solver {
         return 0;
     }
 
-    private static int getNumBlockStmt(MethodDeclaration md){
-        TypeSolver jpTypeSolver = new JavaParserTypeSolver(SRC_PATH);
-        TypeSolver reTypeSolver = new ReflectionTypeSolver();
-        TypeSolver combSolver = new CombinedTypeSolver(jpTypeSolver, reTypeSolver);
-
-        List<BlockStmt> declarations = Navigator.findAllNodesOfGivenClass(md, BlockStmt.class);
-        return declarations.size();
-    }
-
     private static int getMaxDepth(MethodDeclaration md){
-        TypeSolver jpTypeSolver = new JavaParserTypeSolver(SRC_PATH);
-        TypeSolver reTypeSolver = new ReflectionTypeSolver();
-        TypeSolver combSolver = new CombinedTypeSolver(jpTypeSolver, reTypeSolver);
-
-        List<BlockStmt> declarations = Navigator.findAllNodesOfGivenClass(md, BlockStmt.class);
+        List<Node> frontier = new LinkedList<Node>();
+        frontier.add(md);
         int depth = 0;
-        // for (BlockStmt block : declarations){
-        // }
+        while(!frontier.isEmpty()){
+            List<Node> children = new LinkedList<Node>();
+            for(Node node : frontier){
+                children.addAll(node.getChildNodesByType(BlockStmt.class));
+            }
+            frontier.clear();
+            if(!children.isEmpty()){
+                frontier.addAll(children);
+                depth++;
+            }
+        }
         return depth;
     }
-    // private static class MethodNameCollector extends VoidVisitorAdapter<List<String>> {
-    //
-    //     @Override
-    //     public void visit(MethodDeclaration md, List<String> collector) {
-    //         super.visit(md, collector);
-    //         collector.add(md.getNameAsString());
-    //     }
-    // }
-    //
+
+    private static int getBlockCount(MethodDeclaration md){
+        List<BlockStmt> blocks = Navigator.findAllNodesOfGivenClass(md, BlockStmt.class);
+        return blocks.size();
+    }
+
 }
