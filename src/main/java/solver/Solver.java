@@ -2,6 +2,7 @@ package solver;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.Optional;
 
 import com.github.javaparser.JavaParser;
@@ -19,9 +20,11 @@ public class Solver {
 
     // Do not change
     private static final String SRC_PATH = "src/main/resources/Time/";
-    private static FileHandler fileHandler = new FileHandler(CSV_PATH);
+    private static FileHandler fileHandler;
 
     public static void main(String[] args) throws Exception {
+        fileHandler = new FileHandler(CSV_PATH);
+
         for (File file : FileHandler.getSubfolderClasses(FILE_PATH)) {
             currentFile = file;
             CompilationUnit cu = JavaParser.parse(new FileInputStream(file));
@@ -77,12 +80,17 @@ public class Solver {
 
                 String[] headerRecord = result.getHeader();
                 String[] lineRecord = result.getRecord();
-                fileHandler.writeCSVFile(headerRecord, lineRecord);
+                try {
+                    fileHandler.writeCSVFile(headerRecord, lineRecord);
+                } catch (IOException e) {
+                    System.err.println(e);
+                    e.printStackTrace();
+                    System.exit(1);
+                }
             } else {
                 System.out.println("No method block.");
             }
         }
     }
 }
-
 

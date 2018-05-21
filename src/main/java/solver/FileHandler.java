@@ -1,9 +1,11 @@
 package solver;
 
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -15,18 +17,25 @@ import com.opencsv.CSVWriter;
 public class FileHandler {
 
     private File file;
+    private Writer writer;
 
-    public FileHandler(String path) {
+    public FileHandler(String path) throws Exception {
         this.file = new File(path);
+        Validate.isTrue(!file.isDirectory(), "Specified path is a directory.");
         // Check whether path is valid.
         if (!file.exists()) {
             try {
                 file.createNewFile();
                 file.delete();
             } catch (Exception e) {
-                System.err.println("Given path is invalid.");
-                System.exit(1);
+                throw new Exception("File not creatable.");
             }
+        }
+        // Create buffered file writer.
+        try {
+            this.writer = Files.newBufferedWriter(Paths.get(path), StandardOpenOption.APPEND);
+        } catch (Exception e) {
+            throw new Exception("Writer could not be created.");
         }
     }
 
@@ -38,29 +47,26 @@ public class FileHandler {
         } else if (rootFile.isFile()) {
             files.add(rootFile);
         } else {
-            System.out.println("File path not correct.");
+            System.err.println("File path not correct.");
             System.exit(1);
         }
         return files;
     }
 
-    protected void writeCSVFile(String[] header, String[] args) {
-        Validate.isTrue(!file.isDirectory(), "Specified path is a directory.");
-
+    protected void writeCSVFile(String[] header, String[] args) throws IOException {
         boolean fileExists = this.file.isFile();
         try (
-                // Writer writer = Files.newBufferedWriter(Paths.get(path), StandardOpenOption.APPEND);
-                Writer writer = new FileWriter(file, fileExists);
-                CSVWriter csvWriter = new CSVWriter(writer,
+                CSVWriter csvWriter = new CSVWriter(this.writer,
                                                     CSVWriter.DEFAULT_SEPARATOR,
                                                     CSVWriter.NO_QUOTE_CHARACTER,
                                                     CSVWriter.DEFAULT_ESCAPE_CHARACTER,
                                                     CSVWriter.DEFAULT_LINE_END); ) {
             if (!fileExists) csvWriter.writeNext(header);
             csvWriter.writeNext(args);
-        } catch (IOException e) {
-            System.err.println("Error during CSV file generation! Aborting ...");
-            System.out.println(e);
         }
+    }
+
+    protected void close() throws IOException {
+        this.writer.close();
     }
 }
