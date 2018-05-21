@@ -17,7 +17,7 @@ import com.opencsv.CSVWriter;
 public class FileHandler {
 
     private File file;
-    private Writer writer;
+    private CSVWriter writer;
 
     public FileHandler(String path) throws Exception {
         this.file = new File(path);
@@ -33,7 +33,17 @@ public class FileHandler {
         }
         // Create buffered file writer.
         try {
-            this.writer = Files.newBufferedWriter(Paths.get(path), StandardOpenOption.APPEND);
+            Writer BufWriter;
+            if (file.exists()) {
+                BufWriter = Files.newBufferedWriter(Paths.get(path), StandardOpenOption.APPEND);
+            } else {
+                BufWriter = Files.newBufferedWriter(Paths.get(path), StandardOpenOption.CREATE);
+            }
+            this.writer = new CSVWriter(BufWriter,
+                                                CSVWriter.DEFAULT_SEPARATOR,
+                                                CSVWriter.NO_QUOTE_CHARACTER,
+                                                CSVWriter.DEFAULT_ESCAPE_CHARACTER,
+                                                CSVWriter.DEFAULT_LINE_END);
         } catch (Exception e) {
             throw new Exception("Writer could not be created.");
         }
@@ -47,24 +57,17 @@ public class FileHandler {
         } else if (rootFile.isFile()) {
             files.add(rootFile);
         } else {
-            System.err.println("File path not correct.");
-            System.exit(1);
+            System.err.println("Specified file is not regular.");
+            System.exit(1); // TODO: Throw exception
         }
         return files;
     }
 
     protected void writeCSVFile(String[] header, String[] args) throws IOException {
         boolean fileExists = this.file.isFile();
-        try (
-                CSVWriter csvWriter = new CSVWriter(this.writer,
-                                                    CSVWriter.DEFAULT_SEPARATOR,
-                                                    CSVWriter.NO_QUOTE_CHARACTER,
-                                                    CSVWriter.DEFAULT_ESCAPE_CHARACTER,
-                                                    CSVWriter.DEFAULT_LINE_END); ) {
-            if (!fileExists) csvWriter.writeNext(header);
-            csvWriter.writeNext(args);
+            if (!fileExists) this.writer.writeNext(header);
+            this.writer.writeNext(args);
         }
-    }
 
     protected void close() throws IOException {
         this.writer.close();

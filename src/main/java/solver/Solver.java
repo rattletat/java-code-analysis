@@ -31,6 +31,7 @@ public class Solver {
             VoidVisitor<?> methodNameVisitor = new MethodNamePrinter();
             methodNameVisitor.visit(cu, null);
         }
+        fileHandler.close();
     }
 
     private static class MethodNamePrinter extends VoidVisitorAdapter<Void> {
