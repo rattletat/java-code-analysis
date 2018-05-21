@@ -20,12 +20,12 @@ public class Solver {
 
     // Do not change
     private static final String SRC_PATH = "src/main/resources/Time/";
-    private static FileHandler fileHandler;
+    private static CSVHandler fileHandler;
 
     public static void main(String[] args) throws Exception {
-        fileHandler = new FileHandler(CSV_PATH);
+        fileHandler = new CSVHandler(CSV_PATH);
 
-        for (File file : FileHandler.getSubfolderClasses(FILE_PATH)) {
+        for (File file : ProjectHandler.getSubfolderClasses(FILE_PATH)) {
             currentFile = file;
             CompilationUnit cu = JavaParser.parse(new FileInputStream(file));
             VoidVisitor<?> methodNameVisitor = new MethodNamePrinter();

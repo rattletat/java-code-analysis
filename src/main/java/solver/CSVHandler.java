@@ -14,12 +14,12 @@ import org.apache.commons.lang3.Validate;
 
 import com.opencsv.CSVWriter;
 
-public class FileHandler {
+public class CSVHandler {
 
     private File file;
     private CSVWriter writer;
 
-    public FileHandler(String path) throws Exception {
+    public CSVHandler(String path) throws Exception {
         this.file = new File(path);
         Validate.isTrue(!file.isDirectory(), "Specified path is a directory.");
         // Check whether path is valid.
@@ -47,20 +47,6 @@ public class FileHandler {
         } catch (Exception e) {
             throw new Exception("Writer could not be created.");
         }
-    }
-
-    protected static List<File> getSubfolderClasses(String path) {
-        File rootFile = new File(path);
-        List<File> files = new LinkedList<File>();
-        if (rootFile.isDirectory()) {
-            files = (List<File>) FileUtils.listFiles(rootFile, new String[] { "java" }, true);
-        } else if (rootFile.isFile()) {
-            files.add(rootFile);
-        } else {
-            System.err.println("Specified file is not regular.");
-            System.exit(1); // TODO: Throw exception
-        }
-        return files;
     }
 
     protected void writeCSVFile(String[] header, String[] args) throws IOException {
