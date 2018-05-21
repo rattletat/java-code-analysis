@@ -62,6 +62,8 @@ public class StaticResult {
 
     public String[] getRecord() {
         String[] record = {
+            "" + this.file,
+            "" + this.signature,
             "" + this.words,
             "" + this.lines,
             "" + this.density,
@@ -79,7 +81,7 @@ public class StaticResult {
     public String[] getHeader() {
         String[] headerRecord = {
             "FilePath",
-            "MethodName",
+            "Signature",
             "Words",
             "Lines",
             "Density",
@@ -107,7 +109,7 @@ public class StaticResult {
         text += "Maximal of repeated words: " + this.repWords + "\n";
         text += "Comment ratio: " + this.commentRatio + "\n";
         text += "Maximum depth: " + this.maxDepth + "\n";
-        text += "Number of blocks: " + this.blocks + "\n";
+        text += "Number of blocks: " + this.blocks;
         return text;
     }
 }
