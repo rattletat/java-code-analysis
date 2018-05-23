@@ -6,10 +6,7 @@ import java.io.Writer;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
-import java.util.LinkedList;
-import java.util.List;
 
-import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.Validate;
 
 import com.opencsv.CSVWriter;
@@ -53,6 +50,7 @@ public class CSVHandler {
         boolean fileExists = this.file.isFile();
             if (!fileExists) this.writer.writeNext(header);
             this.writer.writeNext(args);
+            System.out.println("Writing to: " + this.file.getPath());
         }
 
     protected void close() throws IOException {

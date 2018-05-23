@@ -1,7 +1,6 @@
 package solver;
 
 import java.io.File;
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.function.Predicate;
@@ -36,22 +35,28 @@ public class ProjectHandler {
         return files;
     }
 
-    protected int getProjectVersionsCount() {
+    // protected int getProjectVersionsCount() {
+    //     File rootFile = new File(this.projectPath);
+    //     File[] dirs = rootFile.listFiles(File::isDirectory);
+    //     return dirs.length;
+    // }
+
+    protected File[] getSubfolders() {
         File rootFile = new File(this.projectPath);
         File[] dirs = rootFile.listFiles(File::isDirectory);
-        return dirs.length;
+        return dirs;
     }
 
-    protected File getProjectVersion(int version) {
-        File rootFile = new File(this.projectPath);
-        File[] dirs = rootFile.listFiles(File::isDirectory);
-        Arrays.sort(dirs);
-        Validate.isTrue(0 <= version && version < dirs.length, "Version index out of bounds.");
-        return dirs[version];
-    }
+    // protected File getProjectVersion(int version) {
+    //     File rootFile = new File(this.projectPath);
+    //     File[] dirs = rootFile.listFiles(File::isDirectory);
+    //     Arrays.sort(dirs);
+    //     Validate.isTrue(0 <= version && version < dirs.length, "Version index out of bounds.");
+    //     return dirs[version];
+    // }
 
-    protected String getProjectPath() {
-        return projectPath;
-    }
+    // protected String getProjectPath() {
+    //     return projectPath;
+    // }
 
 }

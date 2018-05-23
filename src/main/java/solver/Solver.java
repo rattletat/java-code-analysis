@@ -14,23 +14,29 @@ import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
 
 public class Solver {
 
-    private static final String FILE_PATH = "src/main/resources/Time/src/main/java/";
-    private static final String CSV_PATH = "results.csv";
+    private static final String RSC_PATH = "src/main/resources";
     private static File currentFile = null;
 
     private static CSVHandler fileHandler;
 
     public static void main(String[] args) throws Exception {
-        fileHandler = new CSVHandler(CSV_PATH);
-
-        for (File file : ProjectHandler.getSubfolderJavaClasses(FILE_PATH)) {
-            currentFile = file;
-            CompilationUnit cu = JavaParser.parse(new FileInputStream(file));
-            VoidVisitor<?> methodNameVisitor = new MethodNamePrinter();
-            methodNameVisitor.visit(cu, null);
+        ProjectHandler resourceRoot = new ProjectHandler(RSC_PATH);
+        for (File project : resourceRoot.getSubfolders()) {
+            ProjectHandler projectHandler = new ProjectHandler(project.getPath());
+            for (File version : projectHandler.getSubfolders()) {
+                String versionPath = version.getPath();
+                fileHandler = new CSVHandler(project.getPath() + "/" + version.getName() + "-Method-results.csv");
+                for (File file : ProjectHandler.getSubfolderJavaClasses(versionPath)) {
+                    currentFile = file;
+                    CompilationUnit cu = JavaParser.parse(new FileInputStream(file));
+                    VoidVisitor<?> methodNameVisitor = new MethodNamePrinter();
+                    methodNameVisitor.visit(cu, null);
+                }
+                fileHandler.close();
+            }
         }
-        fileHandler.close();
     }
+
 
     private static class MethodNamePrinter extends VoidVisitorAdapter<Void> {
 
