@@ -1,6 +1,6 @@
-# java-static-metrics-analysis
+# java-code-analysis
 
-## Metrics:
+## Static Metrics:
 
 - Lines of code
 - Number of words
@@ -12,3 +12,15 @@
 - Percentage of comments (javadoc + inner method comments)
 - Block depth
 - Number of blocks
+
+## Dynamic Metrics:
+
+...
+
+## Test Suite Metrics:
+
+...
+
+## Fault metrics:
+
+...
