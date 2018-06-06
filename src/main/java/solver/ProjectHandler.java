@@ -12,13 +12,6 @@ import org.apache.commons.lang3.Validate;
 
 public class ProjectHandler {
 
-    private File dir;
-
-    public ProjectHandler(File project) {
-        this.dir = project;
-        Validate.isTrue(dir.isDirectory(), "Project path is not a directory");
-    }
-
     public static List<File> getSubfolderJavaClasses(File rootFile) {
         List<File> files = new LinkedList<File>();
         if (rootFile.isDirectory()) {
@@ -29,9 +22,11 @@ public class ProjectHandler {
             System.err.println("Specified file is not regular.");
             System.exit(1); // TODO: Throw exception
         }
-        Predicate<File> notInJavaDir = f -> !f.getPath().contains("/java/");
+        Predicate<File> notJavaInPath = f -> !f.getPath().contains("java");
+        Predicate<File> notSrcPath = f -> !f.getPath().contains("/src/");
         Predicate<File> inTestDir = f -> f.getPath().contains("/test/");
-        files.removeIf(notInJavaDir);
+        files.removeIf(notJavaInPath);
+        files.removeIf(notSrcPath);
         files.removeIf(inTestDir);
         return files;
     }
@@ -56,16 +51,27 @@ public class ProjectHandler {
         }
     }
 
-    // protected File getProjectVersion(int version) {
-    //     File rootFile = new File(this.projectPath);
-    //     File[] dirs = rootFile.listFiles(File::isDirectory);
-    //     Arrays.sort(dirs);
-    //     Validate.isTrue(0 <= version && version < dirs.length, "Version index out of bounds.");
-    //     return dirs[version];
-    // }
+    // SRC: https://stackoverflow.com/questions/9884514
+    // Small modifications
+    public static void cloneFolder(String source, String target, int depth) {
+        if (depth <= 0) return;
+        File targetFile = new File(target);
+        if (!targetFile.exists()) {
+            targetFile.mkdir();
+        }
+        for (File f : new File(source).listFiles()) {
+            if (f.isDirectory()) {
+                String append = "/" + f.getName();
+                System.out.println("Creating '" + target + append + "': "
+                                   + new File(target + append).mkdir());
+                cloneFolder(source + append, target + append, depth - 1);
+            }
+        }
+    }
 
-    // protected String getProjectPath() {
-    //     return projectPath;
-    // }
-
+    public static String getResourcePath(File realVersionProject) {
+        String realVersionPath = realVersionProject.getPath();
+        // 18 chars: src/main/resources
+        return "temp/" + realVersionPath.substring(18, realVersionPath.length());
+    }
 }
