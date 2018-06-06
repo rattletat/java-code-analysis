@@ -230,7 +230,7 @@ java -Xmx4096M -jar $GZOLTAR_JAR \
   -Dinclude_suspiciousness_value=false \
   -Dstatistics_backend=NONE \
   -diagnose >> "$LOG_FILE" 2>&1 \
-  -Dgranularity="METHOD"
+  -Dgranularity=METHOD
 #END=$(date +%s)
 #IN_SECONDS=$(echo "$END - $START" | bc)
 #SECONDS_IN_HUMAN_FORMAT=$(date -d@$IN_SECONDS -u +%H:%M:%S)
