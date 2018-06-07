@@ -18,10 +18,8 @@ import com.github.javaparser.ast.body.CallableDeclaration.Signature;
 import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.ast.visitor.VoidVisitor;
 import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
-
-import solver.CSVHandler;
-import solver.ProjectHandler;
-
+import handler.CSVHandler;
+import handler.ProjectHandler;
 import staticmetrics.metrics.StaticResult;
 
 public class StaticSolver {
@@ -32,62 +30,71 @@ public class StaticSolver {
     // private static CSVHandler csvFileHandler;
 
     public static void startStaticAnalysis(File versionDir) throws Exception {
-        String RSC_PATH = ProjectHandler.getResourcePath(versionDir);
-        csvMethodHandler = new CSVHandler(RSC_PATH + "/" + "Static_Method_Results.csv");
-        CSVHandler csvFileHandler = new CSVHandler(RSC_PATH + "/" + "Static_File_Results.csv");
-        CSVHandler csvProjectHandler = new CSVHandler(RSC_PATH + "/" + "Static_Project_Results.csv");
+        String OUT_PATH = ProjectHandler.getOutputPath(versionDir);
+        List<String> lines = new LinkedList<>();
+
+        csvMethodHandler = new CSVHandler(OUT_PATH + "/" + "Static_Method_Results.csv");
+        CSVHandler csvFileHandler = new CSVHandler(OUT_PATH + "/" + "Static_File_Results.csv");
+        CSVHandler csvProjectHandler = new CSVHandler(OUT_PATH + "/" + "Static_Project_Results.csv");
 
         for (File file : ProjectHandler.getSubfolderJavaClasses(versionDir)) {
             currentFile = file;
             CompilationUnit cu = JavaParser.parse(new FileInputStream(file));
-            VoidVisitor<?> methodNameVisitor = new MethodNamePrinter();
-            methodNameVisitor.visit(cu, null);
+            VoidVisitor<List<String>> methodNameVisitor = new MethodNamePrinter();
+            methodNameVisitor.visit(cu, lines);
         }
+        csvMethodHandler.writeData(lines);
+        csvMethodHandler.close();
 
         // File average
-        csvMethodHandler.close();
         calculateFileAverage(csvMethodHandler, csvFileHandler);
         csvFileHandler.close();
         calculateProjectAverage(csvFileHandler, csvProjectHandler);
         csvProjectHandler.close();
     }
 
-    private static class MethodNamePrinter extends VoidVisitorAdapter<Void> {
+    private static class MethodNamePrinter extends VoidVisitorAdapter<List<String>> {
 
         @Override
-        public void visit(MethodDeclaration md, Void arg) {
-            super.visit(md, arg);
+        public void visit(MethodDeclaration md, List<String> collector) {
+            super.visit(md, collector);
             // System.out.println("==========================================");
             System.out.println("File: " + currentFile);
             System.out.println("Method Name: " + md.getName());
 
             StaticResult result;
             try {
-                result = new StaticResult(md);
+                result = new StaticResult(currentFile, md);
             } catch (MethodHasNoBodyException e) {
                 return;
             }
-            LinkedList<String> header = result.getHeaderRecord();
-            LinkedList<String> values = result.getValueRecord();
+            // LinkedList<String> header = result.getHeaderRecord();
+            // LinkedList<String> values = result.getValueRecord();
+            // String header = result.getHeader();
+            // String values = result.getValues();
 
-            header.addFirst("Signature");
-            header.addFirst("Path");
+            // header.addFirst("Signature");
+            // header.addFirst("Path");
+            // header = "Path,Signature," + header;
 
-            values.addFirst(cleanSignature(md.getSignature()));
-            values.addFirst(currentFile.getPath());
+            // values.addFirst(cleanSignature(md.getSignature()));
+            // values.addFirst(currentFile.getPath());
+            // values = cleanSignature(md.getSignature()) + currentFile.getPath() + values;
 
             // System.out.println("==========================================");
             // System.out.println(md);
             // System.out.println("==========================================");
             // System.out.println(result);
             // System.out.println("==========================================");
+            if(collector.isEmpty()) collector.add(result.getHeader());
+            collector.add(result.getValues());
 
-            try {
-                csvMethodHandler.writeCSVFile(header, values);
-            } catch (IOException e) {
-                e.printStackTrace();
-                System.exit(1);
-            }
+            // try {
+            //     csvMethodHandler.writeCSVFile(header, values);
+            // } catch (IOException e) {
+            //     e.printStackTrace();
+            //     System.exit(1);
+            // }
         }
     }
 
@@ -156,9 +163,5 @@ public class StaticSolver {
         return list;
     }
 
-    private static String cleanSignature(Signature signature) {
-        String result = signature.asString();
-        return result.replaceAll(",", "|").replaceAll(" ", "");
-    }
 
 }

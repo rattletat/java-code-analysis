@@ -1,4 +1,4 @@
-package solver;
+package handler;
 
 import java.io.File;
 import java.io.IOException;
@@ -54,7 +54,7 @@ public class CSVHandler {
         }
     }
 
-    public void writeCSVFile(LinkedList<String> header, LinkedList<String> args) throws IOException {
+    public void writeCSVFile(List<String> header, List<String> args) throws IOException {
         String[] headerArray = header.toArray(new String[header.size()]);
         String[] argsArray = args.toArray(new String[args.size()]);
         if (!this.fileExists) {
@@ -73,6 +73,13 @@ public class CSVHandler {
         LinkedList<String[]> data = new LinkedList<>(csvReader.readAll());
         csvReader.close();
         return data;
+    }
+
+    public void writeData(List<String> lines) throws IOException {
+        for(String line : lines){
+            this.writer.writeNext(line.split(","));
+            this.writer.flush();
+        }
     }
 
     public void close() throws IOException {

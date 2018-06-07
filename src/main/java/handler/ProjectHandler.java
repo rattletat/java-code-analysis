@@ -1,4 +1,4 @@
-package solver;
+package handler;
 
 import java.io.File;
 import java.io.FileFilter;
@@ -69,7 +69,7 @@ public class ProjectHandler {
         }
     }
 
-    public static String getResourcePath(File realVersionProject) {
+    public static String getOutputPath(File realVersionProject) {
         String realVersionPath = realVersionProject.getPath();
         // 18 chars: src/main/resources
         return "temp/" + realVersionPath.substring(18, realVersionPath.length());

@@ -82,7 +82,7 @@ def main(argv):
     verboseprint("[STATUS] Generating output ...")
 
     for i, line in enumerate(spectra_lines):
-        spectra_lines[i] = "Rank: " + str(ranks[i]) + " | " + "Suspiciousness: " + "{:.4f}".format(scores[i]) + " | " + line
+        spectra_lines[i] = line + "," + str(ranks[i]) + ",{:.4f}".format(scores[i])
     np_spectra_lines = np.array(spectra_lines)
     sorted_lines = np_spectra_lines[sorted_rank_indices]
 

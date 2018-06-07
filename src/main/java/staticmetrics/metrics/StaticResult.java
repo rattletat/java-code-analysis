@@ -1,19 +1,22 @@
 package staticmetrics.metrics;
 
+import java.io.File;
 import java.util.Arrays;
-import java.util.LinkedList;
+import java.util.stream.Collectors;
 
 import com.github.javaparser.ast.body.MethodDeclaration;
 
 import staticmetrics.MethodHasNoBodyException;
+// TODO: Refactor to StaticMethodResult, add StaticFileResult, add Method Count, File size, number of constants etc.
+// Fix deprecated with java 8 streams
 
 public class StaticResult {
 
     private StaticMetric[] staticMetrics;
-    private String[] valueRecord;
-    private String[] headerRecord;
+    private String values;
+    private String header;
 
-    public StaticResult(MethodDeclaration md) throws MethodHasNoBodyException {
+    public StaticResult(File file, MethodDeclaration md) throws MethodHasNoBodyException {
         this.staticMetrics = new StaticMetric[] {
             new WordCount(md),
             new LineCount(md),
@@ -27,25 +30,28 @@ public class StaticResult {
             new BlockCount(md)
         };
 
-        System.out.println(this.staticMetrics);
+        this.values = Arrays.stream(this.staticMetrics)
+                      .map(value -> String.valueOf(value.getValue()))
+                      .collect(Collectors.joining(","));
+        this.values = String.join(",", file.getPath(), cleanSignature(md), this.values);
 
-        // Generate ValueRecord
-        this.valueRecord = Arrays.stream(this.staticMetrics).map(
-                               metric -> String.valueOf(metric.getValue())
-                           ).toArray(String[]::new);
-
-        // Generate HeaderRecord
-        this.headerRecord = Arrays.stream(this.staticMetrics).map(
-                                metric -> metric.getTag()
-                            ).toArray(String[]::new);
+        this.header = Arrays.stream(this.staticMetrics)
+                      .map(metric -> metric.getTag())
+                      .collect(Collectors.joining(","));
+        this.header = "File,Method," + this.header;
     }
 
-    public LinkedList<String> getValueRecord() {
-        return new LinkedList<String>(Arrays.asList(this.valueRecord));
+    public String getValues() {
+        return this.values;
+
+    }
+    public String getHeader() {
+        return this.header;
     }
 
-    public LinkedList<String> getHeaderRecord() {
-        return new LinkedList<String>(Arrays.asList(this.headerRecord));
+    private static String cleanSignature(MethodDeclaration md) {
+        String result = md.getSignature().asString();
+        return result.replaceAll(",", "|").replaceAll(" ", "");
     }
 
     public String toString() {
