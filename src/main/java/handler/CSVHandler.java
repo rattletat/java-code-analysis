@@ -23,6 +23,7 @@ public class CSVHandler {
 
     public CSVHandler(String path) throws Exception {
         this.file = new File(path);
+        System.out.println(path);
         Validate.isTrue(!file.isDirectory(), "Specified path is a directory.");
         // Check whether path is valid.
         if (!file.exists()) {
@@ -39,11 +40,11 @@ public class CSVHandler {
         // Create buffered file writer.
         try {
             Writer BufWriter;
-            if (file.exists()) {
-                BufWriter = Files.newBufferedWriter(Paths.get(path), StandardOpenOption.APPEND);
-            } else {
+            // if (file.exists()) {
+                // BufWriter = Files.newBufferedWriter(Paths.get(path), StandardOpenOption.APPEND);
+            // } else {
                 BufWriter = Files.newBufferedWriter(Paths.get(path), StandardOpenOption.CREATE);
-            }
+            // }
             this.writer = new CSVWriter(BufWriter,
                                         CSVWriter.DEFAULT_SEPARATOR,
                                         CSVWriter.NO_QUOTE_CHARACTER,

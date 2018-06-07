@@ -40,14 +40,14 @@ public class ProjectHandler {
         return dirs;
     }
 
-    public static File getProject(File project, int versionID) throws Exception {
+    public static File getProject(File project, int versionID) throws  IllegalArgumentException {
         File[] versions = getSubfolders(project);
         Validate.isTrue(versions.length >= 1, "Project folder has no version subfolder.");
         if (versionID >= 1 && versionID <= versions.length) {
             Arrays.sort(versions);
             return versions[versionID - 1];
         } else {
-            throw new Exception();
+            throw new IllegalArgumentException();
         }
     }
 
@@ -69,9 +69,9 @@ public class ProjectHandler {
         }
     }
 
-    public static String getOutputPath(File realVersionProject) {
+    public static String getOutputPath(File realVersionProject, String topLevelResultDirName) {
         String realVersionPath = realVersionProject.getPath();
         // 18 chars: src/main/resources
-        return "temp/" + realVersionPath.substring(18, realVersionPath.length());
+        return topLevelResultDirName + realVersionPath.substring(18, realVersionPath.length());
     }
 }

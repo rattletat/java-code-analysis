@@ -17,8 +17,7 @@ import handler.ProjectHandler;
 public class MethodLineSolver {
     private static File currentFile;
 
-    public static void createMethodLineDir(File versionDir) throws Exception {
-        String OUT_PATH = ProjectHandler.getOutputPath(versionDir);
+    public static void createMethodLineDir(File versionDir, String OUT_PATH) throws Exception {
         CSVHandler csvMethodHandler = new CSVHandler(OUT_PATH + "/" + "Method_Line_Dir.csv");
         List<String> lines = new LinkedList<>();
         lines.add("File,Method,From,To");

@@ -2,7 +2,7 @@
 # Uses gzoltar for creating the matrix and spectra file and puts it in the corresponding version folder.
 cd "${0%/*}"
 resource_folder=$(realpath ../../resources)
-temp_folder=$(realpath ../../../../temp)
+temp_folder=$(realpath ../../../../results)
 gzoltar_sh=$(realpath ../java/gzoltar/run_gzoltar.sh)
 
 projects=$(find $resource_folder -maxdepth 1 -type d -not -path '*/\.*' | tail -n +2)

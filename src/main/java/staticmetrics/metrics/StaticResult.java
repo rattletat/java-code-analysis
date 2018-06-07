@@ -27,7 +27,8 @@ public class StaticResult {
             new RepeatedWords(md),
             new CommentPercentage(md),
             new MaxDepth(md),
-            new BlockCount(md)
+            new BlockCount(md),
+            new CyclomaticComplexity(md)
         };
 
         this.values = Arrays.stream(this.staticMetrics)

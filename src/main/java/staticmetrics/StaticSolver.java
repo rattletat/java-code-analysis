@@ -14,7 +14,6 @@ import org.apache.commons.lang3.Validate;
 
 import com.github.javaparser.JavaParser;
 import com.github.javaparser.ast.CompilationUnit;
-import com.github.javaparser.ast.body.CallableDeclaration.Signature;
 import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.ast.visitor.VoidVisitor;
 import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
@@ -29,8 +28,7 @@ public class StaticSolver {
     private static CSVHandler csvMethodHandler;
     // private static CSVHandler csvFileHandler;
 
-    public static void startStaticAnalysis(File versionDir) throws Exception {
-        String OUT_PATH = ProjectHandler.getOutputPath(versionDir);
+    public static void startStaticAnalysis(File versionDir, String OUT_PATH) throws Exception {
         List<String> lines = new LinkedList<>();
 
         csvMethodHandler = new CSVHandler(OUT_PATH + "/" + "Static_Method_Results.csv");
@@ -52,7 +50,7 @@ public class StaticSolver {
         calculateProjectAverage(csvFileHandler, csvProjectHandler);
         csvProjectHandler.close();
 
-        MethodLineSolver.createMethodLineDir(versionDir);
+        MethodLineSolver.createMethodLineDir(versionDir, OUT_PATH);
     }
 
     private static class MethodNamePrinter extends VoidVisitorAdapter<List<String>> {
@@ -132,7 +130,7 @@ public class StaticSolver {
         for (String filePath : averages.keySet()) {
             Double[] fileAverage = averages.get(filePath);
             // Copying averages to String array
-            LinkedList<String> strvalueList = doubleToStringArray(fileAverage);
+            LinkedList<String> strvalueList = doubleToStringList(fileAverage);
             strvalueList.addFirst(filePath);
             dst.writeCSVFile(header, strvalueList);
         }
@@ -152,18 +150,16 @@ public class StaticSolver {
             Arrays.setAll(acc, (i) -> acc[i] + (elem[i] * 1.0 / data.size()));
             return acc;
         });
-        LinkedList<String> projectAverage = doubleToStringArray(averages);
+        LinkedList<String> projectAverage = doubleToStringList(averages);
         header.remove(0);
         dst.writeCSVFile(header, projectAverage);
     }
 
-    private static LinkedList<String> doubleToStringArray(Double[] array) {
+    private static LinkedList<String> doubleToStringList(Double[] array) {
         LinkedList<String> list = new LinkedList<>();
         for (int i = 0; i < array.length; i++) {
             list.addLast(String.valueOf(array[i]));
         }
         return list;
     }
-
-
 }
