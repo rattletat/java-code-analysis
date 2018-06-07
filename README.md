@@ -18,8 +18,21 @@
 ...
 
 ## Test Suite Metrics:
-
-...
+- Number of passing tests
+- Number of failing tests
+- Number of tests
+- Percentage of passing tests
+- Percentage of failing tests
+- Number of elements
+- Number of visited elements
+- Number of visits in total
+- Sparisty
+- Coverage
+- Coverage of passing tests
+- Coverage of failing tests
+- Average number of visited elements by passing tests
+- Average number of visited elements by failing tests
+- Percentage of elements visited by passing and failing tests
 
 ## Fault metrics:
 
