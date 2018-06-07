@@ -21,7 +21,7 @@ public class MethodLineSolver {
         String OUT_PATH = ProjectHandler.getOutputPath(versionDir);
         CSVHandler csvMethodHandler = new CSVHandler(OUT_PATH + "/" + "Method_Line_Dir.csv");
         List<String> lines = new LinkedList<>();
-        lines.add("File,Method,Line");
+        lines.add("File,Method,From,To");
 
         for (File file : ProjectHandler.getSubfolderJavaClasses(versionDir)) {
             currentFile = file;

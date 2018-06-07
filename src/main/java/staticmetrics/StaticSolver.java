@@ -51,6 +51,8 @@ public class StaticSolver {
         csvFileHandler.close();
         calculateProjectAverage(csvFileHandler, csvProjectHandler);
         csvProjectHandler.close();
+
+        MethodLineSolver.createMethodLineDir(versionDir);
     }
 
     private static class MethodNamePrinter extends VoidVisitorAdapter<List<String>> {

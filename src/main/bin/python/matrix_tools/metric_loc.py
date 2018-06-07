@@ -37,11 +37,10 @@ def main(argv):
     verboseprint("[STATUS] Loading matrix file ...")
     verboseprint("[STATUS] Matrix file successfully loaded. Analyzing ...")
     data, results = analyze_matrix(matrix)
-    header = ["[TM-" + "{:02d}".format(i) + "] " for i in range(18)]
 
-    m00 = str(num_passing_tests(results))
-    m01 = str(num_failing_tests(results))
-    m02 = str(num_tests(results))
+    m00 = str(num_tests(results))
+    m01 = str(num_passing_tests(results))
+    m02 = str(num_failing_tests(results))
     m03 = str(percentage_passing_tests(results))
     m04 = str(percentage_failing_tests(results))
     m05 = str(num_elements(data))
@@ -55,12 +54,34 @@ def main(argv):
     m13 = str(avg_num_visited_elements(data))
     m14 = str(avg_num_pass_visited_elements(data, results))
     m15 = str(avg_num_fail_visited_elements(data, results))
-    m16 = str(same_visited_methods(data, results))
-    m17 = str(percentage_same_visited_methods(data, results))
+    m16 = str(same_visited_elements(data, results))
+    m17 = str(percentage_same_visited_elements(data, results))
 
-    output =  header[0] + "Number of passing tests: " + m00 + "\n"
-    output += header[1] + "Number of failing tests: " + m01 + "\n"
-    output += header[2] + "Number of tests: " + m02 + "\n"
+    # header = ["[TM-" + "{:02d}".format(i) + "] " for i in range(18)]
+    header = [
+        "T-#T",
+        "T-#PT",
+        "T-#FT",
+        "T-%PT",
+        "T-%FT",
+        "T-#E",
+        "T-#VE",
+        "T_#NVE",
+        "T-#V",
+        "T-Spa",
+        "T-Cov",
+        "T-CovPT",
+        "T-CovFT",
+        "T-AvgVE",
+        "T-AvgVEPT",
+        "T-AvgVEFT",
+        "T-#VEP^FT",
+        "T-%VEP^FT"
+    ]
+
+    output =  header[0] + "Number of tests: " + m00 + "\n"
+    output += header[1] + "Number of passing tests: " + m01 + "\n"
+    output += header[2] + "Number of failing tests: " + m02 + "\n"
     output += header[3] + "Percentage of passing tests: " + m03 + "\n"
     output += header[4] + "Percentage of failing tests: " + m04 + "\n"
     output += header[5] + "Number of elements: " + m05 + "\n"
@@ -74,8 +95,8 @@ def main(argv):
     output += header[13] + "Average number of visited elements: " + m13 + "\n"
     output += header[14] + "Average number of visited elements by passing tests: " + m14 + "\n"
     output += header[15] + "Average number of visited elements by failing tests: " + m15 + "\n"
-    output += header[16] + "Number of methods visited by passing and failing tests: " + m16 + "\n"
-    output += header[17] + "Percentage of methods visited by passing and failing tests: " + m17 + "\n"
+    output += header[16] + "Number of elements visited both by passing and failing tests: " + m16 + "\n"
+    output += header[17] + "Percentage of all visited elements visited both by passing and failing tests: " + m17 + "\n"
 
     verboseprint("[STATUS] Output generated!")
     if dest_path:
@@ -108,7 +129,7 @@ def analyze_matrix(matrix):
             sys.exit()
 
 def verify_input(matrix, dest_path):
-    if(matrix == ''):
+    if(matrix == '' or matrix is None or dest_path == '' or dest_path is None):
         usage()
         sys.exit()
     if not os.path.isfile(matrix):
@@ -117,7 +138,7 @@ def verify_input(matrix, dest_path):
         sys.exit()
     if dest_path and not os.path.exists(dest_path):
         try:
-            with open(dest_path, 'x') as tempfile: 
+            with open(dest_path, 'x') as tempfile:
                 pass
         except OSError:
             verboseprint("[ERROR] Destination path invalid.")
@@ -197,7 +218,7 @@ def avg_num_fail_visited_elements(data, results):
     visits = np.sum(failing_tests, axis=1)
     return np.sum(visits)/ len(failing_tests)
 
-def same_visited_methods(data, results):
+def same_visited_elements(data, results):
     passing_data = get_passing_data(data, results)
     failing_data = get_failing_data(data, results)
     visited_passing = (np.sum(passing_data, axis=0) != 0)
@@ -205,8 +226,8 @@ def same_visited_methods(data, results):
     both_visited = np.logical_and(visited_passing, visited_failing)
     return both_visited.sum()
 
-def percentage_same_visited_methods(data, results):
-    return same_visited_methods(data, results) / len(data)
+def percentage_same_visited_elements(data, results):
+    return same_visited_elements(data, results) / num_visited_elements(data)
 
 def get_passing_data(data, results):
     mask = np.transpose(results == '+')[0]

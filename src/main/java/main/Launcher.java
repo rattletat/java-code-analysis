@@ -1,9 +1,9 @@
 package main;
+import java.io.BufferedReader;
 import java.io.File;
-import handler.ProjectHandler;
+import java.io.InputStreamReader;
 
-import staticmetrics.MethodLineSolver;
-import staticmetrics.StaticSolver;
+import handler.ProjectHandler;
 
 public class Launcher {
     private static final String RSC_PATH = "src/main/resources";
@@ -31,8 +31,7 @@ public class Launcher {
 
                 // Static Analysis
                 try {
-                    StaticSolver.startStaticAnalysis(version);
-                    MethodLineSolver.createMethodLineDir(version);
+                    // StaticSolver.startStaticAnalysis(version);
                 } catch (Exception e) {
                     System.err.println("[ERROR] Static analysis failed!");
                     e.printStackTrace();
@@ -46,11 +45,12 @@ public class Launcher {
                 }
 
                 // Test Suite Analysis
+                // Important: Generate spectra files with the generateSpectraFiles.sh bash script under Java 7 first!
                 try {
-                //     Process p = Runtime
-                //         .getRuntime()
-                //         .exec("python " + TEST_SCRIPT + " -m " + outputPath + "/matrix -w " + outputPath + "/Test_Suite_Results.csv");
-                //     p.waitFor();
+                    Process p = Runtime
+                                .getRuntime()
+                                .exec("python " + TEST_SCRIPT + " -m " + outputPath + "/matrix -w " + outputPath + "/Test_Suite_Results.csv -v");
+                    p.waitFor();
                 } catch (Exception e) {
                     System.err.println("[ERROR] Test suite analysis failed!");
                     e.printStackTrace();
