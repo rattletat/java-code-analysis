@@ -2,6 +2,8 @@ package staticmetrics.metrics;
 
 import java.io.File;
 import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.stream.Collectors;
 
 import com.github.javaparser.ast.body.MethodDeclaration;
@@ -13,8 +15,8 @@ import staticmetrics.MethodHasNoBodyException;
 public class StaticResult {
 
     private StaticMetric[] staticMetrics;
-    private String values;
-    private String header;
+    private List<String> values;
+    private List<String> header;
 
     public StaticResult(File file, MethodDeclaration md) throws MethodHasNoBodyException {
         this.staticMetrics = new StaticMetric[] {
@@ -31,22 +33,30 @@ public class StaticResult {
             new CyclomaticComplexity(md)
         };
 
-        this.values = Arrays.stream(this.staticMetrics)
-                      .map(value -> String.valueOf(value.getValue()))
-                      .collect(Collectors.joining(","));
-        this.values = String.join(",", file.getPath(), cleanSignature(md), this.values);
+        // Construct header record
+        List<String> metricHeader = Arrays.stream(this.staticMetrics)
+                                    .map(metric -> metric.getTag())
+                                    .collect(Collectors.toList());
+        this.header = new LinkedList<>();
+        this.header.add("File");
+        this.header.add("Method");
+        this.header.addAll(metricHeader);
 
-        this.header = Arrays.stream(this.staticMetrics)
-                      .map(metric -> metric.getTag())
-                      .collect(Collectors.joining(","));
-        this.header = "File,Method," + this.header;
+        // Construct value record
+        List<String> metricValues = Arrays.stream(this.staticMetrics)
+                                    .map(value -> String.valueOf(value.getValue()))
+                                    .collect(Collectors.toList());
+        this.values = new LinkedList<>();
+        this.values.add(file.getPath());
+        this.values.add(cleanSignature(md));
+        this.values.addAll(metricValues);
     }
 
-    public String getValues() {
+    public List<String> getValues() {
         return this.values;
 
     }
-    public String getHeader() {
+    public List<String> getHeader() {
         return this.header;
     }
 

@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.ast.expr.MethodCallExpr;
-import com.github.javaparser.symbolsolver.javaparser.Navigator;
 
 import staticmetrics.MethodHasNoBodyException;
 
@@ -18,7 +17,7 @@ public class FunctionCallCount extends StaticMetric {
     }
 
     protected float calculate(MethodDeclaration md) {
-        List<MethodCallExpr> methodCalls = Navigator.findAllNodesOfGivenClass(md, MethodCallExpr.class);
+        List<MethodCallExpr> methodCalls = md.findAll(MethodCallExpr.class);
         return methodCalls.size();
     }
 }

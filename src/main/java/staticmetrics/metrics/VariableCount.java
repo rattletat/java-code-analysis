@@ -1,10 +1,8 @@
 package staticmetrics.metrics;
 
-import java.util.List;
-
+import java.util.List; 
 import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.ast.body.VariableDeclarator;
-import com.github.javaparser.symbolsolver.javaparser.Navigator;
 
 import staticmetrics.MethodHasNoBodyException;
 
@@ -18,7 +16,7 @@ public class VariableCount extends StaticMetric {
     }
 
     protected float calculate(MethodDeclaration md) {
-        List<VariableDeclarator> declarations = Navigator.findAllNodesOfGivenClass(md, VariableDeclarator.class);
+        List<VariableDeclarator> declarations = md.findAll(VariableDeclarator.class);
         return declarations.size();
     }
 }

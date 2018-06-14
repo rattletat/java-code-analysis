@@ -7,6 +7,8 @@ import staticmetrics.MethodHasNoBodyException;
 /**
  * Calculates the density metric of text,
  * which is 'word per line'.
+ * On class level the average is calculated over the method averages, not just all words / all lines.
+ * On project level the average is calculated over the class averages.
  */
 public class Density extends StaticMetric {
 

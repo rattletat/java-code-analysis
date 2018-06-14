@@ -1,5 +1,4 @@
 target/
-temp/
 src/main/resources
 pom.xml.tag
 pom.xml.releaseBackup

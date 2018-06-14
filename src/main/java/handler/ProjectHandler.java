@@ -3,6 +3,7 @@ package handler;
 import java.io.File;
 import java.io.FileFilter;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.function.Predicate;
@@ -44,7 +45,15 @@ public class ProjectHandler {
         File[] versions = getSubfolders(project);
         Validate.isTrue(versions.length >= 1, "Project folder has no version subfolder.");
         if (versionID >= 1 && versionID <= versions.length) {
-            Arrays.sort(versions);
+            // Sort numerically, not alphanumerically
+            Arrays.sort(versions, new Comparator<File>() {
+                @Override
+                public int compare(File o1, File o2) {
+                    int n1 = Integer.parseInt(o1.getName());
+                    int n2 = Integer.parseInt(o2.getName());
+                    return n1 - n2;
+                }
+            });
             return versions[versionID - 1];
         } else {
             throw new IllegalArgumentException();
@@ -60,7 +69,7 @@ public class ProjectHandler {
             targetFile.mkdir();
         }
         for (File f : new File(source).listFiles()) {
-            if (f.isDirectory()) {
+            if (f.isDirectory() && !f.isHidden()) {
                 String append = "/" + f.getName();
                 System.out.println("Creating '" + target + append + "': "
                                    + new File(target + append).mkdir());
@@ -69,7 +78,8 @@ public class ProjectHandler {
         }
     }
 
-    public static String getOutputPath(File realVersionProject, String topLevelResultDirName) {
+    // Converts a maven project path .../resources/[project]/[version] to the equivalent result output directory.
+    public static String getResultDirPath(File realVersionProject, String topLevelResultDirName) {
         String realVersionPath = realVersionProject.getPath();
         // 18 chars: src/main/resources
         return topLevelResultDirName + realVersionPath.substring(18, realVersionPath.length());

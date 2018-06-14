@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.ast.stmt.BlockStmt;
-import com.github.javaparser.symbolsolver.javaparser.Navigator;
 
 import staticmetrics.MethodHasNoBodyException;
 
@@ -18,7 +17,7 @@ public class BlockCount extends StaticMetric {
     }
 
     protected float calculate(MethodDeclaration md) {
-        List<BlockStmt> blocks = Navigator.findAllNodesOfGivenClass(md, BlockStmt.class);
+        List<BlockStmt> blocks = md.findAll(BlockStmt.class);
         return blocks.size();
     }
 }

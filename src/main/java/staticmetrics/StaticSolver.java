@@ -17,50 +17,54 @@ import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.ast.visitor.VoidVisitor;
 import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
+
 import handler.CSVHandler;
 import handler.ProjectHandler;
+
 import staticmetrics.metrics.StaticResult;
 
 public class StaticSolver {
 
     private static File currentFile = null;
 
-    private static CSVHandler csvMethodHandler;
-    // private static CSVHandler csvFileHandler;
+    public static void startStaticAnalysis(
+        File versionDir,
+        CSVHandler csvProjectHandler,
+        CSVHandler csvClassHandler,
+        CSVHandler csvMethodHandler,
+        CSVHandler csvMethodLineHandler
+    ) throws Exception {
 
-    public static void startStaticAnalysis(File versionDir, String OUT_PATH) throws Exception {
-        List<String> lines = new LinkedList<>();
-
-        csvMethodHandler = new CSVHandler(OUT_PATH + "/" + "Static_Method_Results.csv");
-        CSVHandler csvFileHandler = new CSVHandler(OUT_PATH + "/" + "Static_File_Results.csv");
-        CSVHandler csvProjectHandler = new CSVHandler(OUT_PATH + "/" + "Static_Project_Results.csv");
-
+        List<List<String>> lines = new LinkedList<>();
         for (File file : ProjectHandler.getSubfolderJavaClasses(versionDir)) {
             currentFile = file;
             CompilationUnit cu = JavaParser.parse(new FileInputStream(file));
-            VoidVisitor<List<String>> methodNameVisitor = new MethodNamePrinter();
+            VoidVisitor<List<List<String>>> methodNameVisitor = new MethodNamePrinter();
             methodNameVisitor.visit(cu, lines);
         }
-        csvMethodHandler.writeData(lines);
+        List<String> header = lines.remove(0);
+        System.out.println(header);
+        csvMethodHandler.writeLines(header, lines);
         csvMethodHandler.close();
 
         // File average
-        calculateFileAverage(csvMethodHandler, csvFileHandler);
-        csvFileHandler.close();
-        calculateProjectAverage(csvFileHandler, csvProjectHandler);
+        calculateFileAverage(csvMethodHandler, csvClassHandler);
+        csvClassHandler.close();
+        calculateProjectAverage(csvClassHandler, csvProjectHandler);
         csvProjectHandler.close();
-
-        MethodLineSolver.createMethodLineDir(versionDir, OUT_PATH);
+        MethodLineSolver.createMethodLineDir(versionDir, csvMethodLineHandler);
     }
 
-    private static class MethodNamePrinter extends VoidVisitorAdapter<List<String>> {
+    private static class MethodNamePrinter extends VoidVisitorAdapter<List<List<String>>> {
 
         @Override
-        public void visit(MethodDeclaration md, List<String> collector) {
+        public void visit(MethodDeclaration md, List<List<String>> collector) {
             super.visit(md, collector);
-            // System.out.println("==========================================");
-            System.out.println("File: " + currentFile);
-            System.out.println("Method Name: " + md.getName());
+            // System.out.println("File: " + currentFile);
+            // System.out.println("Method Name: " + md.getName());
+            // System.out.println("=============================");
+            // System.out.println(md);
+            // System.out.println("=============================");
 
             StaticResult result;
             try {
@@ -68,39 +72,16 @@ public class StaticSolver {
             } catch (MethodHasNoBodyException e) {
                 return;
             }
-            // LinkedList<String> header = result.getHeaderRecord();
-            // LinkedList<String> values = result.getValueRecord();
-            // String header = result.getHeader();
-            // String values = result.getValues();
-
-            // header.addFirst("Signature");
-            // header.addFirst("Path");
-            // header = "Path,Signature," + header;
-
-            // values.addFirst(cleanSignature(md.getSignature()));
-            // values.addFirst(currentFile.getPath());
-            // values = cleanSignature(md.getSignature()) + currentFile.getPath() + values;
-
-            // System.out.println("==========================================");
-            // System.out.println(md);
-            // System.out.println("==========================================");
             // System.out.println(result);
-            // System.out.println("==========================================");
-            if(collector.isEmpty()) collector.add(result.getHeader());
+            // System.out.println("=============================");
+            if (collector.isEmpty()) collector.add(result.getHeader());
             collector.add(result.getValues());
-
-            // try {
-            //     csvMethodHandler.writeCSVFile(header, values);
-            // } catch (IOException e) {
-            //     e.printStackTrace();
-            //     System.exit(1);
-            // }
         }
     }
 
     private static void calculateFileAverage(CSVHandler src, CSVHandler dst) throws IOException {
-        LinkedList<String[]> data = src.getData();
-        LinkedList<String> header = new LinkedList<>(Arrays.asList(data.pop()));
+        List<String[]> data = src.getData();
+        LinkedList<String> header = new LinkedList<>(Arrays.asList(data.remove(0)));
         header.remove(1);
         Map<String, List<String[]>> groups = data.stream().collect(Collectors.groupingBy(line -> line[0]));
         Map<String, Double[]> averages = groups.entrySet().stream()
@@ -130,35 +111,36 @@ public class StaticSolver {
         for (String filePath : averages.keySet()) {
             Double[] fileAverage = averages.get(filePath);
             // Copying averages to String array
-            LinkedList<String> strvalueList = doubleToStringList(fileAverage);
-            strvalueList.addFirst(filePath);
-            dst.writeCSVFile(header, strvalueList);
+            List<String> values = new LinkedList<>();
+            values.add(filePath);
+            values.addAll(doubleToStringList(fileAverage));
+            dst.writeLine(header, values);
         }
     }
 
     private static void calculateProjectAverage(CSVHandler src, CSVHandler dst) throws IOException {
-        LinkedList<String[]> data = src.getData();
-        LinkedList<String> header = new LinkedList<>(Arrays.asList(data.pop()));
+        List<String[]> data = src.getData();
+        List<String> header = new LinkedList<>(Arrays.asList(data.remove(0))); // remove header from data
+        header.remove(0); // remove 1. column: filepath from header
         Double[] temp = new Double[data.get(0).length - 1];
         Arrays.fill(temp, 0.0);
         Double[] averages = data.stream().map(valueArray ->
                                               Arrays.stream(valueArray)
-                                              .skip(1)
+                                              .skip(1) // Skip 1. column: filepath
                                               .map(Double::parseDouble)
                                               .toArray(Double[]::new))
         .reduce(temp, (acc, elem) -> {
             Arrays.setAll(acc, (i) -> acc[i] + (elem[i] * 1.0 / data.size()));
             return acc;
         });
-        LinkedList<String> projectAverage = doubleToStringList(averages);
-        header.remove(0);
-        dst.writeCSVFile(header, projectAverage);
+        List<String> projectAverage = doubleToStringList(averages);
+        dst.writeLine(header, projectAverage);
     }
 
-    private static LinkedList<String> doubleToStringList(Double[] array) {
+    private static List<String> doubleToStringList(Double[] array) {
         LinkedList<String> list = new LinkedList<>();
         for (int i = 0; i < array.length; i++) {
-            list.addLast(String.valueOf(array[i]));
+            list.add(String.valueOf(array[i]));
         }
         return list;
     }

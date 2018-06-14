@@ -14,7 +14,8 @@ import staticmetrics.MethodHasNoBodyException;
  */
 public class MaxDepth extends StaticMetric {
 
-    MaxDepth(MethodDeclaration md) throws MethodHasNoBodyException { super(md, "S-MaxDepth");
+    MaxDepth(MethodDeclaration md) throws MethodHasNoBodyException {
+        super(md, "S-MaxDepth");
     }
 
     protected float calculate(MethodDeclaration md) {
@@ -24,7 +25,8 @@ public class MaxDepth extends StaticMetric {
         while (!frontier.isEmpty()) {
             List<Node> children = new LinkedList<Node>();
             for (Node node : frontier) {
-                children.addAll(node.getChildNodesByType(BlockStmt.class));
+                children.addAll(node.findAll(BlockStmt.class));
+                children.remove(node);
             }
             frontier.clear();
             if (!children.isEmpty()) {
