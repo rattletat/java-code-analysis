@@ -26,9 +26,15 @@ public class ProjectHandler {
         Predicate<File> notJavaInPath = f -> !f.getPath().contains("java");
         Predicate<File> notSrcPath = f -> !f.getPath().contains("/src/");
         Predicate<File> inTestDir = f -> f.getPath().contains("/test/");
+        // Predicate<File> inResourcesDir = f -> f.getPath().contains("/resources/");
+        Predicate<File> notInOrg = f -> !f.getPath().contains("/org/");
         files.removeIf(notJavaInPath);
         files.removeIf(notSrcPath);
         files.removeIf(inTestDir);
+        files.removeIf(notInOrg);
+        // files.removeIf(inResourcesDir);
+        
+        Validate.isTrue(files.size() >= 1, "No filtered java files found in project: " + rootFile.getName());
         return files;
     }
 

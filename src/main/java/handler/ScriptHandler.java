@@ -7,12 +7,13 @@ import java.io.InputStreamReader;
 
 public class ScriptHandler {
 
-    private String testMetricTool = "src/main/python/matrix_tools/metric_loc.py";
-    private String coverageMetricTool = "src/main/python/matrix_tools/fault_loc.py";
+    private static String testMetricTool = "src/main/tools/python/matrix_tools/metric_loc.py";
+    private static String suspiciousnessTool = "src/main/tools/python/matrix_tools/fault_loc.py";
 
-  protected void runMetricTool(File matrix, File output) throws IOException, InterruptedException {
-        String matrixPath = matrix.getPath();
-        String outputPath = output.getPath();
+    public static void runMetricTool(
+        String matrixPath,
+        String outputPath
+    ) throws IOException, InterruptedException {
         String command = "python " + testMetricTool
                          + " -m " + matrixPath
                          + " -w " + outputPath
@@ -20,19 +21,22 @@ public class ScriptHandler {
         runExternalCommand(command);
     }
 
-  protected void runCoverageTool(File matrix, File spectra, File output) throws IOException, InterruptedException {
-        String matrixPath = matrix.getPath();
-        String spectraPath = spectra.getPath();
-        String outputPath = output.getPath();
-        String command = "python " + coverageMetricTool
+    public static void runSuspiciousnessTool(
+        String matrixPath,
+        String spectraPath,
+        String technique,
+        String outputPath
+    ) throws IOException, InterruptedException {
+        String command = "python " + suspiciousnessTool
                          + " -m " + matrixPath
                          + " -s " + spectraPath
+                         + " -t " + technique
                          + " -w " + outputPath
                          + " --verbose";
         runExternalCommand(command);
     }
 
-    private void runExternalCommand(String command) throws IOException, InterruptedException {
+    private static void runExternalCommand(String command) throws IOException, InterruptedException {
         System.out.println("Calling: " + command);
         Process p = Runtime.getRuntime().exec(command);
         BufferedReader bri = new BufferedReader

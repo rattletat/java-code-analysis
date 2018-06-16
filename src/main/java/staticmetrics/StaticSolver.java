@@ -58,7 +58,7 @@ public class StaticSolver {
     private static class MethodNamePrinter extends VoidVisitorAdapter<List<List<String>>> {
 
         @Override
-        public void visit(MethodDeclaration md, List<List<String>> collector) {
+        public void visit(BodyDeclaration<?> md, List<List<String>> collector) {
             super.visit(md, collector);
             // System.out.println("File: " + currentFile);
             // System.out.println("Method Name: " + md.getName());

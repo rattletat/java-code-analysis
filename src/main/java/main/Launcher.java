@@ -11,17 +11,21 @@ import java.util.stream.Collectors;
 import org.apache.commons.lang3.Validate;
 
 import handler.CSVHandler;
+import handler.LabelSolver;
 import handler.ProjectHandler;
+import handler.ScriptHandler;
 
 import staticmetrics.StaticSolver;
 
 public class Launcher {
     private static final boolean RUN_STATIC_ANALYSIS = false;
+    private static final boolean RUN_SUSPICIOUSNESS_ANALYSIS = false;
     private static final boolean RUN_DYNAMIC_ANALYSIS = false;
     private static final boolean RUN_TEST_SUITE_ANALYSIS = false;
-    private static final boolean COMBINE_VERSION_ANALYSIS = true;
+    private static final boolean COMBINE_VERSION_ANALYSIS = false;
     private static final int MIN_VERSION = 1;
-    private static final int MAX_VERSION = 3;
+    private static final int MAX_VERSION = 106;
+    private static final String SUSPICIOUSNESS_TECHNIQUE = "dstar2";
 
     private static final String RSC_PATH = "src/main/resources";
     private static final String RESULT_PATH = "results";
@@ -33,14 +37,16 @@ public class Launcher {
     private static final String STATIC_CLASS_OUTPUT_FILENAME = "Static_Class_Results.csv";
     private static final String STATIC_METHOD_OUTPUT_FILENAME = "Static_Method_Results.csv";
     private static final String STATIC_METHODLINE_OUTPUT_FILENAME = "Static_MethodLine_Results.csv";
+    private static final String SUSPICIOUSNESS_OUTPUT_FILENAME = "Suspiciousness_Values.csv";
     private static final String DYNAMIC_OUTPUT_FILENAME = "Dynamic_Results.csv";
     private static final String TESTSUITE_OUTPUT_FILENAME = "Test_Suite_Results.csv";
 
-    private static final String TEST_SUITE_ANALYSIS_SCRIPT = "src/main/tools/python/matrix_tools/metric_loc.py";
+    private static final String JSON_BUG_CSV = "src/main/json/defects4j-dissection/defects4j-bugs.json";
 
     public static void main(String[] args) throws Exception {
         // Initialize result folder
         ProjectHandler.cloneFolder(RSC_PATH, RESULT_PATH, 2);
+
         File projectRoot = new File(RSC_PATH);
         List<Map.Entry<SimpleEntry<String, Integer>, CSVHandler>> projectResults = new LinkedList<>();
 
@@ -92,6 +98,32 @@ public class Launcher {
                     }
                 }
 
+                LabelSolver lSolver = new LabelSolver(JSON_BUG_CSV);
+                List<String[]> methods = lSolver.getPatchedMethods(project.getName(), versionNumber, staticMethodLineResult);
+                System.out.println("LABEL SOLVER: " + project.getName() + " " + versionNumber);
+                for(String[] method : methods){
+                    System.out.println("=======");
+                    System.out.println(method[0]);
+                    System.out.println(method[1]);
+                }
+
+                // Suspiciousness Analysis
+                String suspiciousnessResultPath = outputVersionDir + "/" + SUSPICIOUSNESS_OUTPUT_FILENAME;
+                final CSVHandler suspiciousnessResult = new CSVHandler(suspiciousnessResultPath, RUN_SUSPICIOUSNESS_ANALYSIS);
+                if(RUN_SUSPICIOUSNESS_ANALYSIS){
+                    try {
+                        ScriptHandler.runSuspiciousnessTool(
+                            outputVersionDir + "/matrix",
+                            outputVersionDir + "/spectra",
+                            SUSPICIOUSNESS_TECHNIQUE,
+                            suspiciousnessResultPath
+                        );
+                    } catch (Exception e) {
+                        System.err.println("[ERROR] Test suite analysis failed!");
+                        e.printStackTrace();
+                    }
+                }
+
                 // Dynamic Analysis
                 // String dynamicResultPath = outputVersionDir + "/" + DYNAMIC_OUTPUT_FILENAME;
                 // final CSVHandler dynamicResult = new CSVHandler(dynamicResultPath, RUN_DYNAMIC_ANALYSIS);
@@ -109,13 +141,10 @@ public class Launcher {
                 final CSVHandler testSuiteResult = new CSVHandler(testSuiteResultPath, RUN_TEST_SUITE_ANALYSIS);
                 if (RUN_TEST_SUITE_ANALYSIS) {
                     try {
-                        Process p = Runtime
-                                    .getRuntime()
-                                    .exec("python " + TEST_SUITE_ANALYSIS_SCRIPT
-                                          + " -m " + outputVersionDir + "/matrix"
-                                          + " -w " + testSuiteResultPath
-                                          + " -v");
-                        p.waitFor();
+                        ScriptHandler.runMetricTool(
+                            outputVersionDir + "/matrix",
+                            testSuiteResultPath
+                        );
                     } catch (Exception e) {
                         System.err.println("[ERROR] Test suite analysis failed!");
                         e.printStackTrace();

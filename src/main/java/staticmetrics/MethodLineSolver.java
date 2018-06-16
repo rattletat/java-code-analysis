@@ -4,9 +4,13 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 
 import com.github.javaparser.JavaParser;
 import com.github.javaparser.ast.CompilationUnit;
+import com.github.javaparser.ast.body.BodyDeclaration;
+import com.github.javaparser.ast.body.CallableDeclaration.Signature;
+import com.github.javaparser.ast.body.ConstructorDeclaration;
 import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.ast.visitor.VoidVisitor;
 import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
@@ -28,6 +32,7 @@ public class MethodLineSolver {
         for (File file : ProjectHandler.getSubfolderJavaClasses(versionDir)) {
             currentFile = file;
             CompilationUnit cu = JavaParser.parse(new FileInputStream(file));
+            Optional<ConstructorDeclaration> node = cu.findFirst(ConstructorDeclaration.class);
             VoidVisitor<List<List<String>>> methodNameVisitor = new MethodNamePrinter();
             System.out.println(file.getPath());
             methodNameVisitor.visit(cu, lines);
@@ -37,25 +42,61 @@ public class MethodLineSolver {
     }
 
     private static class MethodNamePrinter extends VoidVisitorAdapter<List<List<String>>> {
+        @Override
+        public void visit(ConstructorDeclaration cd, List<List<String>> collector) {
+            super.visit(cd, collector);
+            if (cd.isAbstract() || !cd.getRange().isPresent()) return;
+            String methodBeginning = getBeginningLine(cd);
+            String methodEnding = getEndingLine(cd);
+            String signature = cleanSignature(cd.getSignature());
+
+            List<String> line = new LinkedList<String>(){{
+                add(shortenStringUntilOrg(currentFile.getPath()));
+                add(signature);
+                add(methodBeginning);
+                add(methodEnding);
+            }};
+            collector.add(line);
+        }
 
         @Override
         public void visit(MethodDeclaration md, List<List<String>> collector) {
             super.visit(md, collector);
-            if(md.isAbstract() || !md.getBody().isPresent()) return;
+            if (md.isAbstract() || !md.getBody().isPresent()) return;
 
-            String methodBeginning = String.valueOf(md.getBody().get().getRange().get().begin.line);
-            String methodEnding = String.valueOf(md.getBody().get().getRange().get().end.line);
-            String signature = md.getSignature()
-                               .asString()
-                               .replaceAll(",", "|")
-                               .replaceAll(" ", "");
+            String methodBeginning = getBeginningLine(md);
+            String methodEnding = getEndingLine(md);
+            String signature = cleanSignature(md.getSignature());
 
-            List<String> line = new LinkedList<>();
-            line.add(currentFile.getPath());
-            line.add(signature); 
-            line.add(methodBeginning); 
-            line.add(methodEnding);
+            List<String> line = new LinkedList<String>(){{
+                add(shortenStringUntilOrg(currentFile.getPath()));
+                add(signature);
+                add(methodBeginning);
+                add(methodEnding);
+            }};
             collector.add(line);
         }
     }
+
+    private static String getBeginningLine(BodyDeclaration<?> bd){
+        return String.valueOf(bd.getRange().get().begin.line);
+    }
+
+    private static String getEndingLine(BodyDeclaration<?> bd){
+        return String.valueOf(bd.getRange().get().end.line);
+    }
+
+    private static String cleanSignature(Signature signature) {
+        return signature
+               .asString()
+               .replaceAll(",", "|")
+               .replaceAll(" ", "");
+    }
+
+    // Filter in ProjectHandler guarantees existence of substring org
+    private static String shortenStringUntilOrg(String path) {
+        return path.substring(path.indexOf("org"));
+    }
 }
+
+

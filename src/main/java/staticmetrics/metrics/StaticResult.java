@@ -6,7 +6,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.github.javaparser.ast.body.MethodDeclaration;
+import com.github.javaparser.ast.body.CallableDeclaration;
+import com.github.javaparser.ast.nodeTypes.NodeWithOptionalBlockStmt;
 
 import staticmetrics.MethodHasNoBodyException;
 // TODO: Refactor to StaticMethodResult, add StaticFileResult, add Method Count, File size, number of constants etc.
@@ -18,7 +19,7 @@ public class StaticResult {
     private List<String> values;
     private List<String> header;
 
-    public StaticResult(File file, MethodDeclaration md) throws MethodHasNoBodyException {
+    public <T extends CallableDeclaration<T> & NodeWithOptionalBlockStmt<T>> StaticResult(File file,  T md) throws MethodHasNoBodyException {
         this.staticMetrics = new StaticMetric[] {
             new WordCount(md),
             new LineCount(md),
@@ -46,10 +47,13 @@ public class StaticResult {
         List<String> metricValues = Arrays.stream(this.staticMetrics)
                                     .map(value -> String.valueOf(value.getValue()))
                                     .collect(Collectors.toList());
-        this.values = new LinkedList<>();
-        this.values.add(file.getPath());
-        this.values.add(cleanSignature(md));
-        this.values.addAll(metricValues);
+        this.values = new LinkedList<String>() {
+            {
+                add(file.getPath());
+                add(cleanSignature(cd));
+                addAll(metricValues);
+            }
+        };
     }
 
     public List<String> getValues() {
@@ -60,9 +64,10 @@ public class StaticResult {
         return this.header;
     }
 
-    private static String cleanSignature(MethodDeclaration md) {
-        String result = md.getSignature().asString();
-        return result.replaceAll(",", "|").replaceAll(" ", "");
+    private static String cleanSignature(CallableDeclaration<?> cd) {
+        return cd.getSignature().asString()
+               .replaceAll(",", "|")
+               .replaceAll(" ", "");
     }
 
     public String toString() {

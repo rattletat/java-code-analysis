@@ -12,7 +12,7 @@ import staticmetrics.MethodHasNoBodyException;
  */
 public class LineCount extends StaticMetric {
 
-    LineCount(MethodDeclaration md) throws MethodHasNoBodyException {
+    LineCount(NodeWithOptionalBlockStmt md) throws MethodHasNoBodyException {
         super(md, "S-LineCount");
     }
 
