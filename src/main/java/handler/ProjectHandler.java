@@ -2,6 +2,7 @@ package handler;
 
 import java.io.File;
 import java.io.FileFilter;
+import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.LinkedList;
@@ -12,6 +13,8 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.Validate;
 
 public class ProjectHandler {
+
+    private static String dotfiles = "src/main/dotfiles";
 
     public static List<File> getSubfolderJavaClasses(File rootFile) {
         List<File> files = new LinkedList<File>();
@@ -26,14 +29,19 @@ public class ProjectHandler {
         Predicate<File> notJavaInPath = f -> !f.getPath().contains("java");
         Predicate<File> notSrcPath = f -> !f.getPath().contains("/src/");
         Predicate<File> inTestDir = f -> f.getPath().contains("/test/");
+        Predicate<File> inTargetDir = f -> f.getPath().contains("/target/");
+        // Predicate<File> abstractInName = f -> f.getPath().contains("Abstract")
+                                         // || f.getPath().contains("abstract");
         // Predicate<File> inResourcesDir = f -> f.getPath().contains("/resources/");
         Predicate<File> notInOrg = f -> !f.getPath().contains("/org/");
         files.removeIf(notJavaInPath);
         files.removeIf(notSrcPath);
         files.removeIf(inTestDir);
+        files.removeIf(inTargetDir);
         files.removeIf(notInOrg);
+        // files.removeIf(abstractInName);
         // files.removeIf(inResourcesDir);
-        
+
         Validate.isTrue(files.size() >= 1, "No filtered java files found in project: " + rootFile.getName());
         return files;
     }
@@ -77,8 +85,8 @@ public class ProjectHandler {
         for (File f : new File(source).listFiles()) {
             if (f.isDirectory() && !f.isHidden()) {
                 String append = "/" + f.getName();
-                System.out.println("Creating '" + target + append + "': "
-                                   + new File(target + append).mkdir());
+                // System.out.println("Creating '" + target + append + "': "
+                                   // + new File(target + append).mkdir());
                 cloneFolder(source + append, target + append, depth - 1);
             }
         }
@@ -89,5 +97,11 @@ public class ProjectHandler {
         String realVersionPath = realVersionProject.getPath();
         // 18 chars: src/main/resources
         return topLevelResultDirName + realVersionPath.substring(18, realVersionPath.length());
+    }
+
+    // Returns path to corresponding dotfile
+    public static String getDotFile(String projectName, int versionNumber) {
+        return Paths.get(dotfiles, projectName, String.valueOf(versionNumber) + ".dot")
+            .toString();
     }
 }

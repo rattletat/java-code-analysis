@@ -1,0 +1,14 @@
+digraph enhanced {
+	"ochiai" [style=striped shape=box fillcolor="yellow"];
+	"d4" [style=striped shape=box fillcolor="yellow"];
+	"org.jfree.data.time.TimeSeries#857" [style=striped shape=box fillcolor="red:orange:yellow"];
+	"org.jfree.data.time.junit.TimeSeriesTests#616" [style=striped shape=box fillcolor="green"];
+	"real" [style=striped shape=box fillcolor="red"];
+	"org.jfree.data.time.junit.TimeSeriesTests#616" -> "org.jfree.data.time.TimeSeries#857";
+	"org.jfree.data.time.TimeSeries#140" -> "org.jfree.data.time.TimeSeries#172";
+	"org.jfree.data.time.junit.TimeSeriesTests#616" -> "org.jfree.data.time.TimeSeries#140";
+	"org.jfree.data.time.TimeSeries#172" -> "org.jfree.data.general.Series#102";
+	"org.jfree.data.general.Series#102" -> "org.jfree.data.general.Series#111" [style=bold];
+	"org.jfree.data.time.TimeSeries#857" -> "org.jfree.data.time.TimeSeries#876";
+	"org.jfree.data.time.TimeSeries#857" -> "org.jfree.data.time.TimeSeries#238";
+}

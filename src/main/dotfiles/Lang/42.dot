@@ -1,0 +1,20 @@
+digraph enhanced {
+	"ochiai" [style=striped shape=box fillcolor="yellow"];
+	"d4" [style=striped shape=box fillcolor="yellow"];
+	"org.apache.commons.lang.StringEscapeUtils#498" [style=striped shape=box fillcolor="orange:yellow"];
+	"org.apache.commons.lang.StringEscapeUtils#455" [style=striped shape=box fillcolor="orange:yellow"];
+	"org.apache.commons.lang.Entities#826" [style=striped shape=box fillcolor="red"];
+	"org.apache.commons.lang.StringEscapeUtilsTest#425" [style=striped shape=box fillcolor="green"];
+	"real" [style=striped shape=box fillcolor="red"];
+	"org.apache.commons.lang.Entities#826" -> "org.apache.commons.lang.Entities#766";
+	"org.apache.commons.lang.StringEscapeUtils#455" -> "org.apache.commons.lang.StringEscapeUtils#498" [style=bold];
+	"org.apache.commons.lang.StringEscapeUtils#525" -> "org.apache.commons.lang.StringEscapeUtils#557" [style=bold];
+	"org.apache.commons.lang.Entities$PrimitiveEntityMap#457" -> "org.apache.commons.lang.IntHashMap#237" [style=bold];
+	"org.apache.commons.lang.StringEscapeUtils#498" -> "org.apache.commons.lang.Entities#826";
+	"org.apache.commons.lang.StringEscapeUtilsTest#425" -> "org.apache.commons.lang.StringEscapeUtils#455";
+	"org.apache.commons.lang.Entities#905" -> "org.apache.commons.lang.Entities#928";
+	"org.apache.commons.lang.StringEscapeUtils#557" -> "org.apache.commons.lang.Entities#905";
+	"org.apache.commons.lang.Entities#766" -> "org.apache.commons.lang.Entities$LookupEntityMap#533";
+	"org.apache.commons.lang.StringEscapeUtilsTest#425" -> "org.apache.commons.lang.StringEscapeUtils#525";
+	"org.apache.commons.lang.Entities$LookupEntityMap#533" -> "org.apache.commons.lang.Entities$PrimitiveEntityMap#457";
+}

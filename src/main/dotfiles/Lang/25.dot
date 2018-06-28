@@ -1,0 +1,9 @@
+digraph enhanced {
+	"ochiai" [style=striped shape=box fillcolor="yellow"];
+	"d4" [style=striped shape=box fillcolor="yellow"];
+	"org.apache.commons.lang3.text.translate.EntityArrays#30" [style=striped shape=box fillcolor="orange:yellow"];
+	"missing method" [style=striped shape=box fillcolor="red"];
+	"real" [style=striped shape=box fillcolor="red"];
+	"org.apache.commons.lang3.text.translate.EntityArraysTest#48" [style=striped shape=box fillcolor="green"];
+	"org.apache.commons.lang3.text.translate.EntityArraysTest#48" -> "org.apache.commons.lang3.text.translate.EntityArrays#30";
+}

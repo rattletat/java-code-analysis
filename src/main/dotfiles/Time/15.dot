@@ -1,0 +1,8 @@
+digraph enhanced {
+	"ochiai" [style=striped shape=box fillcolor="yellow"];
+	"d4" [style=striped shape=box fillcolor="yellow"];
+	"org.joda.time.field.FieldUtils#136" [style=striped shape=box fillcolor="red:orange:yellow"];
+	"real" [style=striped shape=box fillcolor="red"];
+	"org.joda.time.field.TestFieldUtils#242" [style=striped shape=box fillcolor="green"];
+	"org.joda.time.field.TestFieldUtils#242" -> "org.joda.time.field.FieldUtils#136";
+}

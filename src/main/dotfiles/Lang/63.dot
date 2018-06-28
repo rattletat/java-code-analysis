@@ -1,0 +1,22 @@
+digraph enhanced {
+	"ochiai" [style=striped shape=box fillcolor="yellow"];
+	"d4" [style=striped shape=box fillcolor="yellow"];
+	"org.apache.commons.lang.time.DurationFormatUtils#265" [style=striped shape=box fillcolor="red"];
+	"org.apache.commons.lang.time.DurationFormatUtils#433" [style=striped shape=box fillcolor="red"];
+	"org.apache.commons.lang.time.DurationFormatUtilsTest#418" [style=striped shape=box fillcolor="green"];
+	"org.apache.commons.lang.time.DurationFormatUtils#247" [style=striped shape=box fillcolor="orange:yellow"];
+	"real" [style=striped shape=box fillcolor="red"];
+	"org.apache.commons.lang.time.DurationFormatUtils#265" -> "org.apache.commons.lang.time.DurationFormatUtils#380";
+	"org.apache.commons.lang.time.DurationFormatUtils#265" -> "org.apache.commons.lang.time.DurationFormatUtils$Token#528";
+	"org.apache.commons.lang.time.DurationFormatUtils#460" -> "org.apache.commons.lang.time.DurationFormatUtils$Token#545" [style=bold];
+	"org.apache.commons.lang.time.DurationFormatUtils#460" -> "org.apache.commons.lang.time.DurationFormatUtils$Token#566";
+	"org.apache.commons.lang.time.DurationFormatUtils#247" -> "org.apache.commons.lang.time.DurationFormatUtils#265";
+	"org.apache.commons.lang.time.DurationFormatUtils#265" -> "org.apache.commons.lang.time.DurationFormatUtils#460";
+	"org.apache.commons.lang.time.DurationFormatUtils#265" -> "org.apache.commons.lang.time.DurationFormatUtils#433" [style=bold];
+	"org.apache.commons.lang.time.DurationFormatUtils#380" -> "org.apache.commons.lang.StringUtils#3865";
+	"org.apache.commons.lang.time.DurationFormatUtils$Token#528" -> "org.apache.commons.lang.time.DurationFormatUtils$Token#584";
+	"org.apache.commons.lang.time.DurationFormatUtils#380" -> "org.apache.commons.lang.time.DurationFormatUtils$Token#584";
+	"org.apache.commons.lang.time.DurationFormatUtils#460" -> "org.apache.commons.lang.time.DurationFormatUtils$Token#584";
+	"org.apache.commons.lang.time.DurationFormatUtilsTest#418" -> "org.apache.commons.lang.time.DurationFormatUtils#247";
+	"org.apache.commons.lang.time.DurationFormatUtils#380" -> "org.apache.commons.lang.time.DurationFormatUtils$Token#575" [style=bold];
+}

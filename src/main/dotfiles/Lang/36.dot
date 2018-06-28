@@ -1,0 +1,32 @@
+digraph enhanced {
+	"org.apache.commons.lang3.math.NumberUtils#606" [style=striped shape=box fillcolor="orange:yellow"];
+	"org.apache.commons.lang3.math.NumberUtils#628" [style=striped shape=box fillcolor="orange:yellow"];
+	"real" [style=striped shape=box fillcolor="red"];
+	"org.apache.commons.lang3.math.NumberUtils#1313" [style=striped shape=box fillcolor="red"];
+	"ochiai" [style=striped shape=box fillcolor="yellow"];
+	"d4" [style=striped shape=box fillcolor="yellow"];
+	"org.apache.commons.lang3.math.NumberUtils#694" [style=striped shape=box fillcolor="orange:yellow"];
+	"org.apache.commons.lang3.math.NumberUtils#661" [style=striped shape=box fillcolor="orange:yellow"];
+	"org.apache.commons.lang3.math.NumberUtilsTest#1003" [style=striped shape=box fillcolor="green"];
+	"org.apache.commons.lang3.math.NumberUtilsTest#178" [style=striped shape=box fillcolor="green"];
+	"org.apache.commons.lang3.math.NumberUtils#449" [style=striped shape=box fillcolor="red:orange:yellow"];
+	"org.apache.commons.lang3.math.NumberUtils#710" [style=striped shape=box fillcolor="orange:yellow"];
+	"org.apache.commons.lang3.math.NumberUtils#644" [style=striped shape=box fillcolor="orange:yellow"];
+	"org.apache.commons.lang3.math.NumberUtils#449" -> "org.apache.commons.lang3.math.NumberUtils#628";
+	"org.apache.commons.lang3.math.NumberUtils#449" -> "org.apache.commons.lang3.math.NumberUtils#606" [style=bold];
+	"org.apache.commons.lang3.math.NumberUtilsTest#1003" -> "org.apache.commons.lang3.math.NumberUtils#1313";
+	"org.apache.commons.lang3.math.NumberUtils#449" -> "org.apache.commons.lang3.StringUtils#229";
+	"org.apache.commons.lang3.math.NumberUtils#710" -> "org.apache.commons.lang3.StringUtils#229";
+	"org.apache.commons.lang3.math.NumberUtils#449" -> "org.apache.commons.lang3.math.NumberUtils#1288";
+	"org.apache.commons.lang3.math.NumberUtils#449" -> "org.apache.commons.lang3.math.NumberUtils#694";
+	"org.apache.commons.lang3.math.NumberUtils#449" -> "org.apache.commons.lang3.math.NumberUtils#661";
+	"org.apache.commons.lang3.math.NumberUtilsTest#1003" -> "org.apache.commons.lang3.math.NumberUtilsTest#1143";
+	"org.apache.commons.lang3.math.NumberUtilsTest#178" -> "org.apache.commons.lang3.SystemUtils#1274";
+	"org.apache.commons.lang3.math.NumberUtilsTest#1143" -> "org.apache.commons.lang3.math.NumberUtils#449";
+	"org.apache.commons.lang3.math.NumberUtilsTest#178" -> "org.apache.commons.lang3.math.NumberUtils#449";
+	"org.apache.commons.lang3.math.NumberUtils#449" -> "org.apache.commons.lang3.math.NumberUtils#678";
+	"org.apache.commons.lang3.math.NumberUtils#449" -> "org.apache.commons.lang3.math.NumberUtils#710";
+	"org.apache.commons.lang3.math.NumberUtils#449" -> "org.apache.commons.lang3.math.NumberUtils#644";
+	"org.apache.commons.lang3.math.NumberUtils#1288" -> "org.apache.commons.lang3.StringUtils#191";
+	"org.apache.commons.lang3.math.NumberUtils#1313" -> "org.apache.commons.lang3.StringUtils#191";
+}

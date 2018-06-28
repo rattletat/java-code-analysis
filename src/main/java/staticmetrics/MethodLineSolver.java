@@ -4,11 +4,10 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Optional;
 
 import com.github.javaparser.JavaParser;
 import com.github.javaparser.ast.CompilationUnit;
-import com.github.javaparser.ast.body.BodyDeclaration;
+import com.github.javaparser.ast.body.CallableDeclaration;
 import com.github.javaparser.ast.body.CallableDeclaration.Signature;
 import com.github.javaparser.ast.body.ConstructorDeclaration;
 import com.github.javaparser.ast.body.MethodDeclaration;
@@ -32,7 +31,6 @@ public class MethodLineSolver {
         for (File file : ProjectHandler.getSubfolderJavaClasses(versionDir)) {
             currentFile = file;
             CompilationUnit cu = JavaParser.parse(new FileInputStream(file));
-            Optional<ConstructorDeclaration> node = cu.findFirst(ConstructorDeclaration.class);
             VoidVisitor<List<List<String>>> methodNameVisitor = new MethodNamePrinter();
             System.out.println(file.getPath());
             methodNameVisitor.visit(cu, lines);
@@ -50,12 +48,14 @@ public class MethodLineSolver {
             String methodEnding = getEndingLine(cd);
             String signature = cleanSignature(cd.getSignature());
 
-            List<String> line = new LinkedList<String>(){{
-                add(shortenStringUntilOrg(currentFile.getPath()));
-                add(signature);
-                add(methodBeginning);
-                add(methodEnding);
-            }};
+            List<String> line = new LinkedList<String>() {
+                {
+                    add(shortenStringUntilOrg(currentFile.getPath()));
+                    add(signature);
+                    add(methodBeginning);
+                    add(methodEnding);
+                }
+            };
             collector.add(line);
         }
 
@@ -68,22 +68,48 @@ public class MethodLineSolver {
             String methodEnding = getEndingLine(md);
             String signature = cleanSignature(md.getSignature());
 
-            List<String> line = new LinkedList<String>(){{
-                add(shortenStringUntilOrg(currentFile.getPath()));
-                add(signature);
-                add(methodBeginning);
-                add(methodEnding);
-            }};
+            List<String> line = new LinkedList<String>() {
+                {
+                    add(shortenStringUntilOrg(currentFile.getPath()));
+                    add(signature);
+                    add(methodBeginning);
+                    add(methodEnding);
+                }
+            };
             collector.add(line);
         }
     }
 
-    private static String getBeginningLine(BodyDeclaration<?> bd){
-        return String.valueOf(bd.getRange().get().begin.line);
+    private static String getBeginningLine(CallableDeclaration<?> cd) {
+        if (cd instanceof MethodDeclaration) {
+            return String.valueOf(((MethodDeclaration) cd)
+                                  .getBody().get()
+                                  .getBegin().get()
+                                  .line);
+        }
+        if (cd instanceof ConstructorDeclaration) {
+            return String.valueOf(((ConstructorDeclaration) cd)
+                                  .getBody()
+                                  .getBegin().get()
+                                  .line);
+        }
+        throw new RuntimeException();
     }
 
-    private static String getEndingLine(BodyDeclaration<?> bd){
-        return String.valueOf(bd.getRange().get().end.line);
+    private static String getEndingLine(CallableDeclaration<?> cd) {
+        if (cd instanceof MethodDeclaration) {
+            return String.valueOf(((MethodDeclaration) cd)
+                                  .getBody().get()
+                                  .getEnd().get()
+                                  .line);
+        }
+        if (cd instanceof ConstructorDeclaration) {
+            return String.valueOf(((ConstructorDeclaration) cd)
+                                  .getBody()
+                                  .getEnd().get()
+                                  .line);
+        }
+        throw new RuntimeException();
     }
 
     private static String cleanSignature(Signature signature) {
@@ -98,5 +124,3 @@ public class MethodLineSolver {
         return path.substring(path.indexOf("org"));
     }
 }
-
-

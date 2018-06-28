@@ -1,0 +1,10 @@
+digraph enhanced {
+	"ochiai" [style=striped shape=box fillcolor="yellow"];
+	"d4" [style=striped shape=box fillcolor="yellow"];
+	"org.apache.commons.lang.WordUtilsTest#368" [style=striped shape=box fillcolor="green"];
+	"real" [style=striped shape=box fillcolor="red"];
+	"org.apache.commons.lang.WordUtils#607" [style=striped shape=box fillcolor="red:orange:yellow"];
+	"org.apache.commons.lang.WordUtils#607" -> "org.apache.commons.lang.StringUtils#851";
+	"org.apache.commons.lang.WordUtils#607" -> "org.apache.commons.lang.StringUtils#5279";
+	"org.apache.commons.lang.WordUtilsTest#368" -> "org.apache.commons.lang.WordUtils#607";
+}

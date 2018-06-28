@@ -1,0 +1,26 @@
+digraph enhanced {
+	"ochiai" [style=striped shape=box fillcolor="yellow"];
+	"d4" [style=striped shape=box fillcolor="yellow"];
+	"org.apache.commons.lang3.math.NumberUtilsTest#187" [style=striped shape=box fillcolor="green"];
+	"org.apache.commons.lang3.math.NumberUtilsTest#1218" [style=striped shape=box fillcolor="orange:yellow"];
+	"org.apache.commons.lang3.math.NumberUtils#714" [style=striped shape=box fillcolor="red"];
+	"real" [style=striped shape=box fillcolor="red"];
+	"org.apache.commons.lang3.math.NumberUtils#446" [style=striped shape=box fillcolor="red"];
+	"org.apache.commons.lang3.SystemUtils#1383" -> "org.apache.commons.lang3.JavaVersion#105";
+	"org.apache.commons.lang3.math.NumberUtils#446" -> "org.apache.commons.lang3.math.NumberUtils#609" [style=bold];
+	"org.apache.commons.lang3.math.NumberUtilsTest#187" -> "org.apache.commons.lang3.math.NumberUtilsTest#1218";
+	"org.apache.commons.lang3.math.NumberUtils#714" -> "org.apache.commons.lang3.StringUtils#235";
+	"org.apache.commons.lang3.math.NumberUtils#446" -> "org.apache.commons.lang3.StringUtils#235";
+	"org.apache.commons.lang3.math.NumberUtils#446" -> "org.apache.commons.lang3.math.NumberUtils#682";
+	"org.apache.commons.lang3.JavaVersion#32" -> "org.apache.commons.lang3.math.NumberUtilsTest#187" [style=dotted];
+	"org.apache.commons.lang3.math.NumberUtils#446" -> "org.apache.commons.lang3.math.NumberUtils#1296";
+	"org.apache.commons.lang3.math.NumberUtils#446" -> "org.apache.commons.lang3.math.NumberUtils#714";
+	"org.apache.commons.lang3.math.NumberUtils#446" -> "org.apache.commons.lang3.math.NumberUtils#647";
+	"org.apache.commons.lang3.math.NumberUtils#1296" -> "org.apache.commons.lang3.StringUtils#195";
+	"org.apache.commons.lang3.math.NumberUtilsTest#187" -> "org.apache.commons.lang3.math.NumberUtils#446";
+	"org.apache.commons.lang3.math.NumberUtilsTest#1218" -> "org.apache.commons.lang3.math.NumberUtils#446";
+	"org.apache.commons.lang3.math.NumberUtils#446" -> "org.apache.commons.lang3.math.NumberUtils#698";
+	"org.apache.commons.lang3.math.NumberUtilsTest#187" -> "org.apache.commons.lang3.SystemUtils#1383";
+	"org.apache.commons.lang3.math.NumberUtils#446" -> "org.apache.commons.lang3.math.NumberUtils#664";
+	"org.apache.commons.lang3.math.NumberUtils#446" -> "org.apache.commons.lang3.math.NumberUtils#631";
+}

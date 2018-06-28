@@ -1,0 +1,8 @@
+digraph enhanced {
+	"d4" [style=striped shape=box fillcolor="yellow"];
+	"org.apache.commons.lang.LocaleUtils#223" [style=striped shape=box fillcolor="red"];
+	"real" [style=striped shape=box fillcolor="red"];
+	"org.apache.commons.lang.LocaleUtilsTest#79" [style=striped shape=box fillcolor="green"];
+	"org.apache.commons.lang.LocaleUtilsTest#79" -> "org.apache.commons.lang.LocaleUtils#223";
+	"org.apache.commons.lang.LocaleUtilsTest#79" -> "org.apache.commons.lang.LocaleUtils#47";
+}

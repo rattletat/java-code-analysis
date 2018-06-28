@@ -3,11 +3,12 @@ package staticmetrics.metrics;
 import java.util.List;
 import java.util.Optional;
 
-import com.github.javaparser.ast.body.MethodDeclaration;
+import com.github.javaparser.ast.body.CallableDeclaration;
 import com.github.javaparser.ast.comments.Comment;
 import com.github.javaparser.ast.comments.JavadocComment;
+import com.github.javaparser.ast.stmt.BlockStmt;
 
-import staticmetrics.MethodHasNoBodyException;
+import exceptions.MethodHasNoBodyException;
 
 /**
  * Calculates the percentage of comments in a given method.
@@ -16,14 +17,15 @@ import staticmetrics.MethodHasNoBodyException;
  */
 public class CommentPercentage extends StaticMetric {
 
-    CommentPercentage(MethodDeclaration md) throws MethodHasNoBodyException {
+    <T extends CallableDeclaration<T>> CommentPercentage(T md) throws MethodHasNoBodyException {
         super(md, "S-ComPer");
     }
 
-    protected float calculate(MethodDeclaration md) {
+    protected <T extends CallableDeclaration<T>> float calculate(T md) {
+        BlockStmt blk = super.getBlock(md);
+        String methodText = blk.toString();
         List<Comment> innerComments = md.getAllContainedComments();
         Optional<JavadocComment> docComments = md.getJavadocComment();
-        String methodText = md.getBody().toString();
         // Extract inner method comments and javadoc comments
         String commentText = innerComments.toString();
         if (docComments.isPresent()) commentText += docComments.get().toString();

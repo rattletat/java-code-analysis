@@ -1,8 +1,8 @@
 package staticmetrics.metrics;
 
-import com.github.javaparser.ast.body.MethodDeclaration;
+import com.github.javaparser.ast.body.CallableDeclaration;
 
-import staticmetrics.MethodHasNoBodyException;
+import exceptions.MethodHasNoBodyException;
 
 /**
  * Calculates the density metric of text,
@@ -12,11 +12,11 @@ import staticmetrics.MethodHasNoBodyException;
  */
 public class Density extends StaticMetric {
 
-    Density(MethodDeclaration md) throws MethodHasNoBodyException {
+    <T extends CallableDeclaration<T>> Density(T md) throws MethodHasNoBodyException {
         super(md, "S-Density");
     }
 
-    protected float calculate(MethodDeclaration md) {
+    protected <T extends CallableDeclaration<T>> float calculate(T md) {
         float lines = 0;
         float words = 0;
         try {

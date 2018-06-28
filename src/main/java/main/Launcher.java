@@ -3,12 +3,15 @@ package main;
 import java.io.File;
 import java.util.AbstractMap;
 import java.util.AbstractMap.SimpleEntry;
+import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.Validate;
+
+import exceptions.PatchNotInMethodException;
 
 import handler.CSVHandler;
 import handler.LabelSolver;
@@ -20,9 +23,10 @@ import staticmetrics.StaticSolver;
 public class Launcher {
     private static final boolean RUN_STATIC_ANALYSIS = false;
     private static final boolean RUN_SUSPICIOUSNESS_ANALYSIS = false;
-    private static final boolean RUN_DYNAMIC_ANALYSIS = false;
+    private static final boolean RUN_LABEL_ANALYSIS = true;
+    private static final boolean RUN_DYNAMIC_ANALYSIS = true;
     private static final boolean RUN_TEST_SUITE_ANALYSIS = false;
-    private static final boolean COMBINE_VERSION_ANALYSIS = false;
+    private static final boolean COMBINE_VERSION_ANALYSIS = true;
     private static final int MIN_VERSION = 1;
     private static final int MAX_VERSION = 106;
     private static final String SUSPICIOUSNESS_TECHNIQUE = "dstar2";
@@ -49,10 +53,15 @@ public class Launcher {
 
         File projectRoot = new File(RSC_PATH);
         List<Map.Entry<SimpleEntry<String, Integer>, CSVHandler>> projectResults = new LinkedList<>();
+        List<String> projectRanks = new LinkedList<>();
+        List<String> projectFaultLocalizable = new LinkedList<>();
+        String overallResultPath = RESULT_PATH + "/" + RESULTS_FILENAME;
+        final CSVHandler overallResult = new CSVHandler(overallResultPath, COMBINE_VERSION_ANALYSIS);
 
         folder:
         for (File project : ProjectHandler.getSubfolders(projectRoot)) {
             int versionNumber = MIN_VERSION;
+            String projectName = project.getName();
             List<Map.Entry<Integer, CSVHandler>> versionResults = new LinkedList<>();
             String outputProjectDir = ProjectHandler.getResultDirPath(project, RESULT_PATH);
             while (versionNumber <= MAX_VERSION) {
@@ -98,19 +107,13 @@ public class Launcher {
                     }
                 }
 
-                LabelSolver lSolver = new LabelSolver(JSON_BUG_CSV);
-                List<String[]> methods = lSolver.getPatchedMethods(project.getName(), versionNumber, staticMethodLineResult);
-                System.out.println("LABEL SOLVER: " + project.getName() + " " + versionNumber);
-                for(String[] method : methods){
-                    System.out.println("=======");
-                    System.out.println(method[0]);
-                    System.out.println(method[1]);
-                }
-
                 // Suspiciousness Analysis
                 String suspiciousnessResultPath = outputVersionDir + "/" + SUSPICIOUSNESS_OUTPUT_FILENAME;
+                // Just for recreating the file
                 final CSVHandler suspiciousnessResult = new CSVHandler(suspiciousnessResultPath, RUN_SUSPICIOUSNESS_ANALYSIS);
-                if(RUN_SUSPICIOUSNESS_ANALYSIS){
+                suspiciousnessResult.close();
+                if (RUN_SUSPICIOUSNESS_ANALYSIS) {
+                    System.out.println("[STATUS] Start suspiciousness analysis.");
                     try {
                         ScriptHandler.runSuspiciousnessTool(
                             outputVersionDir + "/matrix",
@@ -121,18 +124,57 @@ public class Launcher {
                     } catch (Exception e) {
                         System.err.println("[ERROR] Test suite analysis failed!");
                         e.printStackTrace();
+                        System.exit(1);
                     }
+                    System.out.println("[STATUS] Suspiciousness analysis successful!.");
                 }
 
-                // Dynamic Analysis
-                // String dynamicResultPath = outputVersionDir + "/" + DYNAMIC_OUTPUT_FILENAME;
-                // final CSVHandler dynamicResult = new CSVHandler(dynamicResultPath, RUN_DYNAMIC_ANALYSIS);
-                if (RUN_DYNAMIC_ANALYSIS) {
+                // Label analysis
+                LabelSolver lSolver = new LabelSolver(JSON_BUG_CSV);
+                int minimalRank;
+                Collection<String[]> faultyMethods = new LinkedList<>();
+                if (RUN_LABEL_ANALYSIS) {
+                    System.out.println("[STATUS] Start label analysis.");
                     try {
+                        Collection<String[]> patched_methods = lSolver.getPatchedMethods(projectName, versionNumber, staticMethodLineResult);
+                        Collection<String[]> suspicious_methods = suspiciousnessResult.getData();
+                        faultyMethods = lSolver.getFaultyMethods(patched_methods, suspicious_methods);
+                        minimalRank = lSolver.getMinimalRankLabel(faultyMethods);
+                        projectFaultLocalizable.add(String.valueOf(true));
+                    } catch (PatchNotInMethodException e) {
+                        minimalRank = -1;
+                        projectFaultLocalizable.add(String.valueOf(false));
+                    }
+                    projectRanks.add(String.valueOf(minimalRank));
+                    System.out.println("[STATUS] Label analysis successful!.");
+                }
+
+
+
+                // Dynamic Analysis
+                String dynamicResultPath = outputVersionDir + "/" + DYNAMIC_OUTPUT_FILENAME;
+                final CSVHandler dynamicResult = new CSVHandler(dynamicResultPath, RUN_DYNAMIC_ANALYSIS && RUN_LABEL_ANALYSIS);
+                if (RUN_DYNAMIC_ANALYSIS && RUN_LABEL_ANALYSIS) {
+                    System.out.println("[STATUS] Start dynamic analysis.");
+                    try {
+                        String dotFile = ProjectHandler.getDotFile(projectName, versionNumber);
+                        System.out.println("DOTFILE: " + dotFile);
+                        System.out.println("SIZE: " + faultyMethods.size());
+                        String list = faultyMethods.stream()
+                                      .map(array -> array[0] + "#" + array[1])
+                                      .collect(Collectors.joining(","));
+                        System.out.println("List: " + list);
+                        ScriptHandler.runDynamicTool(
+                            dotFile,
+                            list,
+                            dynamicResultPath
+                        );
                     } catch (Exception e) {
                         System.err.println("[ERROR] Dynamic analysis failed!");
                         e.printStackTrace();
+                        System.exit(1);
                     }
+                    System.out.println("[STATUS] Dynamic analysis successful!.");
                 }
 
                 // Test Suite Analysis
@@ -140,6 +182,7 @@ public class Launcher {
                 String testSuiteResultPath = outputVersionDir + "/" + TESTSUITE_OUTPUT_FILENAME;
                 final CSVHandler testSuiteResult = new CSVHandler(testSuiteResultPath, RUN_TEST_SUITE_ANALYSIS);
                 if (RUN_TEST_SUITE_ANALYSIS) {
+                    System.out.println("[STATUS] Start test suite analysis.");
                     try {
                         ScriptHandler.runMetricTool(
                             outputVersionDir + "/matrix",
@@ -149,6 +192,7 @@ public class Launcher {
                         System.err.println("[ERROR] Test suite analysis failed!");
                         e.printStackTrace();
                     }
+                    System.out.println("[STATUS] Test suite analysis successful!.");
                 }
 
                 // Add combined result to List of version results
@@ -156,26 +200,30 @@ public class Launcher {
                 final CSVHandler combinedResult = new CSVHandler(combinedResultsPath, COMBINE_VERSION_ANALYSIS);
                 versionResults.add(new AbstractMap.SimpleEntry<Integer, CSVHandler>(versionNumber, combinedResult));
                 if (COMBINE_VERSION_ANALYSIS) {
+                    System.out.println("[STATUS] Start combining versions.");
                     List<CSVHandler> csvFiles = new LinkedList<>();
                     csvFiles.add(staticProjectResult);
-                    // csvFiles.add(dynamicResult);
+                    csvFiles.add(dynamicResult);
                     csvFiles.add(testSuiteResult);
                     combinedResult.combineCSVFiles(csvFiles);
+                    combinedResult.close();
+                    System.out.println("[STATUS] Combining versions successful!");
                 }
 
                 versionNumber++;
+                System.gc();
             }
 
             // Stack project results
             String overallProjectResultPath = outputProjectDir + "/" + PROJECT_RESULTS_FILENAME;
             final CSVHandler overallProjectResult = new CSVHandler(overallProjectResultPath, COMBINE_VERSION_ANALYSIS);
             int versionCount = versionResults.size();
-            String projectName = project.getName();
             projectResults.add(new SimpleEntry<SimpleEntry<String, Integer>, CSVHandler>(
                                    new SimpleEntry<String, Integer>(projectName, versionCount),
                                    overallProjectResult
                                ));
             if (COMBINE_VERSION_ANALYSIS) {
+                System.out.println("[STATUS] Start stacking project results.");
                 List<CSVHandler> versionCSVFiles = versionResults.stream()
                                                    .map(entry -> entry.getValue())
                                                    .collect(Collectors.toList());
@@ -183,35 +231,32 @@ public class Launcher {
                                               .map(entry -> String.valueOf(entry.getKey()))
                                               .collect(Collectors.toList());
                 overallProjectResult.stackCSVFiles(versionCSVFiles);
+                overallProjectResult.appendRight("RankDistance", projectRanks);
+                overallProjectResult.appendRight("FaultLocalizable", projectFaultLocalizable);
                 overallProjectResult.appendLeft("Version", versionNumbers);
-
-
-                // List<String> versionNumbers = versionResults.stream().
-            }
-        }
-
-        final CSVHandler overallResult = new CSVHandler(RESULT_PATH + "/" + RESULTS_FILENAME, COMBINE_VERSION_ANALYSIS);
-        // Stack projects
-        if (COMBINE_VERSION_ANALYSIS) {
-            List<CSVHandler> projectCSVFiles = projectResults.stream()
-                                               .map(entry -> entry.getValue())
-                                               .collect(Collectors.toList());
-            List<String> projectNames = projectResults.stream()
-                                        .map(entry -> String.valueOf(entry.getKey().getKey()))
-                                        .collect(Collectors.toList());
-            List<Integer> projectCount = projectResults.stream()
-                                         .map(entry -> entry.getKey().getValue())
-                                         .collect(Collectors.toList());
-            overallResult.stackCSVFiles(projectCSVFiles);
-            List<String> projectColumn = new LinkedList<>();
-            Validate.isTrue(projectNames.size() == projectCount.size(), "Project name list size unequal to project count list size!");
-            for (Integer i : projectCount) {
-                String projectName = projectNames.remove(0);
-                for (int j = 0; j < i; j++) {
-                    projectColumn.add(projectName);
+                overallProjectResult.close();
+                System.out.println("[STATUS] Stacking project results successful!.");
+                List<CSVHandler> projectCSVFiles = projectResults.stream()
+                                                   .map(entry -> entry.getValue())
+                                                   .collect(Collectors.toList());
+                List<String> projectNames = projectResults.stream()
+                                            .map(entry -> String.valueOf(entry.getKey().getKey()))
+                                            .collect(Collectors.toList());
+                List<Integer> projectCount = projectResults.stream()
+                                             .map(entry -> entry.getKey().getValue())
+                                             .collect(Collectors.toList());
+                overallResult.stackCSVFiles(projectCSVFiles);
+                List<String> projectColumn = new LinkedList<>();
+                Validate.isTrue(projectNames.size() == projectCount.size(), "Project name list size unequal to project count list size!");
+                for (Integer i : projectCount) {
+                    String projectNameTEMP = projectNames.remove(0);
+                    for (int j = 0; j < i; j++) {
+                        projectColumn.add(projectNameTEMP);
+                    }
                 }
+                overallResult.appendLeft("Project", projectColumn);
+                overallResult.close();
             }
-            overallResult.appendLeft("Project", projectColumn);
         }
     }
 }

@@ -1,0 +1,20 @@
+digraph enhanced {
+	"ochiai" [style=striped shape=box fillcolor="yellow"];
+	"d4" [style=striped shape=box fillcolor="yellow"];
+	"org.apache.commons.lang3.StringUtilsTest$1#74" [style=striped shape=box fillcolor="orange:yellow"];
+	"org.apache.commons.lang3.StringUtils#3369" [style=striped shape=box fillcolor="red"];
+	"org.apache.commons.lang3.StringUtils#3290" [style=striped shape=box fillcolor="red"];
+	"org.apache.commons.lang3.StringUtilsTest#201" [style=striped shape=box fillcolor="green"];
+	"real" [style=striped shape=box fillcolor="red"];
+	"org.apache.commons.lang3.StringUtilsTest#186" [style=striped shape=box fillcolor="green"];
+	"org.apache.commons.lang3.StringUtilsTest#201" -> "org.apache.commons.lang3.StringUtils#3256";
+	"org.apache.commons.lang3.StringUtils#3230" -> "org.apache.commons.lang3.StringUtils#3335";
+	"org.apache.commons.lang3.StringUtils#3369" -> "org.apache.commons.lang3.StringUtilsTest$1#74";
+	"org.apache.commons.lang3.StringUtils#3290" -> "org.apache.commons.lang3.StringUtilsTest$1#74";
+	"org.apache.commons.lang3.StringUtils#3335" -> "org.apache.commons.lang3.StringUtils#3369" [style=bold];
+	"org.apache.commons.lang3.StringUtils#3256" -> "org.apache.commons.lang3.StringUtils#3290";
+	"org.apache.commons.lang3.StringUtilsTest#201" -> "org.apache.commons.lang3.StringUtils#3290";
+	"org.apache.commons.lang3.StringUtilsTest#44" -> "org.apache.commons.lang3.StringUtilsTest#201" [style=dotted];
+	"org.apache.commons.lang3.StringUtilsTest#44" -> "org.apache.commons.lang3.StringUtilsTest#186" [style=dotted];
+	"org.apache.commons.lang3.StringUtilsTest#186" -> "org.apache.commons.lang3.StringUtils#3230";
+}

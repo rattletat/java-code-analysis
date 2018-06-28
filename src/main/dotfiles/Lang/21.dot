@@ -1,0 +1,8 @@
+digraph enhanced {
+	"ochiai" [style=striped shape=box fillcolor="yellow"];
+	"d4" [style=striped shape=box fillcolor="yellow"];
+	"real" [style=striped shape=box fillcolor="red"];
+	"org.apache.commons.lang3.time.DateUtilsTest#223" [style=striped shape=box fillcolor="green"];
+	"org.apache.commons.lang3.time.DateUtils#259" [style=striped shape=box fillcolor="red:orange:yellow"];
+	"org.apache.commons.lang3.time.DateUtilsTest#223" -> "org.apache.commons.lang3.time.DateUtils#259";
+}

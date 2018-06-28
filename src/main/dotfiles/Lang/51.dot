@@ -1,0 +1,8 @@
+digraph enhanced {
+	"ochiai" [style=striped shape=box fillcolor="yellow"];
+	"d4" [style=striped shape=box fillcolor="yellow"];
+	"org.apache.commons.lang.BooleanUtils#656" [style=striped shape=box fillcolor="red:orange:yellow"];
+	"real" [style=striped shape=box fillcolor="red"];
+	"org.apache.commons.lang.BooleanUtilsTest#296" [style=striped shape=box fillcolor="green"];
+	"org.apache.commons.lang.BooleanUtilsTest#296" -> "org.apache.commons.lang.BooleanUtils#656";
+}

@@ -1,4 +1,4 @@
-package staticmetrics;
+package exceptions;
 
 public class MethodHasNoBodyException extends Exception {
     // Parameterless Constructor

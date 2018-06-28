@@ -1,0 +1,35 @@
+digraph enhanced {
+	"ochiai" [style=striped shape=box fillcolor="yellow"];
+	"d4" [style=striped shape=box fillcolor="yellow"];
+	"com.google.javascript.jscomp.LightweightMessageFormatterTest$1#112" [style=striped shape=box fillcolor="orange:yellow"];
+	"com.google.javascript.jscomp.LightweightMessageFormatter#68" [style=striped shape=box fillcolor="red"];
+	"com.google.javascript.jscomp.LightweightMessageFormatterTest#110" [style=striped shape=box fillcolor="orange:yellow"];
+	"com.google.javascript.jscomp.LightweightMessageFormatterTest$1#110" [style=striped shape=box fillcolor="orange:yellow"];
+	"com.google.javascript.jscomp.LightweightMessageFormatterTest#97" [style=striped shape=box fillcolor="green"];
+	"com.google.javascript.jscomp.LightweightMessageFormatterTest#106" [style=striped shape=box fillcolor="orange:yellow"];
+	"real" [style=striped shape=box fillcolor="red"];
+	"com.google.javascript.jscomp.LightweightMessageFormatterTest#88" [style=striped shape=box fillcolor="green"];
+	"com.google.javascript.jscomp.LightweightMessageFormatter#59" -> "com.google.javascript.jscomp.LightweightMessageFormatter#68";
+	"com.google.javascript.jscomp.LightweightMessageFormatter#68" -> "com.google.javascript.jscomp.AbstractMessageFormatter#44" [style=bold];
+	"com.google.javascript.jscomp.LightweightMessageFormatterTest#97" -> "com.google.javascript.jscomp.LightweightMessageFormatter#59";
+	"com.google.javascript.jscomp.LightweightMessageFormatterTest#88" -> "com.google.javascript.jscomp.LightweightMessageFormatter#59";
+	"com.google.javascript.jscomp.LightweightMessageFormatter#49" -> "com.google.javascript.jscomp.AbstractMessageFormatter#32";
+	"com.google.javascript.jscomp.LightweightMessageFormatter#44" -> "com.google.javascript.jscomp.LightweightMessageFormatter#49" [style=bold];
+	"com.google.javascript.jscomp.LightweightMessageFormatterTest#97" -> "com.google.javascript.jscomp.JSError#85";
+	"com.google.javascript.jscomp.LightweightMessageFormatterTest#88" -> "com.google.javascript.jscomp.JSError#85";
+	"com.google.javascript.jscomp.LightweightMessageFormatter#68" -> "com.google.javascript.jscomp.JSError#200";
+	"com.google.javascript.jscomp.SourceExcerptProvider$SourceExcerpt$1#36" -> "com.google.javascript.jscomp.LightweightMessageFormatter$LineNumberingFormatter#122" [style=bold];
+	"com.google.javascript.jscomp.SourceExcerptProvider$SourceExcerpt$1#36" -> "com.google.javascript.jscomp.LightweightMessageFormatterTest$1#112";
+	"com.google.javascript.jscomp.LightweightMessageFormatterTest#106" -> "com.google.javascript.jscomp.LightweightMessageFormatterTest#110" [style=bold];
+	"com.google.javascript.jscomp.LightweightMessageFormatterTest#110" -> "com.google.javascript.jscomp.LightweightMessageFormatterTest$1#110" [style=bold];
+	"com.google.javascript.jscomp.JSError#85" -> "com.google.javascript.jscomp.JSError#141";
+	"com.google.javascript.jscomp.LightweightMessageFormatter#49" -> "com.google.common.base.Preconditions#186";
+	"com.google.javascript.jscomp.LightweightMessageFormatter#68" -> "com.google.javascript.jscomp.SourceExcerptProvider$SourceExcerpt$1#36" [style=bold];
+	"com.google.javascript.jscomp.AbstractMessageFormatter#74" -> "com.google.javascript.jscomp.AbstractMessageFormatter#82" [style=bold];
+	"com.google.javascript.jscomp.LightweightMessageFormatterTest#25" -> "com.google.javascript.jscomp.LightweightMessageFormatterTest#97" [style=bold];
+	"com.google.javascript.jscomp.LightweightMessageFormatterTest#97" -> "com.google.javascript.jscomp.LightweightMessageFormatterTest#106";
+	"com.google.javascript.jscomp.LightweightMessageFormatterTest#88" -> "com.google.javascript.jscomp.LightweightMessageFormatterTest#106";
+	"com.google.javascript.jscomp.LightweightMessageFormatter#68" -> "com.google.javascript.jscomp.AbstractMessageFormatter#74" [style=bold];
+	"com.google.javascript.jscomp.LightweightMessageFormatterTest#25" -> "com.google.javascript.jscomp.LightweightMessageFormatterTest#88" [style=bold];
+	"com.google.javascript.jscomp.LightweightMessageFormatterTest#106" -> "com.google.javascript.jscomp.LightweightMessageFormatter#44";
+}

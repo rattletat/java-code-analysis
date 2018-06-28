@@ -1,0 +1,14 @@
+digraph enhanced {
+	"ochiai" [style=striped shape=box fillcolor="yellow"];
+	"d4" [style=striped shape=box fillcolor="yellow"];
+	"com.google.javascript.jscomp.ProcessCommonJSModules#54" [style=striped shape=box fillcolor="orange:yellow"];
+	"com.google.javascript.jscomp.ProcessCommonJSModules#120" [style=striped shape=box fillcolor="red"];
+	"com.google.javascript.jscomp.ProcessCommonJSModules$ProcessCommonJsModulesCallback#180" [style=striped shape=box fillcolor="red"];
+	"real" [style=striped shape=box fillcolor="red"];
+	"com.google.javascript.jscomp.ProcessCommonJSModulesTest#129" [style=striped shape=box fillcolor="green"];
+	"com.google.javascript.jscomp.ProcessCommonJSModulesTest#129" -> "com.google.javascript.jscomp.ProcessCommonJSModules#54";
+	"com.google.javascript.jscomp.ProcessCommonJSModules#72" -> "com.google.javascript.jscomp.ProcessCommonJSModules#89";
+	"com.google.javascript.jscomp.ProcessCommonJSModules#54" -> "com.google.javascript.jscomp.ProcessCommonJSModules#58";
+	"com.google.javascript.jscomp.ProcessCommonJSModules#72" -> "com.google.javascript.jscomp.ProcessCommonJSModules#120" [style=bold];
+	"com.google.javascript.jscomp.ProcessCommonJSModulesTest#129" -> "com.google.javascript.jscomp.ProcessCommonJSModules#72";
+}

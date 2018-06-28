@@ -1,0 +1,10 @@
+digraph enhanced {
+	"ochiai" [style=striped shape=box fillcolor="yellow"];
+	"d4" [style=striped shape=box fillcolor="yellow"];
+	"org.apache.commons.lang3.LocaleUtils#89" [style=striped shape=box fillcolor="red"];
+	"org.apache.commons.lang3.LocaleUtilsTest#505" [style=striped shape=box fillcolor="green"];
+	"org.apache.commons.lang3.LocaleUtilsTest#119" [style=striped shape=box fillcolor="orange:yellow"];
+	"real" [style=striped shape=box fillcolor="red"];
+	"org.apache.commons.lang3.LocaleUtilsTest#119" -> "org.apache.commons.lang3.LocaleUtils#89";
+	"org.apache.commons.lang3.LocaleUtilsTest#505" -> "org.apache.commons.lang3.LocaleUtilsTest#119";
+}

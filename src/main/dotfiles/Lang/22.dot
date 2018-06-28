@@ -1,0 +1,30 @@
+digraph enhanced {
+	"ochiai" [style=striped shape=box fillcolor="yellow"];
+	"d4" [style=striped shape=box fillcolor="yellow"];
+	"org.apache.commons.lang3.math.FractionTest#611" [style=striped shape=box fillcolor="green"];
+	"real" [style=striped shape=box fillcolor="red"];
+	"org.apache.commons.lang3.math.Fraction#475" [style=striped shape=box fillcolor="orange"];
+	"org.apache.commons.lang3.math.FractionTest#251" [style=striped shape=box fillcolor="green"];
+	"org.apache.commons.lang3.math.Fraction#584" [style=striped shape=box fillcolor="red:yellow"];
+	"org.apache.commons.lang3.math.Fraction#129" -> "org.apache.commons.lang3.math.Fraction#373" [style=dotted];
+	"org.apache.commons.lang3.math.FractionTest#611" -> "org.apache.commons.lang3.math.Fraction#373";
+	"org.apache.commons.lang3.math.Fraction#844" -> "org.apache.commons.lang3.math.Fraction#373";
+	"org.apache.commons.lang3.math.FractionTest#251" -> "org.apache.commons.lang3.math.Fraction#373";
+	"org.apache.commons.lang3.math.Fraction#129" -> "org.apache.commons.lang3.math.Fraction#382" [style=dotted];
+	"org.apache.commons.lang3.math.FractionTest#611" -> "org.apache.commons.lang3.math.Fraction#382";
+	"org.apache.commons.lang3.math.Fraction#844" -> "org.apache.commons.lang3.math.Fraction#382";
+	"org.apache.commons.lang3.math.FractionTest#251" -> "org.apache.commons.lang3.math.Fraction#382";
+	"org.apache.commons.lang3.math.Fraction#52" -> "org.apache.commons.lang3.math.FractionTest#611" [style=dotted];
+	"org.apache.commons.lang3.math.Fraction#475" -> "org.apache.commons.lang3.math.Fraction#844";
+	"org.apache.commons.lang3.math.Fraction#215" -> "org.apache.commons.lang3.math.Fraction#129";
+	"org.apache.commons.lang3.math.Fraction#147" -> "org.apache.commons.lang3.math.Fraction#129";
+	"org.apache.commons.lang3.math.Fraction#52" -> "org.apache.commons.lang3.math.Fraction#215" [style=dotted];
+	"org.apache.commons.lang3.math.FractionTest#251" -> "org.apache.commons.lang3.math.Fraction#215";
+	"org.apache.commons.lang3.math.FractionTest#611" -> "org.apache.commons.lang3.math.Fraction#147";
+	"org.apache.commons.lang3.math.Fraction#475" -> "org.apache.commons.lang3.math.Fraction#147";
+	"org.apache.commons.lang3.math.FractionTest#611" -> "org.apache.commons.lang3.math.Fraction#475";
+	"org.apache.commons.lang3.math.Fraction#129" -> "org.apache.commons.lang3.math.Fraction#475" [style=dotted];
+	"org.apache.commons.lang3.math.Fraction#52" -> "org.apache.commons.lang3.math.Fraction#475" [style=dotted];
+	"org.apache.commons.lang3.math.Fraction#215" -> "org.apache.commons.lang3.math.Fraction#584";
+	"org.apache.commons.lang3.math.Fraction#475" -> "org.apache.commons.lang3.math.Fraction#584";
+}

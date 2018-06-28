@@ -1,0 +1,15 @@
+digraph enhanced {
+	"ochiai" [style=striped shape=box fillcolor="yellow"];
+	"d4" [style=striped shape=box fillcolor="yellow"];
+	"org.jfree.data.time.junit.WeekTests#505" [style=striped shape=box fillcolor="green"];
+	"org.jfree.data.time.Week#175" [style=striped shape=box fillcolor="red:orange:yellow"];
+	"org.jfree.data.time.Week#188" [style=striped shape=box fillcolor="orange:yellow"];
+	"real" [style=striped shape=box fillcolor="red"];
+	"org.jfree.data.time.Week#288" -> "org.jfree.data.time.Week#405" [style=bold];
+	"org.jfree.data.time.Week#288" -> "org.jfree.data.time.Week#380" [style=bold];
+	"org.jfree.data.time.junit.WeekTests#505" -> "org.jfree.data.time.Week#175";
+	"org.jfree.data.time.Week#175" -> "org.jfree.data.time.Week#188" [style=bold];
+	"org.jfree.data.time.Week#188" -> "org.jfree.data.time.Week#288";
+	"org.jfree.data.time.Week#188" -> "org.jfree.data.time.RegularTimePeriod#70";
+	"org.jfree.data.time.junit.WeekTests#505" -> "org.jfree.data.time.Week#248";
+}

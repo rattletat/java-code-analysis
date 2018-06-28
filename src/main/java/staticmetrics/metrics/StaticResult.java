@@ -7,20 +7,16 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import com.github.javaparser.ast.body.CallableDeclaration;
-import com.github.javaparser.ast.nodeTypes.NodeWithOptionalBlockStmt;
 
-import staticmetrics.MethodHasNoBodyException;
-// TODO: Refactor to StaticMethodResult, add StaticFileResult, add Method Count, File size, number of constants etc.
-// Fix deprecated with java 8 streams
+import exceptions.MethodHasNoBodyException;
 
 public class StaticResult {
 
-    private StaticMetric[] staticMetrics;
     private List<String> values;
     private List<String> header;
 
-    public <T extends CallableDeclaration<T> & NodeWithOptionalBlockStmt<T>> StaticResult(File file,  T md) throws MethodHasNoBodyException {
-        this.staticMetrics = new StaticMetric[] {
+    public <T extends CallableDeclaration<T>> StaticResult(File file,  T md) throws MethodHasNoBodyException {
+        StaticMetric[] staticMetrics = new StaticMetric[] {
             new WordCount(md),
             new LineCount(md),
             new Density(md),
@@ -35,22 +31,25 @@ public class StaticResult {
         };
 
         // Construct header record
-        List<String> metricHeader = Arrays.stream(this.staticMetrics)
+        List<String> metricHeader = Arrays.stream(staticMetrics)
                                     .map(metric -> metric.getTag())
                                     .collect(Collectors.toList());
-        this.header = new LinkedList<>();
-        this.header.add("File");
-        this.header.add("Method");
-        this.header.addAll(metricHeader);
+        this.header = new LinkedList<String>() {
+            {
+                add("File");
+                add("Method");
+                addAll(metricHeader);
+            }
+        };
 
         // Construct value record
-        List<String> metricValues = Arrays.stream(this.staticMetrics)
+        List<String> metricValues = Arrays.stream(staticMetrics)
                                     .map(value -> String.valueOf(value.getValue()))
                                     .collect(Collectors.toList());
         this.values = new LinkedList<String>() {
             {
                 add(file.getPath());
-                add(cleanSignature(cd));
+                add(cleanSignature(md));
                 addAll(metricValues);
             }
         };
@@ -71,8 +70,10 @@ public class StaticResult {
     }
 
     public String toString() {
-        return Arrays.stream(this.staticMetrics).map(
-                   metric -> metric.toString() + "\n"
-               ).reduce("", String::concat);
+        String output = "";
+        for (int i = 0; i < values.size(); i++) {
+            output += this.header.get(i) + ": " + this.values.get(i);
+        }
+        return output;
     }
 }

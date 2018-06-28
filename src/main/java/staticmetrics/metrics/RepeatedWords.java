@@ -3,25 +3,24 @@ package staticmetrics.metrics;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 
-import com.github.javaparser.ast.body.MethodDeclaration;
+import com.github.javaparser.ast.body.CallableDeclaration;
 import com.github.javaparser.ast.stmt.BlockStmt;
 
-import staticmetrics.MethodHasNoBodyException;
+import exceptions.MethodHasNoBodyException;
 
 /**
  * Calculates the number of the most repeated word in a method.
  */
 public class RepeatedWords extends StaticMetric {
 
-    RepeatedWords(MethodDeclaration md) throws MethodHasNoBodyException {
+    <T extends CallableDeclaration<T>> RepeatedWords(T md) throws MethodHasNoBodyException {
         super(md, "S-RepWords");
     }
 
-    protected float calculate(MethodDeclaration md) {
-        Optional<BlockStmt> blk = md.getBody();
-        String text = blk.get().toString();
+    protected <T extends CallableDeclaration<T>> float calculate(T md) {
+        BlockStmt blk = super.getBlock(md);
+        String text = blk.toString();
         String cleaned = text
                          .replaceAll("[^\\p{L}\\p{Nd}]+", " ")
                          .trim();

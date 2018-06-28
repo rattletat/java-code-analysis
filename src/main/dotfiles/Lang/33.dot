@@ -1,0 +1,10 @@
+digraph enhanced {
+	"ochiai" [style=striped shape=box fillcolor="yellow"];
+	"d4" [style=striped shape=box fillcolor="yellow"];
+	"org.apache.commons.lang3.ClassUtils#903" [style=striped shape=box fillcolor="red:orange:yellow"];
+	"org.apache.commons.lang3.ClassUtilsTest#903" [style=striped shape=box fillcolor="green"];
+	"real" [style=striped shape=box fillcolor="red"];
+	"org.apache.commons.lang3.ClassUtilsTest#903" -> "org.apache.commons.lang3.ClassUtils#903";
+	"org.apache.commons.lang3.ArrayUtils#55" -> "org.apache.commons.lang3.ClassUtils#903" [style=dotted];
+	"org.apache.commons.lang3.ArrayUtils#55" -> "org.apache.commons.lang3.ClassUtilsTest#903" [style=dotted];
+}

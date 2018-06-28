@@ -1,0 +1,15 @@
+digraph enhanced {
+	"ochiai" [style=striped shape=box fillcolor="yellow"];
+	"d4" [style=striped shape=box fillcolor="yellow"];
+	"org.apache.commons.lang.math.Fraction#466" [style=striped shape=box fillcolor="red:orange:yellow"];
+	"org.apache.commons.lang.math.FractionTest#617" [style=striped shape=box fillcolor="green"];
+	"real" [style=striped shape=box fillcolor="red"];
+	"org.apache.commons.lang.math.Fraction#466" -> "org.apache.commons.lang.math.Fraction#571";
+	"org.apache.commons.lang.math.Fraction#466" -> "org.apache.commons.lang.math.Fraction#142";
+	"org.apache.commons.lang.math.FractionTest#617" -> "org.apache.commons.lang.math.Fraction#142";
+	"org.apache.commons.lang.math.FractionTest#617" -> "org.apache.commons.lang.math.Fraction#368";
+	"org.apache.commons.lang.math.FractionTest#617" -> "org.apache.commons.lang.math.Fraction#377";
+	"org.apache.commons.lang.math.Fraction#125" -> "org.apache.commons.lang.math.Fraction#466" [style=dotted];
+	"org.apache.commons.lang.math.FractionTest#617" -> "org.apache.commons.lang.math.Fraction#466";
+	"org.apache.commons.lang.math.Fraction#142" -> "org.apache.commons.lang.math.Fraction#125";
+}

@@ -39,6 +39,7 @@ public class CSVHandler {
             }
         } else if (deleteOld) {
             file.delete();
+            file.createNewFile();
         }
     }
 
@@ -70,26 +71,38 @@ public class CSVHandler {
         }
     }
 
-    public void appendLeft(String header, List<String> data) { 
+    public void appendLeft(String header, List<String> data){
+        this.append(header, data, true);
+    }
+
+    public void appendRight(String header, List<String> data){
+        this.append(header, data, false);
+    }
+
+    private void append(String header, List<String> data, boolean appendLeft) {
         List<String> resultLines = new LinkedList<>();
         try {
             BufferedReader br = new BufferedReader(new FileReader(file.getPath()));
             String line = br.readLine();
-            resultLines.add(header + "," + line);
-            int i = 0;
-            while ((line = br.readLine()) != null) {
-                resultLines.add(data.get(i) + "," + line);
-                i++;
+            if (appendLeft)
+                resultLines.add(header + "," + line);
+            else
+                resultLines.add(line + "," + header);
+            for (int i = 0; (line = br.readLine()) != null; i++) {
+                if (appendLeft)
+                    resultLines.add(data.get(i) + "," + line);
+                else
+                    resultLines.add(line + "," + data.get(i));
             }
             br.close();
-            Validate.isTrue(data.size() == i, "Column size and CSV File row size are different!\nColumn: " + (data.size()+1) + " CSV File: " + (i+1));
+            Validate.isTrue(
+                data.size() == resultLines.size() - 1,
+                "Column size and CSV File row size are different!\nColumn: " + (data.size() + 1) + " CSV File: " + resultLines.size());
             this.close();
-            FileWriter newwriter = new FileWriter(file.getPath());
+            Writer newwriter = new FileWriter(file.getPath());
             for (String newline : resultLines) {
-                newwriter.write(newline + "\n");
-                newwriter.flush();
+                newwriter.write(newline + CSVWriter.DEFAULT_LINE_END);
             }
-            this.writer = null;
             newwriter.close();
         } catch (Exception e) {
             e.printStackTrace();
@@ -120,6 +133,7 @@ public class CSVHandler {
     public void close() throws IOException {
         if (this.writer != null) {
             writer.close();
+            this.writer = null;
         }
     }
 
@@ -156,7 +170,6 @@ public class CSVHandler {
         List<String> header = resultLines.remove(0);
 
         this.writeLines(header, resultLines);
-        this.close();
     }
 
     public void stackCSVFiles(List<CSVHandler> csvFiles) throws IOException {

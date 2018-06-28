@@ -1,0 +1,16 @@
+digraph enhanced {
+	"ochiai" [style=striped shape=box fillcolor="yellow"];
+	"d4" [style=striped shape=box fillcolor="yellow"];
+	"org.jfree.chart.plot.junit.ValueMarkerTests#290" [style=striped shape=box fillcolor="green"];
+	"org.jfree.chart.plot.ValueMarker#95" [style=striped shape=box fillcolor="red"];
+	"real" [style=striped shape=box fillcolor="red"];
+	"org.jfree.chart.plot.Marker#265" [style=striped shape=box fillcolor="orange:yellow"];
+	"org.jfree.chart.util.RectangleInsets#79" -> "org.jfree.chart.util.RectangleInsets#93";
+	"org.jfree.chart.plot.junit.ValueMarkerTests#290" -> "org.jfree.chart.plot.ValueMarker#95";
+	"org.jfree.chart.plot.junit.ValueMarkerTests#290" -> "org.jfree.chart.plot.Marker#238";
+	"org.jfree.chart.plot.Marker#175" -> "org.jfree.chart.util.RectangleInsets#79";
+	"org.jfree.chart.plot.junit.ValueMarkerTests#290" -> "org.jfree.chart.plot.Marker#211";
+	"org.jfree.chart.plot.junit.ValueMarkerTests#290" -> "org.jfree.chart.plot.Marker#265";
+	"org.jfree.chart.plot.junit.ValueMarkerTests#290" -> "org.jfree.chart.plot.ValueMarker#107";
+	"org.jfree.chart.plot.ValueMarker#95" -> "org.jfree.chart.plot.Marker#175";
+}

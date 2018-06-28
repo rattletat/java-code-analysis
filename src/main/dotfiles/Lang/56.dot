@@ -1,0 +1,18 @@
+digraph enhanced {
+	"ochiai" [style=striped shape=box fillcolor="yellow"];
+	"d4" [style=striped shape=box fillcolor="yellow"];
+	"real" [style=striped shape=box fillcolor="red"];
+	"missing code" [style=striped shape=box fillcolor="red"];
+	"org.apache.commons.lang.time.FastDateFormatTest#287" [style=striped shape=box fillcolor="green"];
+	"org.apache.commons.lang.time.FastDateFormat#167" [style=striped shape=box fillcolor="orange:yellow"];
+	"org.apache.commons.lang.SerializationUtils#101" -> "org.apache.commons.lang.SerializationException#65";
+	"org.apache.commons.lang.SerializationUtils#132" -> "org.apache.commons.lang.SerializationUtils#101";
+	"org.apache.commons.lang.exception.NestableRuntimeException#81" -> "org.apache.commons.lang.exception.NestableDelegate#108";
+	"org.apache.commons.lang.time.FastDateFormatTest#287" -> "org.apache.commons.lang.SerializationUtils#132";
+	"org.apache.commons.lang.time.FastDateFormat#213" -> "org.apache.commons.lang.time.FastDateFormat#539" [style=bold];
+	"org.apache.commons.lang.time.FastDateFormat#213" -> "org.apache.commons.lang.time.FastDateFormat#1002" [style=bold];
+	"org.apache.commons.lang.time.FastDateFormat#167" -> "org.apache.commons.lang.time.FastDateFormat#213";
+	"org.apache.commons.lang.time.FastDateFormat#213" -> "org.apache.commons.lang.time.FastDateFormat#980";
+	"org.apache.commons.lang.SerializationException#65" -> "org.apache.commons.lang.exception.NestableRuntimeException#81";
+	"org.apache.commons.lang.time.FastDateFormatTest#287" -> "org.apache.commons.lang.time.FastDateFormat#167";
+}

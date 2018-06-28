@@ -1,0 +1,34 @@
+digraph enhanced {
+	"ochiai" [style=striped shape=box fillcolor="yellow"];
+	"d4" [style=striped shape=box fillcolor="yellow"];
+	"org.apache.commons.lang3.time.FastDateFormat#182" [style=striped shape=box fillcolor="orange:yellow"];
+	"real" [style=striped shape=box fillcolor="red"];
+	"org.apache.commons.lang3.time.FastDateFormatTest#340" [style=striped shape=box fillcolor="green"];
+	"org.apache.commons.lang3.time.FastDateFormat#871" [style=striped shape=box fillcolor="red"];
+	"org.apache.commons.lang3.time.FastDateFormat#887" -> "org.apache.commons.lang3.time.FastDateFormat$CharacterLiteral#1098";
+	"org.apache.commons.lang3.time.FastDateFormat#558" -> "org.apache.commons.lang3.time.FastDateFormat$TwoDigitNumberField#1340";
+	"org.apache.commons.lang3.time.FastDateFormat#887" -> "org.apache.commons.lang3.time.FastDateFormat$TwoDigitNumberField#1347";
+	"org.apache.commons.lang3.time.FastDateFormat#182" -> "org.apache.commons.lang3.time.FastDateFormat#213";
+	"org.apache.commons.lang3.time.FastDateFormat#832" -> "org.apache.commons.lang3.time.FastDateFormat#871" [style=bold];
+	"org.apache.commons.lang3.time.FastDateFormat$TwoDigitMonthField#1423" -> "org.apache.commons.lang3.time.FastDateFormat$TwoDigitMonthField#1430" [style=bold];
+	"org.apache.commons.lang3.time.FastDateFormat#213" -> "org.apache.commons.lang3.time.FastDateFormat#558";
+	"org.apache.commons.lang3.time.FastDateFormat#558" -> "org.apache.commons.lang3.time.FastDateFormat#578" [style=bold];
+	"org.apache.commons.lang3.time.FastDateFormatTest#340" -> "org.apache.commons.lang3.time.FastDateFormat#832";
+	"org.apache.commons.lang3.time.FastDateFormat#213" -> "org.apache.commons.lang3.time.FastDateFormat#535" [style=bold];
+	"org.apache.commons.lang3.time.FastDateFormat#558" -> "org.apache.commons.lang3.time.FastDateFormat$PaddedNumberField#1285";
+	"org.apache.commons.lang3.time.FastDateFormat#558" -> "org.apache.commons.lang3.time.FastDateFormat$TwoDigitMonthField#1416";
+	"org.apache.commons.lang3.time.FastDateFormat#558" -> "org.apache.commons.lang3.time.FastDateFormat$CharacterLiteral#1091";
+	"org.apache.commons.lang3.time.FastDateFormat#578" -> "org.apache.commons.lang3.time.FastDateFormat$CharacterLiteral#1083";
+	"org.apache.commons.lang3.time.FastDateFormatTest#340" -> "org.apache.commons.lang3.time.FastDateFormat#182";
+	"org.apache.commons.lang3.time.FastDateFormat$TwoDigitNumberField#1347" -> "org.apache.commons.lang3.time.FastDateFormat$TwoDigitNumberField#1354" [style=bold];
+	"org.apache.commons.lang3.time.FastDateFormat#767" -> "org.apache.commons.lang3.time.FastDateFormat$TwoDigitNumberField#1332";
+	"org.apache.commons.lang3.time.FastDateFormat#213" -> "org.apache.commons.lang3.time.FastDateFormat#1002" [style=bold];
+	"org.apache.commons.lang3.time.FastDateFormat#887" -> "org.apache.commons.lang3.time.FastDateFormat$PaddedNumberField#1292";
+	"org.apache.commons.lang3.time.FastDateFormat#578" -> "org.apache.commons.lang3.time.FastDateFormat#767" [style=bold];
+	"org.apache.commons.lang3.time.FastDateFormat#871" -> "org.apache.commons.lang3.time.FastDateFormat#887";
+	"org.apache.commons.lang3.time.FastDateFormat#887" -> "org.apache.commons.lang3.time.FastDateFormat$TwoDigitMonthField#1423";
+	"org.apache.commons.lang3.time.FastDateFormat#767" -> "org.apache.commons.lang3.time.FastDateFormat$PaddedNumberField#1272";
+	"org.apache.commons.lang3.time.FastDateFormat$PaddedNumberField#1299" -> "org.apache.commons.lang3.Validate#121";
+	"org.apache.commons.lang3.time.FastDateFormat$PaddedNumberField#1292" -> "org.apache.commons.lang3.time.FastDateFormat$PaddedNumberField#1299" [style=bold];
+	"org.apache.commons.lang3.time.FastDateFormat#578" -> "org.apache.commons.lang3.time.FastDateFormat#708" [style=bold];
+}

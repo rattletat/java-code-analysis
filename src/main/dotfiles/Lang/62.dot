@@ -1,0 +1,12 @@
+digraph enhanced {
+	"ochiai" [style=striped shape=box fillcolor="yellow"];
+	"d4" [style=striped shape=box fillcolor="yellow"];
+	"org.apache.commons.lang.Entities#814" [style=striped shape=box fillcolor="red"];
+	"org.apache.commons.lang.EntitiesTest#201" [style=striped shape=box fillcolor="green"];
+	"org.apache.commons.lang.EntitiesTest#101" [style=striped shape=box fillcolor="orange:yellow"];
+	"real" [style=striped shape=box fillcolor="red"];
+	"org.apache.commons.lang.Entities#885" [style=striped shape=box fillcolor="red"];
+	"org.apache.commons.lang.EntitiesTest#101" -> "org.apache.commons.lang.Entities#814";
+	"org.apache.commons.lang.EntitiesTest#201" -> "org.apache.commons.lang.EntitiesTest#101";
+	"org.apache.commons.lang.EntitiesTest#54" -> "org.apache.commons.lang.EntitiesTest#101" [style=dotted];
+}

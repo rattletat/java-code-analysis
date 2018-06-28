@@ -1,0 +1,17 @@
+digraph enhanced {
+	"ochiai" [style=striped shape=box fillcolor="yellow"];
+	"d4" [style=striped shape=box fillcolor="yellow"];
+	"org.apache.commons.lang.text.StrBuilder#1725" [style=striped shape=box fillcolor="red"];
+	"org.apache.commons.lang.text.StrBuilderTest#1746" [style=striped shape=box fillcolor="green"];
+	"real" [style=striped shape=box fillcolor="red"];
+	"org.apache.commons.lang.text.StrBuilder#1672" [style=striped shape=box fillcolor="red:orange:yellow"];
+	"org.apache.commons.lang.text.StrBuilder#121" -> "org.apache.commons.lang.text.StrBuilder#469";
+	"org.apache.commons.lang.text.StrBuilder#469" -> "org.apache.commons.lang.text.StrBuilder#182";
+	"org.apache.commons.lang.text.StrBuilder#469" -> "org.apache.commons.lang.text.StrBuilder#228";
+	"org.apache.commons.lang.text.StrBuilder#1202" -> "org.apache.commons.lang.text.StrBuilder#1761";
+	"org.apache.commons.lang.text.StrBuilderTest#1746" -> "org.apache.commons.lang.text.StrBuilder#1672";
+	"org.apache.commons.lang.text.StrBuilder#121" -> "org.apache.commons.lang.text.StrBuilder#1672" [style=dotted];
+	"org.apache.commons.lang.text.StrBuilder#1202" -> "org.apache.commons.lang.text.StrBuilder#1114";
+	"org.apache.commons.lang.text.StrBuilderTest#1746" -> "org.apache.commons.lang.text.StrBuilder#1202";
+	"org.apache.commons.lang.text.StrBuilderTest#1746" -> "org.apache.commons.lang.text.StrBuilder#121";
+}

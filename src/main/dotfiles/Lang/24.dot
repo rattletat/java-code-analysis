@@ -1,0 +1,22 @@
+digraph enhanced {
+	"ochiai" [style=striped shape=box fillcolor="yellow"];
+	"d4" [style=striped shape=box fillcolor="yellow"];
+	"org.apache.commons.lang3.math.NumberUtils#1320" [style=striped shape=box fillcolor="red:orange:yellow"];
+	"org.apache.commons.lang3.math.NumberUtilsTest#1006" [style=striped shape=box fillcolor="green"];
+	"real" [style=striped shape=box fillcolor="red"];
+	"org.apache.commons.lang3.math.NumberUtils#453" -> "org.apache.commons.lang3.math.NumberUtils#685";
+	"org.apache.commons.lang3.math.NumberUtils#453" -> "org.apache.commons.lang3.math.NumberUtils#651";
+	"org.apache.commons.lang3.math.NumberUtilsTest#1150" -> "org.apache.commons.lang3.math.NumberUtils#453";
+	"org.apache.commons.lang3.math.NumberUtilsTest#1006" -> "org.apache.commons.lang3.math.NumberUtils#1320";
+	"org.apache.commons.lang3.math.NumberUtils#453" -> "org.apache.commons.lang3.math.NumberUtils#1295";
+	"org.apache.commons.lang3.math.NumberUtils#453" -> "org.apache.commons.lang3.math.NumberUtils#717";
+	"org.apache.commons.lang3.math.NumberUtils#1320" -> "org.apache.commons.lang3.StringUtils#199";
+	"org.apache.commons.lang3.math.NumberUtils#1295" -> "org.apache.commons.lang3.StringUtils#199";
+	"org.apache.commons.lang3.math.NumberUtils#453" -> "org.apache.commons.lang3.math.NumberUtils#701";
+	"org.apache.commons.lang3.math.NumberUtils#453" -> "org.apache.commons.lang3.math.NumberUtils#635";
+	"org.apache.commons.lang3.math.NumberUtils#453" -> "org.apache.commons.lang3.math.NumberUtils#613" [style=bold];
+	"org.apache.commons.lang3.math.NumberUtils#453" -> "org.apache.commons.lang3.math.NumberUtils#668";
+	"org.apache.commons.lang3.math.NumberUtils#453" -> "org.apache.commons.lang3.StringUtils#239";
+	"org.apache.commons.lang3.math.NumberUtils#717" -> "org.apache.commons.lang3.StringUtils#239";
+	"org.apache.commons.lang3.math.NumberUtilsTest#1006" -> "org.apache.commons.lang3.math.NumberUtilsTest#1150";
+}

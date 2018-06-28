@@ -1,24 +1,22 @@
 package staticmetrics.metrics;
 
-import java.util.Optional;
-
-import com.github.javaparser.ast.body.MethodDeclaration;
+import com.github.javaparser.ast.body.CallableDeclaration;
 import com.github.javaparser.ast.stmt.BlockStmt;
 
-import staticmetrics.MethodHasNoBodyException;
+import exceptions.MethodHasNoBodyException;
 
 /**
  * Counts the words of a method.
  */
 public class WordCount extends StaticMetric {
 
-    WordCount(MethodDeclaration md) throws MethodHasNoBodyException {
+    <T extends CallableDeclaration<T>> WordCount(T md) throws MethodHasNoBodyException {
         super(md, "S-WordCount");
     }
 
-    protected float calculate(MethodDeclaration md) {
-        Optional<BlockStmt> blk = md.getBody();
-        String text = blk.get().toString();
+    protected <T extends CallableDeclaration<T>> float calculate(T md) {
+        BlockStmt block = super.getBlock(md);
+        String text = block.toString();
         String cleaned = text
                          .replaceAll("[^\\p{L}\\p{Nd}]+", " ")
                          .trim();

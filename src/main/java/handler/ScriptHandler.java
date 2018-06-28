@@ -9,6 +9,7 @@ public class ScriptHandler {
 
     private static String testMetricTool = "src/main/tools/python/matrix_tools/metric_loc.py";
     private static String suspiciousnessTool = "src/main/tools/python/matrix_tools/fault_loc.py";
+    private static String dynamicTool = "src/main/tools/python/dynamic_tool/dynamic_solver.py";
 
     public static void runMetricTool(
         String matrixPath,
@@ -16,8 +17,8 @@ public class ScriptHandler {
     ) throws IOException, InterruptedException {
         String command = "python " + testMetricTool
                          + " -m " + matrixPath
-                         + " -w " + outputPath
-                         + " --verbose";
+                         + " -w " + outputPath;
+                         // + " --verbose";
         runExternalCommand(command);
     }
 
@@ -31,6 +32,23 @@ public class ScriptHandler {
                          + " -m " + matrixPath
                          + " -s " + spectraPath
                          + " -t " + technique
+                         + " -w " + outputPath;
+                         // + " --verbose";
+        runExternalCommand(command);
+    }
+
+    public static void runDynamicTool(
+        String dotFilePath,
+        String faultyMethods,
+        String outputPath
+    ) throws IOException, InterruptedException {
+        String faultyOption = "";
+        if (faultyMethods.trim().length() > 0){
+            faultyOption = " -f " + faultyMethods;
+        }
+        String command = "python " + dynamicTool
+                         + " -d " + dotFilePath
+                         + faultyOption
                          + " -w " + outputPath
                          + " --verbose";
         runExternalCommand(command);

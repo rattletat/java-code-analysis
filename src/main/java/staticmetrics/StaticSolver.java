@@ -14,9 +14,12 @@ import org.apache.commons.lang3.Validate;
 
 import com.github.javaparser.JavaParser;
 import com.github.javaparser.ast.CompilationUnit;
+import com.github.javaparser.ast.body.ConstructorDeclaration;
 import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.ast.visitor.VoidVisitor;
 import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
+
+import exceptions.MethodHasNoBodyException;
 
 import handler.CSVHandler;
 import handler.ProjectHandler;
@@ -35,16 +38,18 @@ public class StaticSolver {
         CSVHandler csvMethodLineHandler
     ) throws Exception {
 
-        List<List<String>> lines = new LinkedList<>();
+        List<StaticResult> results = new LinkedList<>();
         for (File file : ProjectHandler.getSubfolderJavaClasses(versionDir)) {
             currentFile = file;
             CompilationUnit cu = JavaParser.parse(new FileInputStream(file));
-            VoidVisitor<List<List<String>>> methodNameVisitor = new MethodNamePrinter();
-            methodNameVisitor.visit(cu, lines);
+            VoidVisitor<List<StaticResult>> methodNameVisitor = new MethodNamePrinter();
+            methodNameVisitor.visit(cu, results);
         }
-        List<String> header = lines.remove(0);
-        System.out.println(header);
-        csvMethodHandler.writeLines(header, lines);
+        List<String> header = results.get(0).getHeader();
+        // System.out.println(header);
+        csvMethodHandler.writeLines(header, results.stream()
+                                    .map(result -> result.getValues())
+                                    .collect(Collectors.toList()));
         csvMethodHandler.close();
 
         // File average
@@ -55,17 +60,38 @@ public class StaticSolver {
         MethodLineSolver.createMethodLineDir(versionDir, csvMethodLineHandler);
     }
 
-    private static class MethodNamePrinter extends VoidVisitorAdapter<List<List<String>>> {
+    private static class MethodNamePrinter extends VoidVisitorAdapter<List<StaticResult>> {
 
         @Override
-        public void visit(BodyDeclaration<?> md, List<List<String>> collector) {
+        public void visit(ConstructorDeclaration cd, List<StaticResult> collector) {
+            super.visit(cd, collector);
+            // System.out.println("File: " + currentFile);
+            // System.out.println("Method Name: " + cd.getName());
+            // System.out.println("=============================");
+            // System.out.println(cd);
+            // System.out.println("=============================");
+            // System.out.println(collector.size());
+
+            StaticResult result;
+            try {
+                result = new StaticResult(currentFile, cd);
+            } catch (MethodHasNoBodyException e) {
+                return;
+            }
+            // System.out.println(result);
+            // System.out.println("=============================");
+            collector.add(result);
+        }
+
+        @Override
+        public void visit(MethodDeclaration md, List<StaticResult> collector) {
             super.visit(md, collector);
             // System.out.println("File: " + currentFile);
             // System.out.println("Method Name: " + md.getName());
             // System.out.println("=============================");
             // System.out.println(md);
             // System.out.println("=============================");
-
+            // System.out.println(collector.size());
             StaticResult result;
             try {
                 result = new StaticResult(currentFile, md);
@@ -74,8 +100,7 @@ public class StaticSolver {
             }
             // System.out.println(result);
             // System.out.println("=============================");
-            if (collector.isEmpty()) collector.add(result.getHeader());
-            collector.add(result.getValues());
+            collector.add(result);
         }
     }
 

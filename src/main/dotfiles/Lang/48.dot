@@ -1,0 +1,10 @@
+digraph enhanced {
+	"ochiai" [style=striped shape=box fillcolor="yellow"];
+	"d4" [style=striped shape=box fillcolor="yellow"];
+	"org.apache.commons.lang.builder.EqualsBuilder#368" [style=striped shape=box fillcolor="red:orange:yellow"];
+	"real" [style=striped shape=box fillcolor="red"];
+	"org.apache.commons.lang.builder.EqualsBuilderTest#382" [style=striped shape=box fillcolor="green"];
+	"org.apache.commons.lang.builder.EqualsBuilderTest#382" -> "org.apache.commons.lang.builder.EqualsBuilder#831";
+	"org.apache.commons.lang.builder.EqualsBuilderTest#382" -> "org.apache.commons.lang.builder.EqualsBuilder#368";
+	"org.apache.commons.lang.builder.EqualsBuilderTest#382" -> "org.apache.commons.lang.builder.EqualsBuilder#100";
+}

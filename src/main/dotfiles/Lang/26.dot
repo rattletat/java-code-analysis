@@ -1,0 +1,29 @@
+digraph enhanced {
+	"ochiai" [style=striped shape=box fillcolor="yellow"];
+	"d4" [style=striped shape=box fillcolor="yellow"];
+	"org.apache.commons.lang3.time.FastDateFormatTest#329" [style=striped shape=box fillcolor="green"];
+	"org.apache.commons.lang3.time.FastDateFormat#820" [style=striped shape=box fillcolor="red"];
+	"org.apache.commons.lang3.time.FastDateFormat$TextField#1171" [style=striped shape=box fillcolor="orange:yellow"];
+	"real" [style=striped shape=box fillcolor="red"];
+	"org.apache.commons.lang3.time.FastDateFormat$StringLiteral#1130" [style=striped shape=box fillcolor="orange:yellow"];
+	"org.apache.commons.lang3.time.FastDateFormat#213" -> "org.apache.commons.lang3.time.FastDateFormat#1003" [style=bold];
+	"org.apache.commons.lang3.time.FastDateFormat#888" -> "org.apache.commons.lang3.time.FastDateFormat$TextField#1171";
+	"org.apache.commons.lang3.time.FastDateFormat#558" -> "org.apache.commons.lang3.time.FastDateFormat$StringLiteral#1123";
+	"org.apache.commons.lang3.time.FastDateFormat#558" -> "org.apache.commons.lang3.time.FastDateFormat$TwoDigitNumberField#1341";
+	"org.apache.commons.lang3.time.FastDateFormatTest#329" -> "org.apache.commons.lang3.time.FastDateFormat#196";
+	"org.apache.commons.lang3.time.FastDateFormat#888" -> "org.apache.commons.lang3.time.FastDateFormat$StringLiteral#1130";
+	"org.apache.commons.lang3.time.FastDateFormat#196" -> "org.apache.commons.lang3.time.FastDateFormat#213";
+	"org.apache.commons.lang3.time.FastDateFormat#558" -> "org.apache.commons.lang3.time.FastDateFormat$TextField#1157";
+	"org.apache.commons.lang3.time.FastDateFormat$TwoDigitNumberField#1348" -> "org.apache.commons.lang3.time.FastDateFormat$TwoDigitNumberField#1355" [style=bold];
+	"org.apache.commons.lang3.time.FastDateFormat#767" -> "org.apache.commons.lang3.time.FastDateFormat$TwoDigitNumberField#1333";
+	"org.apache.commons.lang3.time.FastDateFormat#820" -> "org.apache.commons.lang3.time.FastDateFormat#888";
+	"org.apache.commons.lang3.time.FastDateFormat#578" -> "org.apache.commons.lang3.time.FastDateFormat#767" [style=bold];
+	"org.apache.commons.lang3.time.FastDateFormat#578" -> "org.apache.commons.lang3.time.FastDateFormat$TextField#1148";
+	"org.apache.commons.lang3.time.FastDateFormat#213" -> "org.apache.commons.lang3.time.FastDateFormat#558";
+	"org.apache.commons.lang3.time.FastDateFormatTest#329" -> "org.apache.commons.lang3.time.FastDateFormat#820";
+	"org.apache.commons.lang3.time.FastDateFormat#558" -> "org.apache.commons.lang3.time.FastDateFormat#578" [style=bold];
+	"org.apache.commons.lang3.time.FastDateFormat#888" -> "org.apache.commons.lang3.time.FastDateFormat$TwoDigitNumberField#1348";
+	"org.apache.commons.lang3.time.FastDateFormat#213" -> "org.apache.commons.lang3.time.FastDateFormat#535" [style=bold];
+	"org.apache.commons.lang3.time.FastDateFormat#578" -> "org.apache.commons.lang3.time.FastDateFormat$StringLiteral#1115";
+	"org.apache.commons.lang3.time.FastDateFormat#578" -> "org.apache.commons.lang3.time.FastDateFormat#708" [style=bold];
+}

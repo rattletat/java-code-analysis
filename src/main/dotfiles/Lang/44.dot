@@ -1,0 +1,10 @@
+digraph enhanced {
+	"ochiai" [style=striped shape=box fillcolor="yellow"];
+	"d4" [style=striped shape=box fillcolor="yellow"];
+	"org.apache.commons.lang.NumberUtilsTest#525" [style=striped shape=box fillcolor="green"];
+	"org.apache.commons.lang.NumberUtils#297" [style=striped shape=box fillcolor="orange:yellow"];
+	"real" [style=striped shape=box fillcolor="red"];
+	"org.apache.commons.lang.NumberUtils#139" [style=striped shape=box fillcolor="red:orange:yellow"];
+	"org.apache.commons.lang.NumberUtils#139" -> "org.apache.commons.lang.NumberUtils#297" [style=bold];
+	"org.apache.commons.lang.NumberUtilsTest#525" -> "org.apache.commons.lang.NumberUtils#139";
+}

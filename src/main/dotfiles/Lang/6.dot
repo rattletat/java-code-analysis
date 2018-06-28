@@ -1,0 +1,13 @@
+digraph enhanced {
+	"ochiai" [style=striped shape=box fillcolor="yellow"];
+	"d4" [style=striped shape=box fillcolor="yellow"];
+	"org.apache.commons.lang3.text.translate.CharSequenceTranslator#76" [style=striped shape=box fillcolor="red"];
+	"real" [style=striped shape=box fillcolor="red"];
+	"org.apache.commons.lang3.StringUtilsTest#2187" [style=striped shape=box fillcolor="green"];
+	"org.apache.commons.lang3.StringEscapeUtils#556" [style=striped shape=box fillcolor="orange:yellow"];
+	"org.apache.commons.lang3.StringEscapeUtils$CsvEscaper#156" -> "org.apache.commons.lang3.StringUtils#1737";
+	"org.apache.commons.lang3.text.translate.CharSequenceTranslator#54" -> "org.apache.commons.lang3.text.translate.CharSequenceTranslator#76";
+	"org.apache.commons.lang3.StringEscapeUtils#556" -> "org.apache.commons.lang3.text.translate.CharSequenceTranslator#54";
+	"org.apache.commons.lang3.text.translate.CharSequenceTranslator#76" -> "org.apache.commons.lang3.StringEscapeUtils$CsvEscaper#156";
+	"org.apache.commons.lang3.StringUtilsTest#2187" -> "org.apache.commons.lang3.StringEscapeUtils#556";
+}

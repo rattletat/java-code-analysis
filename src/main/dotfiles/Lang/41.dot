@@ -1,0 +1,17 @@
+digraph enhanced {
+	"ochiai" [style=striped shape=box fillcolor="yellow"];
+	"d4" [style=striped shape=box fillcolor="yellow"];
+	"org.apache.commons.lang.ClassUtils#184" [style=striped shape=box fillcolor="red"];
+	"org.apache.commons.lang.ClassUtils#116" [style=striped shape=box fillcolor="orange:yellow"];
+	"org.apache.commons.lang.ClassUtils#245" [style=striped shape=box fillcolor="red"];
+	"org.apache.commons.lang.ClassUtilsTest#92" [style=striped shape=box fillcolor="green"];
+	"real" [style=striped shape=box fillcolor="red"];
+	"org.apache.commons.lang.ClassUtils#58" [style=striped shape=box fillcolor="orange:yellow"];
+	"org.apache.commons.lang.ClassUtilsTest#141" [style=striped shape=box fillcolor="green"];
+	"org.apache.commons.lang.ClassUtils#169" -> "org.apache.commons.lang.ClassUtils#184";
+	"org.apache.commons.lang.ClassUtils#58" -> "org.apache.commons.lang.ClassUtils#116" [style=bold];
+	"org.apache.commons.lang.ClassUtilsTest#141" -> "org.apache.commons.lang.ClassUtils#229";
+	"org.apache.commons.lang.ClassUtils#229" -> "org.apache.commons.lang.ClassUtils#245";
+	"org.apache.commons.lang.ClassUtilsTest#92" -> "org.apache.commons.lang.ClassUtils#169";
+	"org.apache.commons.lang.ClassUtilsTest#92" -> "org.apache.commons.lang.ClassUtils#58";
+}

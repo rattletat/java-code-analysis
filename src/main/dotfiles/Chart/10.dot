@@ -1,0 +1,10 @@
+digraph enhanced {
+	"ochiai" [style=striped shape=box fillcolor="yellow"];
+	"d4" [style=striped shape=box fillcolor="yellow"];
+	"org.jfree.chart.imagemap.StandardToolTipTagFragmentGenerator#54" [style=striped shape=box fillcolor="orange:yellow"];
+	"org.jfree.chart.imagemap.StandardToolTipTagFragmentGenerator#65" [style=striped shape=box fillcolor="red:orange:yellow"];
+	"real" [style=striped shape=box fillcolor="red"];
+	"org.jfree.chart.imagemap.junit.StandardToolTipTagFragmentGeneratorTests#76" [style=striped shape=box fillcolor="green"];
+	"org.jfree.chart.imagemap.junit.StandardToolTipTagFragmentGeneratorTests#76" -> "org.jfree.chart.imagemap.StandardToolTipTagFragmentGenerator#65";
+	"org.jfree.chart.imagemap.junit.StandardToolTipTagFragmentGeneratorTests#76" -> "org.jfree.chart.imagemap.StandardToolTipTagFragmentGenerator#54";
+}

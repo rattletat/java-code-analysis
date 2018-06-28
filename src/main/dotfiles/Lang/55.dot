@@ -1,0 +1,18 @@
+digraph enhanced {
+	"ochiai" [style=striped shape=box fillcolor="yellow"];
+	"d4" [style=striped shape=box fillcolor="yellow"];
+	"org.apache.commons.lang.time.StopWatchTest#112" [style=striped shape=box fillcolor="green"];
+	"org.apache.commons.lang.time.StopWatch#176" [style=striped shape=box fillcolor="orange:yellow"];
+	"org.apache.commons.lang.time.StopWatch#115" [style=striped shape=box fillcolor="red"];
+	"real" [style=striped shape=box fillcolor="red"];
+	"org.apache.commons.lang.time.StopWatchTest#112" -> "org.apache.commons.lang.time.StopWatch#209";
+	"org.apache.commons.lang.time.StopWatch#96" -> "org.apache.commons.lang.time.StopWatch#209" [style=dotted];
+	"org.apache.commons.lang.time.StopWatch#176" -> "org.apache.commons.lang.time.StopWatch#209" [style=dotted];
+	"org.apache.commons.lang.time.StopWatch#115" -> "org.apache.commons.lang.time.StopWatch#209" [style=dotted];
+	"org.apache.commons.lang.time.StopWatchTest#112" -> "org.apache.commons.lang.time.StopWatch#96";
+	"org.apache.commons.lang.time.StopWatchTest#112" -> "org.apache.commons.lang.time.StopWatch#85";
+	"org.apache.commons.lang.time.StopWatchTest#112" -> "org.apache.commons.lang.time.StopWatch#176";
+	"org.apache.commons.lang.time.StopWatch#96" -> "org.apache.commons.lang.time.StopWatch#176" [style=dotted];
+	"org.apache.commons.lang.time.StopWatchTest#112" -> "org.apache.commons.lang.time.StopWatch#115";
+	"org.apache.commons.lang.time.StopWatch#176" -> "org.apache.commons.lang.time.StopWatch#115" [style=dotted];
+}

@@ -2,21 +2,21 @@ package staticmetrics.metrics;
 
 import java.util.List;
 
-import com.github.javaparser.ast.body.MethodDeclaration;
+import com.github.javaparser.ast.body.CallableDeclaration;
 import com.github.javaparser.ast.expr.MethodCallExpr;
 
-import staticmetrics.MethodHasNoBodyException;
+import exceptions.MethodHasNoBodyException;
 
 /**
  * Counts the amount of function calls in a method.
  */
 public class FunctionCallCount extends StaticMetric {
 
-    FunctionCallCount(MethodDeclaration md) throws MethodHasNoBodyException {
+    <T extends CallableDeclaration<T>> FunctionCallCount(T md) throws MethodHasNoBodyException {
         super(md, "S-FunCalls");
     }
 
-    protected float calculate(MethodDeclaration md) {
+    protected <T extends CallableDeclaration<T>> float calculate(T md) {
         List<MethodCallExpr> methodCalls = md.findAll(MethodCallExpr.class);
         return methodCalls.size();
     }

@@ -1,0 +1,12 @@
+digraph enhanced {
+	"ochiai" [style=striped shape=box fillcolor="yellow"];
+	"d4" [style=striped shape=box fillcolor="yellow"];
+	"org.apache.commons.lang.text.ExtendedMessageFormat#419" [style=striped shape=box fillcolor="red:orange:yellow"];
+	"org.apache.commons.lang.text.ExtendedMessageFormatTest#99" [style=striped shape=box fillcolor="green"];
+	"real" [style=striped shape=box fillcolor="red"];
+	"org.apache.commons.lang.text.ExtendedMessageFormat#124" -> "org.apache.commons.lang.text.ExtendedMessageFormat#143" [style=bold];
+	"org.apache.commons.lang.text.ExtendedMessageFormatTest#99" -> "org.apache.commons.lang.text.ExtendedMessageFormat#112";
+	"org.apache.commons.lang.text.ExtendedMessageFormat#143" -> "org.apache.commons.lang.text.ExtendedMessageFormat#419";
+	"org.apache.commons.lang.text.ExtendedMessageFormat#143" -> "org.apache.commons.lang.text.ExtendedMessageFormat#403";
+	"org.apache.commons.lang.text.ExtendedMessageFormat#112" -> "org.apache.commons.lang.text.ExtendedMessageFormat#124";
+}

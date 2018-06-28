@@ -1,0 +1,13 @@
+digraph enhanced {
+	"ochiai" [style=striped shape=box fillcolor="yellow"];
+	"d4" [style=striped shape=box fillcolor="yellow"];
+	"org.joda.time.DateTimeZone#302" [style=striped shape=box fillcolor="orange:yellow"];
+	"method added" [style=striped shape=box fillcolor="red"];
+	"org.joda.time.DateTimeZone#559" [style=striped shape=box fillcolor="orange:yellow"];
+	"org.joda.time.TestDateTimeZone#244" [style=striped shape=box fillcolor="green"];
+	"real" [style=striped shape=box fillcolor="red"];
+	"org.joda.time.TestDateTimeZone#244" -> "org.joda.time.DateTimeZone#302";
+	"org.joda.time.TestDateTimeZone#244" -> "org.joda.time.DateTimeZone#705";
+	"org.joda.time.DateTimeZone#302" -> "org.joda.time.tz.ZoneInfoProvider#136";
+	"org.joda.time.DateTimeZone#302" -> "org.joda.time.DateTimeZone#559" [style=bold];
+}

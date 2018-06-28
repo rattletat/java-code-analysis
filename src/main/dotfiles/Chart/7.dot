@@ -1,0 +1,28 @@
+digraph enhanced {
+	"ochiai" [style=striped shape=box fillcolor="yellow"];
+	"d4" [style=striped shape=box fillcolor="yellow"];
+	"org.jfree.data.time.TimePeriodValues#259" [style=striped shape=box fillcolor="red"];
+	"real" [style=striped shape=box fillcolor="red"];
+	"org.jfree.data.time.junit.TimePeriodValuesTests#368" [style=striped shape=box fillcolor="green"];
+	"org.jfree.data.time.TimePeriodValues#552" [style=striped shape=box fillcolor="orange:yellow"];
+	"org.jfree.data.time.TimePeriodValues#259" -> "org.jfree.data.time.TimePeriodValues#205" [style=bold];
+	"org.jfree.data.time.TimePeriodValues#243" -> "org.jfree.data.time.TimePeriodValues#259" [style=bold];
+	"org.jfree.data.time.junit.TimePeriodValuesTests#368" -> "org.jfree.data.time.SimpleTimePeriod#76";
+	"org.jfree.data.time.junit.TimePeriodValuesTests#368" -> "org.jfree.data.time.TimePeriodValues#114";
+	"org.jfree.data.general.Series#313" -> "org.jfree.data.general.Series#326" [style=bold];
+	"org.jfree.data.time.TimePeriodValues#243" -> "org.jfree.data.general.Series#313";
+	"org.jfree.data.time.TimePeriodValues#114" -> "org.jfree.data.time.TimePeriodValues#129" [style=bold];
+	"org.jfree.data.time.TimePeriodValue#88" -> "org.jfree.data.time.TimePeriodValue#70";
+	"org.jfree.data.general.Series#313" -> "org.jfree.data.general.SeriesChangeEvent#61" [style=bold];
+	"org.jfree.data.time.TimePeriodValues#259" -> "org.jfree.data.time.TimePeriodValue#97";
+	"org.jfree.data.time.TimePeriodValues#243" -> "org.jfree.data.time.TimePeriodValue#97";
+	"org.jfree.data.time.TimePeriodValues#363" -> "org.jfree.data.time.TimePeriodValue#88";
+	"org.jfree.data.time.TimePeriodValues#259" -> "org.jfree.data.time.SimpleTimePeriod#120";
+	"org.jfree.data.time.TimePeriodValues#259" -> "org.jfree.data.time.SimpleTimePeriod#100";
+	"org.jfree.data.time.TimePeriodValues#129" -> "org.jfree.data.general.Series#102";
+	"org.jfree.data.general.Series#102" -> "org.jfree.data.general.Series#111" [style=bold];
+	"org.jfree.data.time.TimePeriodValues#129" -> "org.jfree.data.time.TimePeriodValues#552" [style=dotted];
+	"org.jfree.data.time.junit.TimePeriodValuesTests#368" -> "org.jfree.data.time.TimePeriodValues#552";
+	"org.jfree.data.time.TimePeriodValues#363" -> "org.jfree.data.time.TimePeriodValues#243";
+	"org.jfree.data.time.junit.TimePeriodValuesTests#368" -> "org.jfree.data.time.TimePeriodValues#363";
+}

@@ -1,0 +1,23 @@
+digraph enhanced {
+	"ochiai" [style=striped shape=box fillcolor="yellow"];
+	"d4" [style=striped shape=box fillcolor="yellow"];
+	"org.apache.commons.lang.enums.ValuedEnum#183" [style=striped shape=box fillcolor="red"];
+	"org.apache.commons.lang.enums.ValuedEnumTest#107" [style=striped shape=box fillcolor="green"];
+	"adding function" [style=striped shape=box fillcolor="red"];
+	"org.apache.commons.lang.enums.ValuedLanguageEnum#34" [style=striped shape=box fillcolor="orange:yellow"];
+	"real" [style=striped shape=box fillcolor="red"];
+	"org.apache.commons.lang.enums.ValuedLanguageEnum#29" [style=striped shape=box fillcolor="orange:yellow"];
+	"org.apache.commons.lang.enums.ValuedEnumTest#107" -> "org.apache.commons.lang.enums.ValuedEnum#183";
+	"org.apache.commons.lang.enums.ValuedColorEnum#30" -> "org.apache.commons.lang.enums.ValuedEnumTest#107" [style=dotted];
+	"org.apache.commons.lang.enums.ValuedLanguageEnum#29" -> "org.apache.commons.lang.enums.ValuedEnumTest#107" [style=dotted];
+	"org.apache.commons.lang.enums.Enum#312" -> "org.apache.commons.lang.enums.Enum#327" [style=bold];
+	"org.apache.commons.lang.enums.ValuedEnum#126" -> "org.apache.commons.lang.enums.Enum#312";
+	"org.apache.commons.lang.enums.Enum#327" -> "org.apache.commons.lang.StringUtils#185";
+	"org.apache.commons.lang.enums.ValuedLanguageEnum#34" -> "org.apache.commons.lang.enums.ValuedEnum#126";
+	"org.apache.commons.lang.enums.Enum#327" -> "org.apache.commons.lang.enums.Enum#484";
+	"org.apache.commons.lang.enums.ValuedLanguageEnum#29" -> "org.apache.commons.lang.enums.ValuedLanguageEnum#34" [style=bold];
+	"org.apache.commons.lang.enums.ValuedEnumTest#107" -> "org.apache.commons.lang.enums.ValuedLanguageEnum#29";
+	"org.apache.commons.lang.enums.Enum#327" -> "org.apache.commons.lang.enums.Enum#519";
+	"org.apache.commons.lang.enums.Enum#312" -> "org.apache.commons.lang.enums.Enum#519";
+	"org.apache.commons.lang.enums.Enum#484" -> "org.apache.commons.lang.enums.Enum$Entry#297" [style=bold];
+}
