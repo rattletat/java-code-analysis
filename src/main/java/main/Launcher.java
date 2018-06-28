@@ -55,10 +55,7 @@ public class Launcher {
         List<Map.Entry<SimpleEntry<String, Integer>, CSVHandler>> projectResults = new LinkedList<>();
         List<String> projectRanks = new LinkedList<>();
         List<String> projectFaultLocalizable = new LinkedList<>();
-        String overallResultPath = RESULT_PATH + "/" + RESULTS_FILENAME;
-        final CSVHandler overallResult = new CSVHandler(overallResultPath, COMBINE_VERSION_ANALYSIS);
 
-        folder:
         for (File project : ProjectHandler.getSubfolders(projectRoot)) {
             int versionNumber = MIN_VERSION;
             String projectName = project.getName();
@@ -69,7 +66,7 @@ public class Launcher {
                 try {
                     version = ProjectHandler.getProject(project, versionNumber);
                 } catch (IllegalArgumentException e) {
-                    continue folder;
+                    break;
                 }
                 String outputVersionDir = ProjectHandler.getResultDirPath(version, RESULT_PATH);
 
@@ -158,12 +155,9 @@ public class Launcher {
                     System.out.println("[STATUS] Start dynamic analysis.");
                     try {
                         String dotFile = ProjectHandler.getDotFile(projectName, versionNumber);
-                        System.out.println("DOTFILE: " + dotFile);
-                        System.out.println("SIZE: " + faultyMethods.size());
                         String list = faultyMethods.stream()
                                       .map(array -> array[0] + "#" + array[1])
                                       .collect(Collectors.joining(","));
-                        System.out.println("List: " + list);
                         ScriptHandler.runDynamicTool(
                             dotFile,
                             list,
@@ -209,11 +203,12 @@ public class Launcher {
                     combinedResult.close();
                     System.out.println("[STATUS] Combining versions successful!");
                 }
-
                 versionNumber++;
                 System.gc();
             }
+            if (versionNumber == MIN_VERSION) continue;
 
+            final CSVHandler overallResult = new CSVHandler(RESULT_PATH + "/" + RESULTS_FILENAME, COMBINE_VERSION_ANALYSIS);
             // Stack project results
             String overallProjectResultPath = outputProjectDir + "/" + PROJECT_RESULTS_FILENAME;
             final CSVHandler overallProjectResult = new CSVHandler(overallProjectResultPath, COMBINE_VERSION_ANALYSIS);

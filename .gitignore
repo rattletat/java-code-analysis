@@ -9,6 +9,7 @@ dependency-reduced-pom.xml
 buildNumber.properties
 .mvn/timing.properties
 .tags
+results/*
 .project
 .settings
 .classpath

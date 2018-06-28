@@ -1,3 +1,6 @@
 [submodule "src/main/tools/python/matrix_tools"]
-	path = src/main/bin/python/matrix_tools
+	path = src/main/tools/python/matrix_tools
 	url = git@github.com:mightymicha/SFL_tool.git
+[submodule "src/main/json/defects4j-dissection"]
+	path = src/main/json/defects4j-dissection
+	url = git@github.com:program-repair/defects4j-dissection.git
