@@ -1,5 +1,6 @@
 package exceptions;
 
+@SuppressWarnings("serial")
 public class PatchNotInMethodException extends Exception {
     // Parameterless Constructor
     public PatchNotInMethodException() {}

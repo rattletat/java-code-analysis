@@ -13,6 +13,7 @@ import java.util.stream.Collectors;
 import org.apache.commons.lang3.Validate;
 
 import com.github.javaparser.JavaParser;
+import com.github.javaparser.ParserConfiguration.LanguageLevel;
 import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.body.ConstructorDeclaration;
 import com.github.javaparser.ast.body.MethodDeclaration;
@@ -41,6 +42,7 @@ public class StaticSolver {
         List<StaticResult> results = new LinkedList<>();
         for (File file : ProjectHandler.getSubfolderJavaClasses(versionDir)) {
             currentFile = file;
+            JavaParser.getStaticConfiguration().setLanguageLevel(LanguageLevel.JAVA_8);
             CompilationUnit cu = JavaParser.parse(new FileInputStream(file));
             VoidVisitor<List<StaticResult>> methodNameVisitor = new MethodNamePrinter();
             methodNameVisitor.visit(cu, results);

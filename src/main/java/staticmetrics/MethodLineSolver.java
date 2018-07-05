@@ -32,7 +32,7 @@ public class MethodLineSolver {
             currentFile = file;
             CompilationUnit cu = JavaParser.parse(new FileInputStream(file));
             VoidVisitor<List<List<String>>> methodNameVisitor = new MethodNamePrinter();
-            System.out.println(file.getPath());
+            // System.out.println(file.getPath());
             methodNameVisitor.visit(cu, lines);
         }
         csvMethodHandler.writeLines(header, lines);
@@ -48,7 +48,8 @@ public class MethodLineSolver {
             String methodEnding = getEndingLine(cd);
             String signature = cleanSignature(cd.getSignature());
 
-            List<String> line = new LinkedList<String>() {
+      @SuppressWarnings("serial")
+      List<String> line = new LinkedList<String>() {
                 {
                     add(shortenStringUntilOrg(currentFile.getPath()));
                     add(signature);
@@ -68,7 +69,8 @@ public class MethodLineSolver {
             String methodEnding = getEndingLine(md);
             String signature = cleanSignature(md.getSignature());
 
-            List<String> line = new LinkedList<String>() {
+      @SuppressWarnings("serial")
+      List<String> line = new LinkedList<String>() {
                 {
                     add(shortenStringUntilOrg(currentFile.getPath()));
                     add(signature);
@@ -121,6 +123,10 @@ public class MethodLineSolver {
 
     // Filter in ProjectHandler guarantees existence of substring org
     private static String shortenStringUntilOrg(String path) {
-        return path.substring(path.indexOf("org"));
+        if(path.contains("org"))
+            return path.substring(path.indexOf("org"));
+        if(path.contains("com"))
+            return path.substring(path.indexOf("com"));
+        throw new RuntimeException("No org or com in filepath!");
     }
 }

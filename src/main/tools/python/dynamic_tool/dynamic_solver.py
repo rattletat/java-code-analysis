@@ -44,7 +44,26 @@ def main(argv):
     verboseprint("[STATUS] Loading dot file ...")
     g = pgv.AGraph(dot, directed=True)
     edges = g.edges()
-    nodes = list(filter(lambda x : "org" in x, g.nodes()))
+    nodes = list(filter(lambda x : "org" in x or "com" in x, g.nodes()))
+    # Remove method names $... from node names
+    for i,node in enumerate(nodes):
+        index1 = node.find("$")
+        index2 = node.find("#")
+        if index1 != -1:
+            nodes[i] = node[:index1] + node[index2:]
+    # Remove method names from edges
+    for i,edge in enumerate(edges):
+        a,b = edge
+        index1a = a.find("$")
+        index2a = a.find("#")
+        index1b = b.find("$")
+        index2b = b.find("#")
+        if index1a != -1:
+            a = a[:index1a] + a[index2a:]
+        if index1b != -1:
+            b = b[:index1b] + b[index2b:]
+        edges[i] = (a,b)
+
     igraph = Graph(directed = True)
     igraph.add_vertices(nodes)
     igraph.add_edges(edges)

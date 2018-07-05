@@ -1,5 +1,6 @@
 package exceptions;
 
+@SuppressWarnings("serial")
 public class MethodHasNoBodyException extends Exception {
     // Parameterless Constructor
     public MethodHasNoBodyException() {}

@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.AbstractMap;
 import java.util.AbstractMap.SimpleEntry;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -11,6 +12,7 @@ import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.Validate;
 
+import exceptions.DotfileDoesNotExist;
 import exceptions.PatchNotInMethodException;
 
 import handler.CSVHandler;
@@ -20,15 +22,74 @@ import handler.ScriptHandler;
 
 import staticmetrics.StaticSolver;
 
+import util.ProjectVersion;
+
 public class Launcher {
-    private static final boolean RUN_STATIC_ANALYSIS = false;
-    private static final boolean RUN_SUSPICIOUSNESS_ANALYSIS = false;
+    private static final boolean RUN_STATIC_ANALYSIS = true;
+    private static final boolean RUN_SUSPICIOUSNESS_ANALYSIS = true;
     private static final boolean RUN_LABEL_ANALYSIS = true;
     private static final boolean RUN_DYNAMIC_ANALYSIS = true;
-    private static final boolean RUN_TEST_SUITE_ANALYSIS = false;
+    private static final boolean RUN_TEST_SUITE_ANALYSIS = true;
     private static final boolean COMBINE_VERSION_ANALYSIS = true;
     private static final int MIN_VERSION = 1;
-    private static final int MAX_VERSION = 106;
+    private static final int MAX_VERSION = 200;
+
+    // Versions without correct dotfiles, skipping these
+    @SuppressWarnings("serial")
+    private final static HashSet<ProjectVersion> invalidVersions = new HashSet<ProjectVersion>() {
+        {
+            add(new ProjectVersion("Math", 2));
+            add(new ProjectVersion("Math", 3));
+            add(new ProjectVersion("Math", 6));
+            add(new ProjectVersion("Math", 8));
+            add(new ProjectVersion("Math", 11));
+            add(new ProjectVersion("Math", 15));
+            add(new ProjectVersion("Math", 16));
+            add(new ProjectVersion("Math", 18));
+            add(new ProjectVersion("Math", 19));
+            add(new ProjectVersion("Math", 21));
+            add(new ProjectVersion("Math", 23));
+            add(new ProjectVersion("Math", 24));
+            add(new ProjectVersion("Math", 25));
+            add(new ProjectVersion("Math", 30));
+            add(new ProjectVersion("Math", 34));
+            add(new ProjectVersion("Math", 35));
+            add(new ProjectVersion("Math", 38));
+            add(new ProjectVersion("Math", 48));
+            add(new ProjectVersion("Math", 50));
+            add(new ProjectVersion("Math", 51));
+            add(new ProjectVersion("Math", 56));
+            add(new ProjectVersion("Math", 57));
+            add(new ProjectVersion("Math", 58));
+            add(new ProjectVersion("Math", 60));
+            add(new ProjectVersion("Math", 61));
+            add(new ProjectVersion("Math", 62));
+            add(new ProjectVersion("Math", 63));
+            add(new ProjectVersion("Math", 66));
+            add(new ProjectVersion("Math", 67));
+            add(new ProjectVersion("Math", 69));
+            add(new ProjectVersion("Math", 70));
+            add(new ProjectVersion("Math", 75));
+            add(new ProjectVersion("Math", 76));
+            add(new ProjectVersion("Math", 82));
+            add(new ProjectVersion("Math", 83));
+            add(new ProjectVersion("Math", 84));
+            add(new ProjectVersion("Math", 85));
+            add(new ProjectVersion("Math", 86));
+            add(new ProjectVersion("Math", 87));
+            add(new ProjectVersion("Math", 88));
+            add(new ProjectVersion("Math", 89));
+            add(new ProjectVersion("Math", 90));
+            add(new ProjectVersion("Math", 95));
+            add(new ProjectVersion("Math", 101));
+            add(new ProjectVersion("Math", 102));
+            add(new ProjectVersion("Math", 103));
+            add(new ProjectVersion("Math", 105));
+            add(new ProjectVersion("Math", 106));
+            add(new ProjectVersion("Chart", 4));
+        }
+    };
+
     private static final String SUSPICIOUSNESS_TECHNIQUE = "dstar2";
 
     private static final String RSC_PATH = "src/main/resources";
@@ -55,6 +116,7 @@ public class Launcher {
         List<Map.Entry<SimpleEntry<String, Integer>, CSVHandler>> projectResults = new LinkedList<>();
         List<String> projectRanks = new LinkedList<>();
         List<String> projectFaultLocalizable = new LinkedList<>();
+        List<ProjectVersion> dotFileDoesNotExist = new LinkedList<>();
 
         for (File project : ProjectHandler.getSubfolders(projectRoot)) {
             int versionNumber = MIN_VERSION;
@@ -62,11 +124,22 @@ public class Launcher {
             List<Map.Entry<Integer, CSVHandler>> versionResults = new LinkedList<>();
             String outputProjectDir = ProjectHandler.getResultDirPath(project, RESULT_PATH);
             while (versionNumber <= MAX_VERSION) {
+                System.out.println("[STATUS] Start analysis for project " + projectName + "-" + versionNumber);
+                // Check whether invalid version
+                ProjectVersion pv = new ProjectVersion(projectName, versionNumber);
+                if (invalidVersions.contains(pv)) {
+                    System.out.println("[WARNING] Invalid version!");
+                    versionNumber++;
+                    continue;
+                }
+
                 File version;
                 try {
                     version = ProjectHandler.getProject(project, versionNumber);
                 } catch (IllegalArgumentException e) {
-                    break;
+                    System.out.println("[WARNING] Version Number too high: " + versionNumber);
+                    versionNumber++;
+                    continue;
                 }
                 String outputVersionDir = ProjectHandler.getResultDirPath(version, RESULT_PATH);
 
@@ -128,7 +201,8 @@ public class Launcher {
 
                 // Label analysis
                 LabelSolver lSolver = new LabelSolver(JSON_BUG_CSV);
-                int minimalRank;
+                int minimalRank = -1;
+                boolean localizable = false;
                 Collection<String[]> faultyMethods = new LinkedList<>();
                 if (RUN_LABEL_ANALYSIS) {
                     System.out.println("[STATUS] Start label analysis.");
@@ -137,16 +211,12 @@ public class Launcher {
                         Collection<String[]> suspicious_methods = suspiciousnessResult.getData();
                         faultyMethods = lSolver.getFaultyMethods(patched_methods, suspicious_methods);
                         minimalRank = lSolver.getMinimalRankLabel(faultyMethods);
-                        projectFaultLocalizable.add(String.valueOf(true));
+                        localizable = true;
+                        System.out.println("[STATUS] Label analysis successful!.");
                     } catch (PatchNotInMethodException e) {
-                        minimalRank = -1;
-                        projectFaultLocalizable.add(String.valueOf(false));
+                        System.out.println("[WARNING] Patch not in method!");
                     }
-                    projectRanks.add(String.valueOf(minimalRank));
-                    System.out.println("[STATUS] Label analysis successful!.");
                 }
-
-
 
                 // Dynamic Analysis
                 String dynamicResultPath = outputVersionDir + "/" + DYNAMIC_OUTPUT_FILENAME;
@@ -163,6 +233,11 @@ public class Launcher {
                             list,
                             dynamicResultPath
                         );
+                    } catch (DotfileDoesNotExist e) {
+                        System.out.println("[WARNING] Dotfile does not exist!");
+                        dotFileDoesNotExist.add(new ProjectVersion(projectName, versionNumber));
+                        versionNumber++;
+                        continue;
                     } catch (Exception e) {
                         System.err.println("[ERROR] Dynamic analysis failed!");
                         e.printStackTrace();
@@ -170,6 +245,13 @@ public class Launcher {
                     }
                     System.out.println("[STATUS] Dynamic analysis successful!.");
                 }
+                // Add minimal rank after dotfile exists
+                projectRanks.add(String.valueOf(minimalRank));
+
+                if(localizable)
+                    projectFaultLocalizable.add(String.valueOf(true));
+                else
+                    projectFaultLocalizable.add(String.valueOf(false));
 
                 // Test Suite Analysis
                 // Important: Generate spectra files with the generateSpectraFiles.sh bash script under Java 7 first!
@@ -203,6 +285,7 @@ public class Launcher {
                     combinedResult.close();
                     System.out.println("[STATUS] Combining versions successful!");
                 }
+                System.out.println("[Status] End analysis for project " + projectName + "-" + versionNumber);
                 versionNumber++;
                 System.gc();
             }
@@ -251,6 +334,12 @@ public class Launcher {
                 }
                 overallResult.appendLeft("Project", projectColumn);
                 overallResult.close();
+            }
+        }
+        if (!dotFileDoesNotExist.isEmpty()) {
+            System.out.println("Invalid versions!");
+            for (ProjectVersion pv : dotFileDoesNotExist) {
+                System.out.println("Dotfile missing: " + pv.projectName + " : " + String.valueOf(pv.version));
             }
         }
     }
