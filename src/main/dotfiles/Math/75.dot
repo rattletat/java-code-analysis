@@ -1,0 +1,26 @@
+digraph "cg/org.apache.commons.math.stat.FrequencyTest#136"
+{
+	"org.apache.commons.math.stat.FrequencyTest#136" [style=filled,fillcolor=green];
+	"org.apache.commons.math.stat.FrequencyTest#136" -> "org.apache.commons.math.stat.Frequency#177";
+	"org.apache.commons.math.stat.Frequency#177" -> "org.apache.commons.math.stat.Frequency#133";
+	"org.apache.commons.math.stat.FrequencyTest#136" -> "org.apache.commons.math.stat.Frequency#158";
+	"org.apache.commons.math.stat.Frequency#158" -> "org.apache.commons.math.stat.Frequency#133";
+	"org.apache.commons.math.stat.FrequencyTest#136" -> "org.apache.commons.math.stat.Frequency#331";
+	"org.apache.commons.math.stat.Frequency#331" -> "org.apache.commons.math.stat.Frequency#316";
+	"org.apache.commons.math.stat.Frequency#316" -> "org.apache.commons.math.stat.Frequency#215";
+	"org.apache.commons.math.stat.Frequency#316" -> "org.apache.commons.math.stat.Frequency#244";
+	"org.apache.commons.math.stat.FrequencyTest#136" -> "org.apache.commons.math.stat.Frequency#316";
+	"org.apache.commons.math.stat.FrequencyTest#136" -> "org.apache.commons.math.stat.Frequency#342";
+	"org.apache.commons.math.stat.Frequency#342" -> "org.apache.commons.math.stat.Frequency#316";
+	"org.apache.commons.math.stat.FrequencyTest#136" -> "org.apache.commons.math.stat.Frequency#303";
+	"org.apache.commons.math.stat.Frequency#303" -> "org.apache.commons.math.stat.Frequency#491";
+	"org.apache.commons.math.stat.Frequency#491" -> "org.apache.commons.math.stat.Frequency#215";
+	"org.apache.commons.math.stat.Frequency#491" -> "org.apache.commons.math.stat.Frequency#382";
+	"org.apache.commons.math.stat.Frequency#382" -> "org.apache.commons.math.stat.Frequency#215";
+	"org.apache.commons.math.stat.Frequency#382" -> "org.apache.commons.math.stat.Frequency#444";
+	"org.apache.commons.math.stat.Frequency#444" -> "org.apache.commons.math.stat.Frequency#382";
+	"org.apache.commons.math.stat.Frequency#382" -> "org.apache.commons.math.stat.Frequency$NaturalComparator#541";
+	"org.apache.commons.math.stat.Frequency$NaturalComparator#541" -> "org.apache.commons.math.stat.Frequency$NaturalComparator#541";
+	"org.apache.commons.math.stat.Frequency#382" -> "org.apache.commons.math.stat.Frequency$NaturalComparator#541";
+	"org.apache.commons.math.stat.Frequency$NaturalComparator#541" -> "org.apache.commons.math.stat.Frequency$NaturalComparator#561";
+}

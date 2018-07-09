@@ -2,6 +2,7 @@ package staticmetrics;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.AbstractMap;
 import java.util.Arrays;
@@ -40,13 +41,20 @@ public class StaticSolver {
     ) throws Exception {
 
         List<StaticResult> results = new LinkedList<>();
-        for (File file : ProjectHandler.getSubfolderJavaClasses(versionDir)) {
+        ProjectHandler.getSubfolderJavaClasses(versionDir).stream().forEach(file-> {
             currentFile = file;
             JavaParser.getStaticConfiguration().setLanguageLevel(LanguageLevel.JAVA_8);
-            CompilationUnit cu = JavaParser.parse(new FileInputStream(file));
+            CompilationUnit cu = null;
+            try {
+                cu = JavaParser.parse(new FileInputStream(file));
+            } catch (FileNotFoundException e) {
+                System.out.println("[ERROR] Could not parse file: " + file.getPath());
+                System.exit(1);
+                e.printStackTrace();
+            }
             VoidVisitor<List<StaticResult>> methodNameVisitor = new MethodNamePrinter();
             methodNameVisitor.visit(cu, results);
-        }
+        });
         List<String> header = results.get(0).getHeader();
         // System.out.println(header);
         csvMethodHandler.writeLines(header, results.stream()

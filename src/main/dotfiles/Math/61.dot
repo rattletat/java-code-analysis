@@ -1,0 +1,13 @@
+digraph "cg/org.apache.commons.math.distribution.PoissonDistributionTest#140"
+{
+	"org.apache.commons.math.distribution.PoissonDistributionTest#140" [style=filled,fillcolor=green];
+	"org.apache.commons.math.distribution.PoissonDistributionTest#140" -> "org.apache.commons.math.distribution.PoissonDistributionImpl#80";
+	"org.apache.commons.math.distribution.PoissonDistributionImpl#80" -> "org.apache.commons.math.distribution.PoissonDistributionImpl#92";
+	"org.apache.commons.math.distribution.PoissonDistributionImpl#92" -> "org.apache.commons.math.distribution.AbstractIntegerDistribution#52";
+	"org.apache.commons.math.distribution.AbstractIntegerDistribution#52" -> "org.apache.commons.math.distribution.AbstractDistribution#40";
+	"org.apache.commons.math.distribution.AbstractIntegerDistribution#52" -> "org.apache.commons.math.random.RandomDataImpl#119";
+	"org.apache.commons.math.distribution.PoissonDistributionImpl#92" -> "org.apache.commons.math.exception.util.LocalizedFormats#44";
+	"org.apache.commons.math.exception.util.LocalizedFormats#44" -> "org.apache.commons.math.exception.util.LocalizedFormats#316";
+	"org.apache.commons.math.distribution.PoissonDistributionImpl#92" -> "org.apache.commons.math.MathRuntimeException#387";
+	"org.apache.commons.math.MathRuntimeException#387" -> "org.apache.commons.math.MathRuntimeException$4#387";
+}

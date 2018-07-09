@@ -1,0 +1,7 @@
+digraph "cg/org.apache.commons.math.stat.regression.SimpleRegressionTest#269"
+{
+	"org.apache.commons.math.stat.regression.SimpleRegressionTest#269" [style=filled,fillcolor=green];
+	"org.apache.commons.math.stat.regression.SimpleRegressionTest#269" -> "org.apache.commons.math.stat.regression.SimpleRegression#89";
+	"org.apache.commons.math.stat.regression.SimpleRegressionTest#269" -> "org.apache.commons.math.stat.regression.SimpleRegression#106";
+	"org.apache.commons.math.stat.regression.SimpleRegressionTest#269" -> "org.apache.commons.math.stat.regression.SimpleRegression#264";
+}

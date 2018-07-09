@@ -1,0 +1,39 @@
+digraph "cg/org.apache.commons.math3.stat.inference.MannWhitneyUTestTest#106"
+{
+	"org.apache.commons.math3.stat.inference.MannWhitneyUTestTest#106" [style=filled,fillcolor=green];
+	"org.apache.commons.math3.stat.inference.MannWhitneyUTestTest#106" -> "org.apache.commons.math3.stat.inference.MannWhitneyUTest#222";
+	"org.apache.commons.math3.stat.inference.MannWhitneyUTest#222" -> "org.apache.commons.math3.stat.inference.MannWhitneyUTest#74";
+	"org.apache.commons.math3.stat.inference.MannWhitneyUTest#222" -> "org.apache.commons.math3.stat.inference.MannWhitneyUTest#129";
+	"org.apache.commons.math3.stat.inference.MannWhitneyUTest#129" -> "org.apache.commons.math3.stat.inference.MannWhitneyUTest#74";
+	"org.apache.commons.math3.stat.inference.MannWhitneyUTest#129" -> "org.apache.commons.math3.stat.inference.MannWhitneyUTest#90";
+	"org.apache.commons.math3.stat.inference.MannWhitneyUTest#129" -> "org.apache.commons.math3.stat.ranking.NaturalRanking#193";
+	"org.apache.commons.math3.stat.ranking.NaturalRanking#193" -> "org.apache.commons.math3.stat.ranking.NaturalRanking$IntDoublePair#432";
+	"org.apache.commons.math3.stat.ranking.NaturalRanking#193" -> "org.apache.commons.math3.stat.ranking.NaturalRanking$1#334";
+	"org.apache.commons.math3.stat.ranking.NaturalRanking$1#334" -> "org.apache.commons.math3.stat.ranking.TiesStrategy#39";
+	"org.apache.commons.math3.stat.ranking.NaturalRanking$1#334" -> "org.apache.commons.math3.stat.ranking.NaNStrategy#36";
+	"org.apache.commons.math3.stat.ranking.NaturalRanking#193" -> "org.apache.commons.math3.stat.ranking.NaturalRanking#404";
+	"org.apache.commons.math3.stat.ranking.NaturalRanking#404" -> "org.apache.commons.math3.stat.ranking.NaturalRanking$IntDoublePair#453";
+	"org.apache.commons.math3.stat.ranking.NaturalRanking#193" -> "org.apache.commons.math3.stat.ranking.NaturalRanking$IntDoublePair#419";
+	"org.apache.commons.math3.stat.ranking.NaturalRanking$IntDoublePair#419" -> "org.apache.commons.math3.stat.ranking.NaturalRanking$IntDoublePair#445";
+	"org.apache.commons.math3.stat.ranking.NaturalRanking#193" -> "org.apache.commons.math3.stat.ranking.NaturalRanking$IntDoublePair#461";
+	"org.apache.commons.math3.stat.ranking.NaturalRanking#193" -> "org.apache.commons.math3.stat.ranking.NaturalRanking$IntDoublePair#453";
+	"org.apache.commons.math3.stat.ranking.NaturalRanking#193" -> "org.apache.commons.math3.stat.ranking.NaturalRanking#387";
+	"org.apache.commons.math3.stat.inference.MannWhitneyUTest#129" -> "org.apache.commons.math3.util.FastMath#3535";
+	"org.apache.commons.math3.stat.inference.MannWhitneyUTest#222" -> "org.apache.commons.math3.stat.inference.MannWhitneyUTest#173";
+	"org.apache.commons.math3.stat.inference.MannWhitneyUTest#173" -> "org.apache.commons.math3.util.FastMath#375";
+	"org.apache.commons.math3.stat.inference.MannWhitneyUTest#173" -> "org.apache.commons.math3.distribution.NormalDistribution#42";
+	"org.apache.commons.math3.distribution.NormalDistribution#42" -> "org.apache.commons.math3.util.FastMath#375";
+	"org.apache.commons.math3.stat.inference.MannWhitneyUTest#173" -> "org.apache.commons.math3.distribution.NormalDistribution#61";
+	"org.apache.commons.math3.distribution.NormalDistribution#61" -> "org.apache.commons.math3.distribution.NormalDistribution#75";
+	"org.apache.commons.math3.distribution.NormalDistribution#75" -> "org.apache.commons.math3.distribution.AbstractRealDistribution#53";
+	"org.apache.commons.math3.distribution.AbstractRealDistribution#53" -> "org.apache.commons.math3.random.RandomDataImpl#168";
+	"org.apache.commons.math3.stat.inference.MannWhitneyUTest#173" -> "org.apache.commons.math3.distribution.NormalDistribution#137";
+	"org.apache.commons.math3.distribution.NormalDistribution#137" -> "org.apache.commons.math3.util.FastMath#3020";
+	"org.apache.commons.math3.distribution.NormalDistribution#137" -> "org.apache.commons.math3.special.Erf#67";
+	"org.apache.commons.math3.special.Erf#67" -> "org.apache.commons.math3.util.FastMath#3020";
+	"org.apache.commons.math3.special.Erf#67" -> "org.apache.commons.math3.special.Gamma#45";
+	"org.apache.commons.math3.special.Gamma#45" -> "org.apache.commons.math3.util.FastMath#1096";
+	"org.apache.commons.math3.util.FastMath#1096" -> "org.apache.commons.math3.util.FastMath#1106";
+	"org.apache.commons.math3.util.FastMath#1106" -> "org.apache.commons.math3.util.FastMath$lnMant#3780";
+	"org.apache.commons.math3.special.Erf#67" -> "org.apache.commons.math3.special.Gamma#154";
+}

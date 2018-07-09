@@ -1,0 +1,35 @@
+digraph "cg/org.apache.commons.math.complex.ComplexFormatTest#354"
+{
+	"org.apache.commons.math.complex.FrenchComplexFormatTest#354" [style=filled,fillcolor=green];
+	"org.apache.commons.math.complex.FrenchComplexFormatTest#354" -> "org.apache.commons.math.complex.ComplexFormat#58";
+	"org.apache.commons.math.complex.ComplexFormat#58" -> "org.apache.commons.math.complex.ComplexFormat#237";
+	"org.apache.commons.math.complex.ComplexFormat#237" -> "org.apache.commons.math.complex.ComplexFormat#248";
+	"org.apache.commons.math.complex.ComplexFormat#58" -> "org.apache.commons.math.complex.ComplexFormat#97";
+	"org.apache.commons.math.complex.ComplexFormat#97" -> "org.apache.commons.math.complex.ComplexFormat#110";
+	"org.apache.commons.math.complex.ComplexFormat#110" -> "org.apache.commons.math.complex.ComplexFormat#508";
+	"org.apache.commons.math.complex.ComplexFormat#110" -> "org.apache.commons.math.complex.ComplexFormat#522";
+	"org.apache.commons.math.complex.ComplexFormat#110" -> "org.apache.commons.math.complex.ComplexFormat#536";
+	"org.apache.commons.math.complex.FrenchComplexFormatTest#354" -> "org.apache.commons.math.complex.ComplexFormat#321";
+	"org.apache.commons.math.complex.ComplexFormat#321" -> "org.apache.commons.math.complex.ComplexFormat#399";
+	"org.apache.commons.math.complex.ComplexFormat#399" -> "org.apache.commons.math.complex.ComplexFormat#411";
+	"org.apache.commons.math.complex.ComplexFormat#321" -> "org.apache.commons.math.complex.ComplexFormat#292";
+	"org.apache.commons.math.complex.ComplexFormat#321" -> "org.apache.commons.math.complex.ComplexFormat#471";
+	"org.apache.commons.math.complex.ComplexFormat#321" -> "org.apache.commons.math.complex.ComplexFormat#411";
+	"org.apache.commons.math.complex.ComplexFormat#321" -> "org.apache.commons.math.complex.ComplexFormat#258";
+	"org.apache.commons.math.complex.ComplexFormatTest#354" [style=filled,fillcolor=green];
+	"org.apache.commons.math.complex.ComplexFormatTest#354" -> "org.apache.commons.math.complex.ComplexFormat#58";
+	"org.apache.commons.math.complex.ComplexFormat#58" -> "org.apache.commons.math.complex.ComplexFormat#237";
+	"org.apache.commons.math.complex.ComplexFormat#237" -> "org.apache.commons.math.complex.ComplexFormat#248";
+	"org.apache.commons.math.complex.ComplexFormat#58" -> "org.apache.commons.math.complex.ComplexFormat#97";
+	"org.apache.commons.math.complex.ComplexFormat#97" -> "org.apache.commons.math.complex.ComplexFormat#110";
+	"org.apache.commons.math.complex.ComplexFormat#110" -> "org.apache.commons.math.complex.ComplexFormat#508";
+	"org.apache.commons.math.complex.ComplexFormat#110" -> "org.apache.commons.math.complex.ComplexFormat#522";
+	"org.apache.commons.math.complex.ComplexFormat#110" -> "org.apache.commons.math.complex.ComplexFormat#536";
+	"org.apache.commons.math.complex.ComplexFormatTest#354" -> "org.apache.commons.math.complex.ComplexFormat#321";
+	"org.apache.commons.math.complex.ComplexFormat#321" -> "org.apache.commons.math.complex.ComplexFormat#399";
+	"org.apache.commons.math.complex.ComplexFormat#399" -> "org.apache.commons.math.complex.ComplexFormat#411";
+	"org.apache.commons.math.complex.ComplexFormat#321" -> "org.apache.commons.math.complex.ComplexFormat#292";
+	"org.apache.commons.math.complex.ComplexFormat#321" -> "org.apache.commons.math.complex.ComplexFormat#471";
+	"org.apache.commons.math.complex.ComplexFormat#321" -> "org.apache.commons.math.complex.ComplexFormat#411";
+	"org.apache.commons.math.complex.ComplexFormat#321" -> "org.apache.commons.math.complex.ComplexFormat#258";
+}

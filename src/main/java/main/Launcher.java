@@ -38,54 +38,16 @@ public class Launcher {
     @SuppressWarnings("serial")
     private final static HashSet<ProjectVersion> invalidVersions = new HashSet<ProjectVersion>() {
         {
-            add(new ProjectVersion("Math", 2));
             add(new ProjectVersion("Math", 3));
             add(new ProjectVersion("Math", 6));
-            add(new ProjectVersion("Math", 8));
-            add(new ProjectVersion("Math", 11));
             add(new ProjectVersion("Math", 15));
             add(new ProjectVersion("Math", 16));
             add(new ProjectVersion("Math", 18));
             add(new ProjectVersion("Math", 19));
-            add(new ProjectVersion("Math", 21));
-            add(new ProjectVersion("Math", 23));
-            add(new ProjectVersion("Math", 24));
-            add(new ProjectVersion("Math", 25));
-            add(new ProjectVersion("Math", 30));
-            add(new ProjectVersion("Math", 34));
-            add(new ProjectVersion("Math", 35));
-            add(new ProjectVersion("Math", 38));
-            add(new ProjectVersion("Math", 48));
-            add(new ProjectVersion("Math", 50));
-            add(new ProjectVersion("Math", 51));
-            add(new ProjectVersion("Math", 56));
-            add(new ProjectVersion("Math", 57));
-            add(new ProjectVersion("Math", 58));
-            add(new ProjectVersion("Math", 60));
-            add(new ProjectVersion("Math", 61));
-            add(new ProjectVersion("Math", 62));
+            add(new ProjectVersion("Math", 20));
+            add(new ProjectVersion("Math", 59));
             add(new ProjectVersion("Math", 63));
-            add(new ProjectVersion("Math", 66));
-            add(new ProjectVersion("Math", 67));
-            add(new ProjectVersion("Math", 69));
-            add(new ProjectVersion("Math", 70));
-            add(new ProjectVersion("Math", 75));
-            add(new ProjectVersion("Math", 76));
-            add(new ProjectVersion("Math", 82));
-            add(new ProjectVersion("Math", 83));
-            add(new ProjectVersion("Math", 84));
-            add(new ProjectVersion("Math", 85));
-            add(new ProjectVersion("Math", 86));
-            add(new ProjectVersion("Math", 87));
-            add(new ProjectVersion("Math", 88));
-            add(new ProjectVersion("Math", 89));
-            add(new ProjectVersion("Math", 90));
-            add(new ProjectVersion("Math", 95));
-            add(new ProjectVersion("Math", 101));
-            add(new ProjectVersion("Math", 102));
-            add(new ProjectVersion("Math", 103));
-            add(new ProjectVersion("Math", 105));
-            add(new ProjectVersion("Math", 106));
+            add(new ProjectVersion("Math", 79));
             add(new ProjectVersion("Chart", 4));
         }
     };

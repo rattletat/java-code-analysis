@@ -1,0 +1,20 @@
+digraph "cg/org.apache.commons.math.fraction.FractionFormatTest#233"
+{
+	"org.apache.commons.math.fraction.FractionFormatTest#233" [style=filled,fillcolor=green];
+	"org.apache.commons.math.fraction.FractionFormatTest#233" -> "org.apache.commons.math.fraction.FractionFormat#243";
+	"org.apache.commons.math.fraction.FractionFormat#243" -> "org.apache.commons.math.fraction.ProperFractionFormat#132";
+	"org.apache.commons.math.fraction.ProperFractionFormat#132" -> "org.apache.commons.math.fraction.FractionFormat#260";
+	"org.apache.commons.math.fraction.FractionFormat#260" -> "org.apache.commons.math.fraction.FractionFormat#359";
+	"org.apache.commons.math.fraction.FractionFormat#359" -> "org.apache.commons.math.fraction.FractionFormat#370";
+	"org.apache.commons.math.fraction.FractionFormat#260" -> "org.apache.commons.math.fraction.FractionFormat#232";
+	"org.apache.commons.math.fraction.FractionFormat#260" -> "org.apache.commons.math.fraction.FractionFormat#370";
+	"org.apache.commons.math.fraction.ProperFractionFormat#132" -> "org.apache.commons.math.fraction.FractionFormat#359";
+	"org.apache.commons.math.fraction.ProperFractionFormat#132" -> "org.apache.commons.math.fraction.ProperFractionFormat#115";
+	"org.apache.commons.math.fraction.ProperFractionFormat#132" -> "org.apache.commons.math.fraction.FractionFormat#232";
+	"org.apache.commons.math.fraction.ProperFractionFormat#132" -> "org.apache.commons.math.fraction.FractionFormat#370";
+	"org.apache.commons.math.fraction.ProperFractionFormat#132" -> "org.apache.commons.math.fraction.FractionFormat#224";
+	"org.apache.commons.math.fraction.ProperFractionFormat#132" -> "org.apache.commons.math.util.MathUtils#680";
+	"org.apache.commons.math.fraction.ProperFractionFormat#132" -> "org.apache.commons.math.fraction.Fraction#133";
+	"org.apache.commons.math.fraction.Fraction#133" -> "org.apache.commons.math.fraction.Fraction#473";
+	"org.apache.commons.math.fraction.Fraction#473" -> "org.apache.commons.math.util.MathUtils#313";
+}

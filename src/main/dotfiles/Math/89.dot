@@ -1,0 +1,5 @@
+digraph "cg/org.apache.commons.math.stat.FrequencyTest#195"
+{
+	"org.apache.commons.math.stat.FrequencyTest#195" [style=filled,fillcolor=green];
+	"org.apache.commons.math.stat.FrequencyTest#195" -> "org.apache.commons.math.stat.Frequency#110";
+}

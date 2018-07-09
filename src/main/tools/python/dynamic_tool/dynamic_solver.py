@@ -118,7 +118,7 @@ def main(argv):
             "[D-AvgOutCloseness]",
             "[D-FaultyCloseness]",
             "[D-WeiEdgeSum]",
-            "[D-#AboveAvgDegrees]",
+            "[D-#AboveAvgD]",
             "[D-#DiCircles]",
             "[D-#WeakGroups]",
             ]
@@ -194,7 +194,7 @@ def verify_input(dot, dest_path):
 def write_output(fname, header, record):
     with open(fname, 'w+') as text_file:
         try:
-            text_file.write(', '.join(header)
+            text_file.write(','.join(header)
                     .replace('[', '')
                     .replace(']', '')
                     .replace(' ,', ',') + "\n")

@@ -1,0 +1,14 @@
+digraph "cg/org.apache.commons.math.analysis.solvers.BisectionSolverTest#99"
+{
+	"org.apache.commons.math.analysis.solvers.BisectionSolverTest#99" [style=filled,fillcolor=green];
+	"org.apache.commons.math.analysis.solvers.BisectionSolverTest#99" -> "org.apache.commons.math.analysis.SinFunction#31";
+	"org.apache.commons.math.analysis.solvers.BisectionSolverTest#99" -> "org.apache.commons.math.analysis.solvers.BisectionSolver#52";
+	"org.apache.commons.math.analysis.solvers.BisectionSolver#52" -> "org.apache.commons.math.analysis.solvers.UnivariateRealSolverImpl#93";
+	"org.apache.commons.math.analysis.solvers.UnivariateRealSolverImpl#93" -> "org.apache.commons.math.ConvergingAlgorithmImpl#61";
+	"org.apache.commons.math.analysis.solvers.BisectionSolverTest#99" -> "org.apache.commons.math.analysis.solvers.BisectionSolver#72";
+	"org.apache.commons.math.analysis.solvers.BisectionSolver#72" -> "org.apache.commons.math.analysis.solvers.BisectionSolver#66";
+	"org.apache.commons.math.analysis.solvers.BisectionSolver#66" -> "org.apache.commons.math.analysis.solvers.BisectionSolver#79";
+	"org.apache.commons.math.analysis.solvers.BisectionSolver#79" -> "org.apache.commons.math.analysis.solvers.UnivariateRealSolverImpl#165";
+	"org.apache.commons.math.analysis.solvers.BisectionSolver#79" -> "org.apache.commons.math.analysis.solvers.UnivariateRealSolverImpl#208";
+	"org.apache.commons.math.analysis.solvers.BisectionSolver#79" -> "org.apache.commons.math.analysis.solvers.UnivariateRealSolverUtils#223";
+}

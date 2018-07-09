@@ -1,0 +1,38 @@
+digraph "cg/org.apache.commons.math.distribution.NormalDistributionTest#158"
+{
+	"org.apache.commons.math.distribution.NormalDistributionTest#158" [style=filled,fillcolor=green];
+	"org.apache.commons.math.distribution.NormalDistributionTest#158" -> "org.apache.commons.math.distribution.NormalDistributionImpl#60";
+	"org.apache.commons.math.distribution.NormalDistributionImpl#60" -> "org.apache.commons.math.distribution.NormalDistributionImpl#73";
+	"org.apache.commons.math.distribution.NormalDistributionImpl#73" -> "org.apache.commons.math.distribution.AbstractContinuousDistribution#58";
+	"org.apache.commons.math.distribution.AbstractContinuousDistribution#58" -> "org.apache.commons.math.distribution.AbstractDistribution#40";
+	"org.apache.commons.math.distribution.AbstractContinuousDistribution#58" -> "org.apache.commons.math.random.RandomDataImpl#119";
+	"org.apache.commons.math.distribution.NormalDistributionTest#158" -> "org.apache.commons.math.distribution.NormalDistributionImpl#125";
+	"org.apache.commons.math.distribution.NormalDistributionImpl#125" -> "org.apache.commons.math.util.FastMath#219";
+	"org.apache.commons.math.distribution.NormalDistributionImpl#125" -> "org.apache.commons.math.special.Erf#51";
+	"org.apache.commons.math.special.Erf#51" -> "org.apache.commons.math.special.Gamma#42";
+	"org.apache.commons.math.special.Gamma#42" -> "org.apache.commons.math.util.FastMath#1155";
+	"org.apache.commons.math.util.FastMath#1155" -> "org.apache.commons.math.util.FastMath#1165";
+	"org.apache.commons.math.special.Erf#51" -> "org.apache.commons.math.special.Gamma#166";
+	"org.apache.commons.math.special.Gamma#166" -> "org.apache.commons.math.util.FastMath#3265";
+	"org.apache.commons.math.special.Gamma#166" -> "org.apache.commons.math.util.FastMath#1155";
+	"org.apache.commons.math.special.Gamma#166" -> "org.apache.commons.math.special.Gamma#98";
+	"org.apache.commons.math.special.Gamma#98" -> "org.apache.commons.math.util.FastMath#1155";
+	"org.apache.commons.math.special.Gamma#166" -> "org.apache.commons.math.util.FastMath#621";
+	"org.apache.commons.math.util.FastMath#621" -> "org.apache.commons.math.util.FastMath#640";
+	"org.apache.commons.math.special.Gamma#166" -> "org.apache.commons.math.special.Gamma#243";
+	"org.apache.commons.math.special.Gamma#243" -> "org.apache.commons.math.special.Gamma$1#253";
+	"org.apache.commons.math.special.Gamma$1#253" -> "org.apache.commons.math.util.ContinuedFraction#47";
+	"org.apache.commons.math.special.Gamma#243" -> "org.apache.commons.math.util.ContinuedFraction#129";
+	"org.apache.commons.math.util.ContinuedFraction#129" -> "org.apache.commons.math.special.Gamma$1#257";
+	"org.apache.commons.math.util.ContinuedFraction#129" -> "org.apache.commons.math.special.Gamma$1#262";
+	"org.apache.commons.math.util.ContinuedFraction#129" -> "org.apache.commons.math.util.FastMath#3265";
+	"org.apache.commons.math.special.Gamma#243" -> "org.apache.commons.math.util.FastMath#1155";
+	"org.apache.commons.math.special.Gamma#243" -> "org.apache.commons.math.special.Gamma#98";
+	"org.apache.commons.math.special.Gamma#243" -> "org.apache.commons.math.util.FastMath#621";
+	"org.apache.commons.math.util.FastMath#640" -> "org.apache.commons.math.util.FastMath#640";
+	"org.apache.commons.math.util.ContinuedFraction#129" -> "org.apache.commons.math.util.FastMath#3491";
+	"org.apache.commons.math.util.ContinuedFraction#129" -> "org.apache.commons.math.exception.util.LocalizedFormats#44";
+	"org.apache.commons.math.exception.util.LocalizedFormats#44" -> "org.apache.commons.math.exception.util.LocalizedFormats#335";
+	"org.apache.commons.math.util.ContinuedFraction#129" -> "org.apache.commons.math.ConvergenceException#62";
+	"org.apache.commons.math.ConvergenceException#62" -> "org.apache.commons.math.MathException#84";
+}

@@ -1,0 +1,23 @@
+digraph "cg/org.apache.commons.math3.optimization.fitting.HarmonicFitterTest#183"
+{
+	"org.apache.commons.math3.optimization.fitting.HarmonicFitterTest#183" [style=filled,fillcolor=green];
+	"org.apache.commons.math3.optimization.fitting.HarmonicFitterTest#183" -> "org.apache.commons.math3.optimization.fitting.WeightedObservedPoint#47";
+	"org.apache.commons.math3.optimization.fitting.HarmonicFitterTest#183" -> "org.apache.commons.math3.optimization.fitting.HarmonicFitter$ParameterGuesser#195";
+	"org.apache.commons.math3.optimization.fitting.HarmonicFitterTest#183" -> "org.apache.commons.math3.optimization.fitting.HarmonicFitter$ParameterGuesser#215";
+	"org.apache.commons.math3.optimization.fitting.HarmonicFitter$ParameterGuesser#215" -> "org.apache.commons.math3.optimization.fitting.HarmonicFitter$ParameterGuesser#228";
+	"org.apache.commons.math3.optimization.fitting.HarmonicFitter$ParameterGuesser#228" -> "org.apache.commons.math3.optimization.fitting.WeightedObservedPoint#64";
+	"org.apache.commons.math3.optimization.fitting.HarmonicFitter$ParameterGuesser#215" -> "org.apache.commons.math3.optimization.fitting.HarmonicFitter$ParameterGuesser#259";
+	"org.apache.commons.math3.optimization.fitting.HarmonicFitter$ParameterGuesser#259" -> "org.apache.commons.math3.optimization.fitting.WeightedObservedPoint#64";
+	"org.apache.commons.math3.optimization.fitting.HarmonicFitter$ParameterGuesser#259" -> "org.apache.commons.math3.optimization.fitting.WeightedObservedPoint#71";
+	"org.apache.commons.math3.optimization.fitting.HarmonicFitter$ParameterGuesser#259" -> "org.apache.commons.math3.util.FastMath#375";
+	"org.apache.commons.math3.optimization.fitting.HarmonicFitter$ParameterGuesser#215" -> "org.apache.commons.math3.optimization.fitting.HarmonicFitter$ParameterGuesser#336";
+	"org.apache.commons.math3.optimization.fitting.HarmonicFitter$ParameterGuesser#336" -> "org.apache.commons.math3.optimization.fitting.WeightedObservedPoint#64";
+	"org.apache.commons.math3.optimization.fitting.HarmonicFitter$ParameterGuesser#336" -> "org.apache.commons.math3.optimization.fitting.WeightedObservedPoint#71";
+	"org.apache.commons.math3.optimization.fitting.HarmonicFitter$ParameterGuesser#336" -> "org.apache.commons.math3.util.FastMath#2268";
+	"org.apache.commons.math3.util.FastMath#2268" -> "org.apache.commons.math3.util.FastMath#1816";
+	"org.apache.commons.math3.util.FastMath#1816" -> "org.apache.commons.math3.util.FastMath#1692";
+	"org.apache.commons.math3.util.FastMath#1692" -> "org.apache.commons.math3.util.FastMath#1653";
+	"org.apache.commons.math3.util.FastMath#1692" -> "org.apache.commons.math3.util.FastMath#1673";
+	"org.apache.commons.math3.optimization.fitting.HarmonicFitter$ParameterGuesser#336" -> "org.apache.commons.math3.util.FastMath#2201";
+	"org.apache.commons.math3.optimization.fitting.HarmonicFitter$ParameterGuesser#336" -> "org.apache.commons.math3.util.FastMath#2555";
+}
