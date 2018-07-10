@@ -268,7 +268,7 @@ def weak_groups(graph):
     return len(graph.clusters(mode="WEAK"))
 
 def usage():
-    print("\nPython command tool to analyze dot files of callgraphs.\n")
+    print("\nPython commandline tool to analyze dot files of callgraphs.\n")
     print("faultloc.py -d <dot file>")
     print("Parameters:")
     print("-d : specify dot file (--dot=)")
