@@ -269,7 +269,7 @@ def weak_groups(graph):
 
 def usage():
     print("\nPython commandline tool to analyze dot files of callgraphs.\n")
-    print("faultloc.py -d <dot file>")
+    print("dynamic_solver.py -d <dot file>")
     print("Parameters:")
     print("-d : specify dot file (--dot=)")
     print("-f : specify faulty node (--faulty=)")
