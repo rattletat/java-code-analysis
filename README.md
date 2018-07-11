@@ -13,11 +13,12 @@ You can easily download **defects4j** projects with the **loadVersions.sh** bash
 sh src/main/tools/bash/loadVersions.sh Math 10 src/main/resources 
 ```
 
-2. Place the coverage matrices and spectra files in the corresponding *results* folder. A valid path would be for example *results/Math/1/spectra* and *results/Math/1/matrix*.
+2. Place the coverage matrices and spectra files in the corresponding *results* folder.  
+A valid path would be for example *results/Math/1/spectra* and *results/Math/1/matrix*.
 
 You can generate these spectra and coverage files easily by calling the **generateSpectraFile.sh** bash script without any arguments. It will call GZoltar (placed at *src/main/tools/java/gzoltar/run_gzoltar.sh*) for every project in the *resource* folder. For this script to work you have to change your java environment to **JAVA 7**. If you are working with another granularity than **METHOD**, you have to change it there.
 
-3. Place your dotfiles in *src/main/dotfiles/{ProjectName}/{BugID}.dot*
+3. Place your dotfiles in *src/main/dotfiles/{ProjectName}/{BugID}.dot*  
 A valid path would be for example *src/main/dotfiles/Math/1.dot*.
 
 4. Configure the **Launcher** class in *src/main/java/main/*. You can set:
@@ -29,7 +30,7 @@ A valid path would be for example *src/main/dotfiles/Math/1.dot*.
         - Label analysis
         - Combine versions
     - Which BugID to start with
-    - Which BugID to end with (only ID ranges yet))
+    - Which BugID to end with (only ID ranges)
     - Which Project-BugIDs to exclude
     - Which suspiciousness technique to use
     - The resource folder path (default: *src/main/resources*)
@@ -50,10 +51,10 @@ mvn clean package && mvn exec:java
 
 ## Static Metrics:
 
-The **Static Solver** class calculates metrics using the (Java Parser libary)[https://javaparser.org/]. Constructors and methods are processed and averaged up the whole project.  
+The **Static Solver** class calculates metrics using the [Java Parser libary](https://javaparser.org/). Constructors and methods are processed and averaged up the whole project.  
 
-To add new metrics, one can do so simply by adding a new metric extending the **StaticMetric** class in **StaticResult**.  
-To avoid processing irrelevant files contained in */test/* or */target/* directories, these get filtered out before processing. Adjustments to the filter can be done in the **ProjectHandler** class.
+To add a new metric, one can simply extend the **StaticMetric** class and add it in **StaticResult**.  
+To avoid processing irrelevant files contained in */test/* or */target/* directories, these get filtered out. Adjustments to the filter can be done in the **ProjectHandler** class.
 
 Also, the project features the **MethodLineSolver** class, which creates a CSV file containing the filepath, the method name, the beginning and ending line number of every method/constructor in the (filtered) project. This class can be easily modified to instead extract code blocks. The CSV file is used in combination with the bug metrics csv file (see below) in the **LabelSolver** class to find the methods containing a fault.
 
@@ -74,20 +75,22 @@ Also, the project features the **MethodLineSolver** class, which creates a CSV f
 
 ## Dynamic Metrics:
 
-The dynamic metrics get calculated by the **dynamic_solver.py** command line tool. It needs a callgraph file in the *.dot* file format, which for example can be created with  (JDCallgraph)[https://github.com/dkarv/jdcallgraph] framework. Additional metrics can be added in the script.
+The dynamic metrics get calculated by the **dynamic_solver.py** command line tool. It needs a callgraph in the *.dot* file format, which for example can be created with  [JDCallgraph](https://github.com/dkarv/jdcallgraph) framework. Additional metrics can be implemented in the script.
 
 You should run the dynamic module always with the label solver module. Otherwise, faulty node specific metrics will be filled with -1.
 
----------------------------------------------------------------
-*Python commandline tool to analyze dot files of callgraphs.*
-faultloc.py -d <dot file>
-**Parameters**:
-**d** : specify dot file (--dot=)
-**f** : specify faulty node (--faulty=)
-**w** : specify output file (--write=)
-**v** : verbose output (--verbose)
-**h** : print this help
----------------------------------------------------------------
+``
+Python commandline tool to analyze dot files of callgraphs.  
+
+dynamic_solver.py -d <dot file>  
+
+Parameters:  
+d : specify dot file (--dot=)  
+f : specify faulty node (--faulty=)  
+w : specify output file (--write=)  
+v : verbose output (--verbose)  
+h : print this help  
+``
 
 ### Metrics
 
@@ -111,19 +114,22 @@ faultloc.py -d <dot file>
 
 ## Test Suite Metrics:
 
-Python command linetool which calculates metrics using a test suite coverage matrix, which for example can be created with the (GZoltar)[http://www.gzoltar.com] framework. More metrics can be added in the script.
+Python command line tool **faultloc.py**. Calculates metrics using a test suite coverage matrix, which for example can be created with the [GZoltar)](http://www.gzoltar.com) framework. More metrics can be added in the script.
 
----------------------------------------------------------------
-*Python commandline tool to analyze hit-spectra matrices.*
-faultloc.py -m <matrix file>
-**Parameters**:
-**m** : specify matrix file (--matrix=)
-**w** : specify output file
-**v** : verbose output (--verbose)
-**h** : print this help
----------------------------------------------------------------
+``
+Python commandline tool to analyze hit-spectra matrices.  
+
+metric_loc.py -m <matrix file>  
+
+Parameters:  
+m : specify matrix file (--matrix=)  
+w : specify output file  
+v : verbose output (--verbose)  
+h : print this help  
+``
 
 ### Metrics 
+
 - **T-#T**: Number of tests
 - **T-#PT**: Number of passing tests
 - **T-#FT**: Number of failing tests
@@ -145,19 +151,21 @@ faultloc.py -m <matrix file>
 
 ## Suspiciousness Analysis
 
----------------------------------------------------------------
-*Python command tool to evaluate Gzoltar outputs.*
-faultloc.py -m <matrix file> -s <spectra file> -t <technique>
-**Parameters**:
-**m** : specify matrix file (--matrix=)
-**s** : specify spectra file (--spectra=)
-**t** : specify technique for evaluation (--technique=)
-**w** : specify output file
-**n** : specify number of objects to output
-**r** : specify number of ranks to output
-**v** : verbose output (--verbose)
-**h** : print this help
----------------------------------------------------------------
+``
+Python command tool to evaluate Gzoltar outputs.  
+
+fault_loc.py -m <matrix file> -s <spectra file> -t <technique>  
+    
+Parameters:  
+m : specify matrix file (--matrix=)  
+s : specify spectra file (--spectra=)  
+t : specify technique for evaluation (--technique=)  
+w : specify output file  
+n : specify number of objects to output  
+r : specify number of ranks to output  
+v : verbose output (--verbose)  
+h : print this help  
+``
 
 The following techniques are implemented in **faultloc.py** and can be specified in the **Launcher** class:
 
