@@ -51,7 +51,7 @@ mvn clean package && mvn exec:java
 
 ## Static Metrics:
 
-The **Static Solver** class calculates metrics using the [Java Parser libary](https://javaparser.org/). Constructors and methods are processed and averaged up the whole project.  
+The **StaticSolver** class calculates metrics using the [Java Parser libary](https://javaparser.org/). Constructors and methods are processed and averaged up the whole project.  
 
 To add a new metric, one can simply extend the **StaticMetric** class and add it in **StaticResult**.  
 To avoid processing irrelevant files contained in */test/* or */target/* directories, these get filtered out. Adjustments to the filter can be done in the **ProjectHandler** class.
@@ -77,9 +77,9 @@ Also, the project features the **MethodLineSolver** class, which creates a CSV f
 
 The dynamic metrics get calculated by the **dynamic_solver.py** command line tool. It needs a callgraph in the *.dot* file format, which for example can be created with  [JDCallgraph](https://github.com/dkarv/jdcallgraph) framework. Additional metrics can be implemented in the script.
 
-You should run the dynamic module always with the label solver module. Otherwise, faulty node specific metrics will be filled with -1.
+You should run the dynamic module always with the **Label Solver** module. Otherwise, faulty node specific metrics will be filled with -1.
 
-``
+```
 Python commandline tool to analyze dot files of callgraphs.  
 
 dynamic_solver.py -d <dot file>  
@@ -90,7 +90,7 @@ f : specify faulty node (--faulty=)
 w : specify output file (--write=)  
 v : verbose output (--verbose)  
 h : print this help  
-``
+```
 
 ### Metrics
 
@@ -114,9 +114,9 @@ h : print this help
 
 ## Test Suite Metrics:
 
-Python command line tool **faultloc.py**. Calculates metrics using a test suite coverage matrix, which for example can be created with the [GZoltar)](http://www.gzoltar.com) framework. More metrics can be added in the script.
+Python command line tool **faultloc.py**. Calculates metrics using a test suite coverage matrix, which for example can be created with the [GZoltar](http://www.gzoltar.com) framework. More metrics can be added in the script.
 
-``
+```
 Python commandline tool to analyze hit-spectra matrices.  
 
 metric_loc.py -m <matrix file>  
@@ -126,7 +126,7 @@ m : specify matrix file (--matrix=)
 w : specify output file  
 v : verbose output (--verbose)  
 h : print this help  
-``
+```
 
 ### Metrics 
 
@@ -151,7 +151,7 @@ h : print this help
 
 ## Suspiciousness Analysis
 
-``
+```
 Python command tool to evaluate Gzoltar outputs.  
 
 fault_loc.py -m <matrix file> -s <spectra file> -t <technique>  
@@ -165,7 +165,7 @@ n : specify number of objects to output
 r : specify number of ranks to output  
 v : verbose output (--verbose)  
 h : print this help  
-``
+```
 
 The following techniques are implemented in **faultloc.py** and can be specified in the **Launcher** class:
 
@@ -178,19 +178,22 @@ The following techniques are implemented in **faultloc.py** and can be specified
 
 ## Label analysis
 
-The label analysis module finds the faulty method(s), so that they can be used in the dynamic analysis for faulty node centered metrics. It does that by extracting modified line locations from the (program-repair JSON file)[https://github.com/program-repair/defects4j-dissection] and comparing them to the *MethodLineSolver* class result (*see static analysis section*). Then the module matches the faulty method ranges against lines from the **Suspiciousness Analysis**, to find the node name used by GZoltar (for later callgraph analysis) and to extract the minimal rank. It returns the minimal rank of all faulty methods or -1, if the method was not found in the suspiciousness output. This happens when the fix modifies only lines outside of preexisting methods.
+The label analysis module finds the faulty method(s), so that they can be used in the dynamic analysis for faulty node centered metrics. It does that by extracting modified line locations from the [program-repair JSON file](https://github.com/program-repair/defects4j-dissection) and comparing them to the **MethodLineSolver** class result (*see static analysis section*). Then the module matches the faulty method ranges against lines from the *Suspiciousness Analysis*, to find the node name used by GZoltar (for later callgraph analysis) and to extract the minimal rank. It returns the minimal rank of all faulty methods or -1, if the method was not found in the suspiciousness output. This happens when the fix modifies only lines outside of preexisting methods.
 
-You have to run the **Suspiciousness Analysis** simultaneous or in advance.
+You have to run the **Suspiciousness Analyzer** simultaneous or before running the **LabelSolver** module.
 
-## Version Combiner
+## Combine Version Results
 
-The version combiner module merges the output of all other modules.
+The **Version Combiner** module merges the output of all other modules.
 
-1. It merges all the output files on version level to a file located in the version directory (default: *Overall_Version_Results.csv*)
-2. It merges all the output files on project level to a file located in the project directory (default: *Overall_Project_Results.csv*)
-3. It merges all the project results to a file located in the *results* folder (default: *Overall_Results.csv*)
+1. It merges all the output files on version level to a file located in the version directory  
+(default: *Overall_Version_Results.csv*)
+2. It merges all the output files on project level to a file located in the project directory  
+(default: *Overall_Project_Results.csv*)
+3. It merges all the project results to a file located in the *results* folder  
+(default: *Overall_Results.csv*)
 
-*Note*: Step 3 is vagile at the moment. I recommend processing the following workflow:
+***Note***: Step 3 is vagile at the moment. I recommend one of the following workflows:
 
 - One project at a time with all modules activated.
 - Mutiple projects with the static-, test suite-, and suspiciousness module and afterwards again with the label-, dynamic-, and combiner module. The last run should always include these three modules.
@@ -198,16 +201,15 @@ The version combiner module merges the output of all other modules.
 
 ## Bug metrics:
 
-I used the [defects4j dissection](https://github.com/program-repair/defects4j-dissection/blob/master/script/defects4j-bugs.csv).
-If wanted, one has to add it manually to the final result.
+I used the [defects4j dissection](https://github.com/program-repair/defects4j-dissection/blob/master/script/defects4j-bugs.csv). One has to add it manually to the final result.
 
 
 # Enhancements:
 
-- Use the results from the **Label Solver** to calculate static metrics directly for the faulty methods.
-- Refactor **Launcher** and **Label Solver** class. Add a class which embed all module results.
+- Use the results from the **LabelSolver** to calculate static metrics directly for the faulty methods.
+- Refactor **Launcher** and **LabelSolver** class. Add a class which embed all module results.
 - Introduce multithreading in python scripts
 - Introduce lazy resource fetching in maven
-- Reduce heap overhead in **Static Solver** class.
-- Add support for mutiple target labels in **Label Solver**.  
+- Reduce heap overhead in **StaticSolver** class.
+- Add support for mutiple target labels in **LabelSolver**.  
 E.g. The minimal cardinality from all faulty method sets containing all not faulty methods with the same or lower rank 
