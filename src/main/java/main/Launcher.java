@@ -26,10 +26,10 @@ import util.ProjectVersion;
 
 public class Launcher {
     private static final boolean RUN_STATIC_ANALYSIS = true;
-    private static final boolean RUN_SUSPICIOUSNESS_ANALYSIS = true;
-    private static final boolean RUN_LABEL_ANALYSIS = true;
     private static final boolean RUN_DYNAMIC_ANALYSIS = true;
     private static final boolean RUN_TEST_SUITE_ANALYSIS = true;
+    private static final boolean RUN_SUSPICIOUSNESS_ANALYSIS = true;
+    private static final boolean RUN_LABEL_ANALYSIS = true;
     private static final boolean COMBINE_VERSION_ANALYSIS = true;
     private static final int MIN_VERSION = 1;
     private static final int MAX_VERSION = 200;
@@ -210,7 +210,7 @@ public class Launcher {
                 // Add minimal rank after dotfile exists
                 projectRanks.add(String.valueOf(minimalRank));
 
-                if(localizable)
+                if (localizable)
                     projectFaultLocalizable.add(String.valueOf(true));
                 else
                     projectFaultLocalizable.add(String.valueOf(false));

@@ -4,3 +4,6 @@
 [submodule "src/main/json/defects4j-dissection"]
 	path = src/main/json/defects4j-dissection
 	url = git@github.com:program-repair/defects4j-dissection.git
+[submodule "src/main/tools/java/gzoltar"]
+	path = src/main/tools/java/gzoltar
+	url = git@github.com:GZoltar/gzoltar.git
