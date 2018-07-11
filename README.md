@@ -15,7 +15,7 @@ sh src/main/tools/bash/loadVersions.sh Math 10 src/main/resources
 
 2. Place the coverage matrices and spectra files in the corresponding *results* folder. A valid path would be for example *results/Math/1/spectra* and *results/Math/1/matrix*.
 
-You can generate these spectra and coverage files easily by calling the **generateSpectraFile.sh** bash script without any arguments. It will call GZoltar (placed at *src/main/tools/java/gzoltar/run_gzoltar.sh*) for every project in the *resource* folder. For this script to work you have to change your java environment to **JAVA 7**. If you are working with another granularity than **METHOD*, you have to change it there.
+You can generate these spectra and coverage files easily by calling the **generateSpectraFile.sh** bash script without any arguments. It will call GZoltar (placed at *src/main/tools/java/gzoltar/run_gzoltar.sh*) for every project in the *resource* folder. For this script to work you have to change your java environment to **JAVA 7**. If you are working with another granularity than **METHOD**, you have to change it there.
 
 3. Place your dotfiles in *src/main/dotfiles/{ProjectName}/{BugID}.dot*
 A valid path would be for example *src/main/dotfiles/Math/1.dot*.
