@@ -108,6 +108,8 @@ h : print this help
 - **D-FaultyCloseness**: Average closeness centrality of faulty node
 - **D-WeiEdgeSum**: EdgeCount / NodeCount
 - **D-#AboveAvgD**: Number of nodes with above avg degree
+- **D-#AboveAvgInD**: Number of nodes with above avg in-degree
+- **D-#AboveAvgOutD**: Number of nodes with above avg out-degree
 - **D-#DiCircles**: Number of directed circles
 - **D-#WeakGroups**: Number of weak groups
 
@@ -140,6 +142,7 @@ h : print this help
 - **T-#NVE**: Number of not visited elements
 - **T-#V**: Number of visits in total
 - **T-Cov**: Coverage
+- **T-Spa**: Sparsity
 - **T-CovPT**: Coverage of passing tests
 - **T-CovFT**: Coverage of failing tests
 - **T-AvgVE**: Average number of visited elements by passing *or* failing tests
