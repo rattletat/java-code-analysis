@@ -214,5 +214,6 @@ I used the [defects4j dissection](https://github.com/program-repair/defects4j-di
 - Introduce multithreading in python scripts
 - Introduce lazy resource fetching in maven
 - Reduce heap overhead in **StaticSolver** class.
+- Name convention: S-WordCount vs. T-#PT
 - Add support for mutiple target labels in **LabelSolver**.  
 E.g. The minimal cardinality from all faulty method sets containing all not faulty methods with the same or lower rank 
