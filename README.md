@@ -1,6 +1,7 @@
 # java-code-analysis
 
 This tool analyzes java projects by calculating static metrics, dynamic (callgraph) metrics and test suite metrics.
+The results of analyzing the [defects4j](https://github.com/rjust/defects4j) projects **Math**, **Time**, **Lang**, **Chart**, **Closure** and **Mockito**  can be found in *results/*. Based on that I predicted the quality of fault localization (using [GZoltar](http://www.gzoltar.com/) and dstar2) with various ML techniques. This can be found in the *analysis/* folder.
 
 # Usage
 
@@ -204,8 +205,24 @@ The **Version Combiner** module merges the output of all other modules.
 
 ## Bug metrics:
 
-I used the [defects4j dissection](https://github.com/program-repair/defects4j-dissection/blob/master/script/defects4j-bugs.csv). One has to add it manually to the final result.
+I used the [defects4j dissection](https://github.com/program-repair/defects4j-dissection/blob/master/script/defects4j-bugs.csv). One has to add it manually to the final result. Also I wrote a command line script which extracts the type of the exception from the bug json file. Can be easily altered. See */src/main/tools/python/bug_tool/*.
 
+### Metrics 
+
+- **B-RepairActions**
+- **B-RepairPatterns**	
+- **B-RepairTools**	
+- **B-Files**
+- **B-Methods**
+- **B-Classes**	
+- **B-LinesAdd**	
+- **B-LinesRem**	
+- **B-LinesMod**	
+- **B-SizeInLines**	
+- **B-Chunks**
+- **B-SpreadAllLines**	
+- **B-SpreadCodeOnly**
+- **B-NumExceptions**: Type of exception (*results/exceptions.csv*)
 
 # Enhancements:
 
